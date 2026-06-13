@@ -13,7 +13,10 @@
     "dev": "concurrently \"bun run --cwd api dev\" \"bun run --cwd web dev\"",
     "lint": "concurrently \"bun run --cwd api lint\" \"bun run --cwd web lint\"",
     "lint:fix": "concurrently \"bun run --cwd api lint:fix\" \"bun run --cwd web lint:fix\"",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db": "bun run --cwd api db",
+    "db:generate": "bun run --cwd api db:generate",
+    "db:migrate": "bun run --cwd api db:migrate"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

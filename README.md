@@ -2,6 +2,11 @@
 
 bla bla bla
 
+## Info
+
+- frontend : http://localhost:5173
+- backend : http://localhost:3000
+
 ## How to use
 
 Run stuff :

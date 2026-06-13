@@ -7,13 +7,18 @@
   "scripts": {
     "dev": "bun run --hot src/index.ts",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "db": "drizzle-kit studio",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@types/node": "^25.9.3",
+    "better-auth": "^1.6.18",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
-    "hono": "^4.12.25"
+    "hono": "^4.12.25",
+    "resend": "^6.12.4"
   },
   "devDependencies": {
     "@libsql/client": "^0.17.3",
