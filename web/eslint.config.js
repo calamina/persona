@@ -20,6 +20,7 @@ export default tseslint.config(
     },
     rules: {
       ...pluginVue.configs['flat/recommended'].map(config => config.rules).reduce((a, b) => ({ ...a, ...b }), {}),
+      'vue/comment-directive': 'off'
     },
   }
 )

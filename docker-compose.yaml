@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - sqlite_data:/app/api/data
+    environment:
+      - NODE_ENV=production
+      - DB_FILE_NAME
+    restart: always
+
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+    ports:
+      - '80:80'
+    depends_on:
+      - api
+    restart: always
+
+volumes:
+  sqlite_data:
+    driver: local

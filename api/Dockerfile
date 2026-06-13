@@ -1,15 +1,18 @@
-FROM oven/bun:alpine
+FROM oven/bun:1-alpine
+
 WORKDIR /app
 
-# Copy lockfiles and package shapes to abuse Docker caching
 COPY package.json bun.lockb ./
 COPY api/package.json ./api/
-COPY web/package.json ./web/
 
 RUN bun install --frozen-lockfile
 
-# Copy API source code
-COPY api ./api
+COPY api/ ./api/
+
+WORKDIR /app/api
+
+RUN mkdir -p /app/api/data
 
 EXPOSE 3000
-CMD [ "bun", "run", "--filter", "api", "src/index.ts" ]
+
+CMD ["sh", "-c", "bun drizzle-kit push && bun src/index.ts"]
