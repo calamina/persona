@@ -1,0 +1,53 @@
+<script setup lang="ts">
+import { ref, useTemplateRef } from 'vue'
+import FieldBase from '../../components/FieldBase.vue'
+import { handleCreateFavorite } from './favorites.service'
+import z from 'zod'
+import { cleanUrl } from '../../utils/url.ts'
+import ButtonLoading from '../../components/ButtonLoading.vue'
+
+const emit = defineEmits(['added'])
+
+const createFavoriteForm = useTemplateRef('createFavoriteForm')
+const loading = ref(false)
+
+const schema = z.object({
+  url: z.url(),
+})
+
+const createFavorite = async () => {
+  loading.value = true
+  const formData = new FormData(createFavoriteForm?.value ?? undefined)
+  const formDataObj = Object.fromEntries(formData.entries()) as { url: string }
+  cleanUrl(formDataObj.url)
+  const parsedData = schema.parse(formDataObj)
+  const res = await handleCreateFavorite(parsedData)
+  if (res) emit('added')
+  loading.value = false
+}
+</script>
+
+<template>
+  <form ref="createFavoriteForm" class="form" @submit.prevent="createFavorite()">
+    <!-- <ButtonBase @click="" slot="button" label="Add favorite" icon="favoriteAdd" id="openCreateFavoriteDialog" /> -->
+    <!-- <DialogForm id="favoriteCreateContainer" submitLabel="Add"> -->
+    <FieldBase id="url" label="Url" type="url" errorMessage="Must be a valid url" />
+    <!-- </DialogForm> -->
+    <ButtonLoading :loading label="Add favorite" icon="favoriteAdd" />
+  </form>
+</template>
+
+<style scoped>
+form {
+  display: flex;
+  flex-flow: column;
+  border-radius: 0.6rem;
+  height: fit-content;
+  border: 2.5px solid var(--border);
+  background-color: var(--element);
+  padding: 0.6rem;
+  max-height: 50vh;
+  overflow-y: auto;
+  scrollbar-color: var(--color) transparent;
+}
+</style>

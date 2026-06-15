@@ -1,15 +1,12 @@
 import { relations, sql } from "drizzle-orm";
 import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const useAuthTable = () => {
-
+export const useAuthTables = () => {
   const user = sqliteTable("user", {
     id: text("id").primaryKey(),
     name: text("name").notNull(),
     email: text("email").notNull().unique(),
-    emailVerified: integer("email_verified", { mode: "boolean" })
-      .default(false)
-      .notNull(),
+    emailVerified: integer("email_verified", { mode: "boolean" }).default(false).notNull(),
     image: text("image"),
     createdAt: integer("created_at", { mode: "timestamp_ms" })
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
@@ -117,11 +114,11 @@ export const useAuthTable = () => {
     sessionRelations,
     user,
     userRelations,
-    verification
+    verification,
   };
 };
 
-type Tables = ReturnType<typeof useAuthTable>;
+type Tables = ReturnType<typeof useAuthTables>;
 export type User = Tables["user"]["$inferSelect"];
 export type UserNew = Tables["user"]["$inferInsert"];
 export type Session = Tables["session"]["$inferSelect"];

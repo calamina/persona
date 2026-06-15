@@ -1,0 +1,30 @@
+.hidden {
+  display: none !important;
+}
+
+.fields {
+  background-color: var(--element);
+  padding: 0.6rem;
+  border-radius: 0.6rem;
+  border: 2.5px solid var(--border);
+  display: flex;
+  flex-flow: column;
+  gap: 0.6rem;
+}
+
+.actions {
+  width: 100%;
+  display: grid;
+
+  &:has(> :nth-child(2)) {
+    grid-template-columns: 1fr 2fr;
+    gap: 0.6rem;
+  }
+}
+
+form {
+  display: flex;
+  width: 25rem;
+  flex-flow: column;
+  gap: 0.6rem;
+}

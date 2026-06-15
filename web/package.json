@@ -1,25 +1,36 @@
 {
   "name": "persona-web",
-  "private": true,
   "version": "0.0.1",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt src/",
+    "fmt:check": "oxfmt --check"
   },
   "dependencies": {
     "better-auth": "^1.6.18",
     "hono": "^4.12.25",
     "persona-api": "workspace:*",
-    "vue": "^3.5.34"
+    "vue": "^3.5.34",
+    "vue-router": "^5.1.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^24.12.3",
     "@vitejs/plugin-vue": "^6.0.6",
+    "@vue/eslint-config-typescript": "^14.7.0",
     "@vue/tsconfig": "^0.9.1",
+    "eslint": "^10.2.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-oxlint": "~1.60.0",
+    "eslint-plugin-vue": "~10.8.0",
+    "oxfmt": "^0.54.0",
+    "oxlint": "^1.69.0",
     "typescript": "~6.0.2",
     "vite": "^8.0.12",
     "vite-tsconfig-paths": "^6.1.1",

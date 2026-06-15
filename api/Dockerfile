@@ -2,8 +2,10 @@ FROM oven/bun:1-alpine
 
 WORKDIR /app
 
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
+
 COPY api/package.json ./api/
+COPY web/package.json ./web/
 
 RUN bun install --frozen-lockfile
 
@@ -15,4 +17,4 @@ RUN mkdir -p /app/api/data
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "bun drizzle-kit push && bun src/index.ts"]
+CMD ["sh", "-c", "bun drizzle-kit migrate && bun src/index.ts"]

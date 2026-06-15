@@ -1,28 +1,31 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { api } from './api-client'
-import { authClient } from './utils/auth-client'
+import { onMounted, ref, type Ref } from 'vue'
+import { api } from './utils/api-client'
+import { RouterView } from 'vue-router'
 
-const message = ref('Loading...')
+interface User {
+  id: number
+  name: string
+  age: number
+  email: string
+}
+
+const user: Ref<null | User> = ref(null)
 
 onMounted(async () => {
   const res = await api.index.$get()
-  const data = await res.text()
-  message.value = data
+  user.value = await res.json()
 })
 
-async function login() {
-  await authClient.signIn.username({
-    // email: 'user@example.com',
-    password: 'password123',
-    username: 'testos',
-  })
-}
+// async function login() {
+//   await authClient.signIn.username({
+//     // email: 'user@example.com',
+//     password: "password123",
+//     username: "testos",
+//   });
+// }
 </script>
 
 <template>
-  <div>
-    <h1>{{ message }}</h1>
-  </div>
-  <button @click="login">login bitch !</button>
+  <RouterView />
 </template>

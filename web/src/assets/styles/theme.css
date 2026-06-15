@@ -1,0 +1,51 @@
+:root {
+  --font: 'necto';
+  --weigth-regular: 400;
+  --weigth-medium: 600;
+  --weigth-bold: 800;
+
+  --bg: oklch(88% 0.04 190);
+
+  --element: oklch(95% 0.017 85);
+  --element-alt: oklch(90% 0.017 85);
+  --element-focus: oklch(87% 0.017 85);
+
+  --color: oklch(30% 0.017 85);
+  --color-dim: oklch(30% 0.017 85 / 0.6);
+  --color-focus: oklch(10% 0.017 85);
+  --color-highlight: oklch(64.137% 0.11206 77.645);
+
+  --border: oklch(30% 0.017 85);
+  --border-focus: oklch(20% 0.017 85);
+
+  --icon: oklch(30% 0.017 85);
+  --icon-focus: oklch(70% 0.017 85);
+
+  --spacing: 0.6rem;
+
+  --header-size: 2.1rem;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--color);
+  font-family: var(--font);
+  font-weight: var(--weigth-regular);
+  background-image: url('../gggrain.svg');
+  background-size: cover;
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+a {
+  color: var(--color);
+
+  &:focus {
+    color: var(--color-focus);
+  }
+}

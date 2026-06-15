@@ -13,12 +13,14 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.8.0",
     "@types/node": "^25.9.3",
     "better-auth": "^1.6.18",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
     "hono": "^4.12.25",
-    "resend": "^6.12.4"
+    "resend": "^6.12.4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@libsql/client": "^0.17.3",

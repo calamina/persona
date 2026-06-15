@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   api:
@@ -6,12 +6,16 @@ services:
       context: .
       dockerfile: api/Dockerfile
     ports:
-      - '3000:3000'
+      - "3005:3000"
     volumes:
       - sqlite_data:/app/api/data
     environment:
       - NODE_ENV=production
       - DB_FILE_NAME
+      - BETTER_AUTH_SECRET
+      - RESEND_API_KEY
+      - BETTER_AUTH_URL
+      - BETTER_AUTH_TRUSTED_ORIGINS
     restart: always
 
   web:
@@ -20,8 +24,9 @@ services:
       dockerfile: web/Dockerfile
       args:
         - VITE_API_URL=${VITE_API_URL}
+    env_file: .env
     ports:
-      - '80:80'
+      - "3006:80"
     depends_on:
       - api
     restart: always

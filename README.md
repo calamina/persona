@@ -1,6 +1,31 @@
 # Persona
 
-bla bla bla
+Frontend :
+
+- **Vue**
+
+Backend :
+
+- **Drizzle** as an _ORM_ to manage the _SQLite database_
+- **Better-auth** for everything _auth_ related (server/client)
+- **Resend** for everything _email_ related (verification, password reset, ...)
+- **Cron** job for _database backups_ each day at midnight (with _14 day retention_)
+- **Litecli** for _production db management_ through _ssh in the vps and docker volume_.
+
+Tech :
+
+- **Bun**
+- **Docker Compose**
+- **Github Actions**
+- **Oxlint** + **Oxfmt**
+
+![Persona App Screenshot](https://github.com/calamina/persona/raw/refs/heads/master/.github/persona.avif)
+
+## TODO
+
+- [ ] add password reset
+- [ ] check account existing
+- [ ] add Dashboard :)
 
 ## Info
 
@@ -17,6 +42,6 @@ Run stuff :
 
 Install stuff :
 
-- go to the right folder and `bun add`
+- `bun add` in app folder
 
-Then global `bun install` at root
+`bun install` at root or in app :)

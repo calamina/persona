@@ -1,7 +1,8 @@
 FROM oven/bun:1-alpine AS builder
 WORKDIR /app
 
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
+
 COPY web/package.json ./web/
 COPY api/package.json ./api/
 
@@ -17,5 +18,8 @@ RUN bun run build
 
 FROM nginx:alpine
 COPY --from=builder /app/web/dist /usr/share/nginx/html
+
+COPY web/nginx.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
