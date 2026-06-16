@@ -1,17 +1,21 @@
 <script setup lang="ts">
-import type { FavoriteModel } from 'persona-api/src/db/favorites.schema'
 import { deleteFavorite } from './favorites.service'
 import ButtonLoading from '../../components/ButtonLoading.vue'
 import { ref } from 'vue'
+import { useFavoriteStore, type FavoriteDisplay } from './favorite.store.ts'
 
-const { favorite } = defineProps<{ favorite: FavoriteModel }>()
+const store = useFavoriteStore()
+const { favorite } = defineProps<{ favorite: FavoriteDisplay }>()
 const emit = defineEmits(['deleted'])
 const loading = ref(false)
 
-const remove = (id: number) => {
+const remove = async (id: number) => {
   loading.value = true
-  deleteFavorite(id)
-  emit('deleted')
+  const { data } = await deleteFavorite(id)
+  if (data) {
+    store.clearFavoriteCache()
+    store.loadFavorites(true)
+  }
   loading.value = false
 }
 </script>
@@ -19,7 +23,7 @@ const remove = (id: number) => {
 <template>
   <a class="link" :href="favorite.url">
     <img :src="favorite.favicon" :alt="favorite.title + 'favicon'" />
-    {{ favorite.title }}
+    <p>{{ favorite.title }}</p>
     <ButtonLoading :loading @click.prevent="remove(favorite.id)" class="deleteButton" icon="favoriteDelete" />
   </a>
 </template>
@@ -32,50 +36,44 @@ const remove = (id: number) => {
   border: 2.5px solid transparent;
 
   &:focus-within {
-    border-color: var(--border);
+    background-color: var(--element-focusmax);
   }
 }
 
 .link {
-  margin: 0 0.3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: calc(100% - 0.6rem);
-  border-radius: 0.3rem;
-  border: 2.5px solid transparent;
   gap: 0.6rem;
   text-decoration: none;
-  padding: 0 0.3rem;
+  padding: 0.6rem;
   line-height: 1.2rem;
-  height: 2.1rem;
   outline: none;
-  overflow-x: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 
   &:hover,
   &:focus-within {
-    border-color: var(--border);
     background-color: var(--element-focus);
     button {
       display: flex;
     }
+    img {
+      background-color: var(--element-focusmax);
+    }
   }
-  &:first-of-type {
-    margin-top: 0.3rem;
-  }
-  &:last-of-type {
-    margin-bottom: 0.3rem;
-  }
+}
+
+p {
+  flex: 1;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 img {
   background-color: var(--element-focus);
-  border-radius: 50%;
-  width: 1.2rem;
-  height: 1.2rem;
-  display: none;
-  /* filter: saturate(0); */
+  border-radius: 0.3rem;
+  padding: 0.45rem;
+  width: 2.1rem;
+  height: 2.1rem;
 }
 </style>

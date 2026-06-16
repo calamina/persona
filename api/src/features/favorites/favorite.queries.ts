@@ -1,10 +1,8 @@
 // src/features/dashboard/model/dashboard.service.ts
 import { and, eq } from "drizzle-orm";
 import { db } from "../../utils/db";
-import { type FavoriteModel, useFavoritesTable } from "../../db/favorites.schema";
 import { getUrlTitle, isValidUrl } from "../../utils/url";
-
-const { favorite } = useFavoritesTable();
+import { favorite, type FavoriteModel } from "../../db/favorite.schema";
 
 export async function dbGetFavorites(userId: string) {
   return await db.select().from(favorite).where(eq(favorite.userId, userId));

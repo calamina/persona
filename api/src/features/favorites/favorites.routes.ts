@@ -8,17 +8,18 @@ export const favorites = new Hono()
   .get("/", async (c) => {
     const user = c.get("user");
 
-    if (!user) return c.json({ error: "Unauthorized" }, 401);
+    if (!user) return c.json({ data: null, error: { message: "Unauthorized" } }, 401);
 
     const data = await dbGetFavorites(user.id);
+    if (!data) return c.json({ data: null, error: { message: "Database error" } }, 500);
 
-    return c.json(data);
+    return c.json({ data, error: null });
   })
 
-  .get("/:id", (c) => {
-    const id = c.req.param("id");
-    return c.json({ message: `Get user with ID: ${id}` });
-  })
+  // .get("/:id", (c) => {
+  //   const id = c.req.param("id");
+  //   return c.json({ message: `Get user with ID: ${id}` });
+  // })
 
   .post(
     "/",
@@ -42,8 +43,8 @@ export const favorites = new Hono()
     },
   )
 
-  .delete("/", zValidator("json", z.object({ id: z.number() })), async (c) => {
-    const { id } = c.req.valid("json");
+  .delete("/:id", zValidator("param", z.object({ id: z.coerce.number() })), async (c) => {
+    const { id } = c.req.valid("param");
     const user = c.get("user");
 
     if (!user) return c.json({ error: "Unauthorized" }, 401);

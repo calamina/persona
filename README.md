@@ -23,13 +23,14 @@ Tech :
 
 ## TODO
 
-- [ ] clean feed parser
+- [ ] streamline routes + {data, error}
+- [ ] manage errors (store mmessages ?)
+- [ ] multi-use inputs ? search and add if not found
+- [ ] redirect on register + redirect on mail send
 - [ ] add password reset
 - [ ] check account existing
-- [ ] finish feed block
 - [ ] add animations / transitionGroups
 - [ ] add favorite folders
-- [ ] add favorite singleton check
 - [ ] add todos
 - [ ] add rss
 - [ ] add main links

@@ -1,7 +1,3 @@
-import { useAuthTables } from "./auth.schema";
-import { useFavoritesTable } from "./favorites.schema";
-
-export const { account, accountRelations, session, sessionRelations, user, userRelations, verification } =
-  useAuthTables();
-
-export const { favorite } = useFavoritesTable();
+export * from "./auth.schema";
+export { favorite } from "./favorite.schema";
+export { channel } from "./channel.schema";

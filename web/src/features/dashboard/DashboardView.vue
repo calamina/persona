@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import FavoriteFeature from '../favorites/FavoriteFeature.vue'
-import FeedFeature from '../feed/FeedFeature.vue'
+import YoutubeFeed from '../youtube/YoutubeFeed.vue'
 import DashboardHeader from './DashboardHeader.vue'
 </script>
 
@@ -9,10 +9,10 @@ import DashboardHeader from './DashboardHeader.vue'
     <DashboardHeader />
     <div class="elements">
       <Suspense>
-        <FavoriteFeature />
+        <FavoriteFeature class="col2" />
       </Suspense>
       <Suspense>
-        <FeedFeature />
+        <YoutubeFeed class="col3" />
       </Suspense>
     </div>
   </div>
@@ -32,7 +32,16 @@ import DashboardHeader from './DashboardHeader.vue'
 
 .elements {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 8rem 1fr 1fr 8rem;
   align-items: center;
+  gap: 8rem;
+  /* grid-template-columns: auto auto; */
+}
+
+.col2 {
+  grid-column: 2;
+}
+.col3 {
+  grid-column: 3;
 }
 </style>

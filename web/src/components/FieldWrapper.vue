@@ -9,7 +9,7 @@ const {
   hint = undefined,
 } = defineProps<{
   id: string
-  label: string
+  label?: string
   errorMessage?: string
   hint?: string
 }>()
@@ -18,9 +18,9 @@ const {
 <template>
   <div class="field-wrapper">
     <slot />
-    <LabelBase :id="id" :label="label" />
-    <TextHint :id="id" :content="hint" type="hint" class="hint-msg" />
-    <TextHint :id="id" :content="errorMessage" type="error" class="error-msg" />
+    <LabelBase v-if="label" :id :label />
+    <TextHint :id :content="hint" type="hint" class="hint-msg" />
+    <TextHint :id :content="errorMessage" type="error" class="error-msg" />
   </div>
 </template>
 

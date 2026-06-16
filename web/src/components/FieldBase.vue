@@ -5,27 +5,29 @@ import FieldWrapper from './FieldWrapper.vue'
 
 const {
   id,
-  placeholder = undefined,
+  placeholder,
   label,
-  errorMessage = undefined,
-  hint = undefined,
+  errorMessage,
+  hint,
   type = 'text',
   required = true,
 } = defineProps<{
   id: string
-  label: string
+  label?: string
   type?: InputTypeHTMLAttribute
   placeholder?: string
   errorMessage?: string
   hint?: string
   required?: boolean
 }>()
+
+const model = defineModel<string>()
 </script>
 
 <template>
   <div class="field-wrapper">
     <FieldWrapper :id :label :error-message="errorMessage ?? hint" :hint>
-      <InputBase :id :type :placeholder :required :has-hint="!!hint" v-bind="$attrs" />
+      <InputBase v-model="model" :id :type :placeholder :required :has-hint="!!hint" v-bind="$attrs" />
     </FieldWrapper>
   </div>
 </template>

@@ -15,6 +15,7 @@ const {
   placeholder?: string
 }>()
 
+const model = defineModel<string>()
 const emit = defineEmits(['error'])
 
 const hintId = `${id}-hint`
@@ -25,6 +26,7 @@ const describedBy = hasHint ? `${hintId} ${errorId}` : errorId
 
 <template>
   <input
+    v-model="model"
     :id="id"
     :type="type"
     :name="id"

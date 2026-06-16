@@ -3,41 +3,56 @@ import { api } from '../../utils/api-client'
 export async function getFavorites() {
   // TODO :: util to return {data, error} !
   try {
-    const res = await api.favorites.$get()
-    if (!res.ok) throw new Error('Failed to fetch favorites')
+    const response = await api.favorites.$get()
 
-    const rawFavorites = await res.json()
-    return rawFavorites.map((fav) => ({
-      ...fav,
-      createdAt: new Date(fav.createdAt),
-      updatedAt: new Date(fav.updatedAt),
-    }))
+    if (response.ok) {
+      const { data } = await response.json()
+      return data.map((fav) => ({
+        ...fav,
+        createdAt: new Date(fav.createdAt),
+        updatedAt: new Date(fav.updatedAt),
+      }))
+    }
+
+    const errPayload = await response.json().catch(() => null)
+    return { data: null, error: errPayload || { message: 'Network error occurred' } }
   } catch {
-    return []
+    return { data: null, error: { message: 'Failed to connect to backend service' } }
   }
 }
 
 export async function createFavorite(data: { url: string }) {
   try {
-    const res = await api.favorites.$post({
+    const response = await api.favorites.$post({
       form: { url: data.url },
     })
 
-    if (res.ok) {
-      const data = await res.json()
-      return data
+    if (response.ok) {
+      const data = await response.json()
+      return { data, error: null }
     }
-  } catch {
-    return null
+
+    const errPayload = await response.json().catch(() => null)
+    return { data: null, error: errPayload || { message: 'Network error occurred' } }
+  } catch (error) {
+    console.error('RPC Service Exception:', error)
+    return { data: null, error: { message: 'Failed to connect to backend service' } }
   }
 }
 
 export async function deleteFavorite(id: number) {
   try {
-    return await api.favorites.$delete({
-      json: { id },
+    const response = await api.favorites[':id'].$delete({
+      param: { id: id.toString() },
     })
-  } catch {
-    return null
+    if (response.ok) {
+      const data = await response.json()
+      return { data, error: null }
+    }
+    const errPayload = await response.json().catch(() => null)
+    return { data: null, error: errPayload || { message: 'Network error occurred' } }
+  } catch (error) {
+    console.error('RPC Service Exception:', error)
+    return { data: null, error: { message: 'Failed to connect to backend service' } }
   }
 }

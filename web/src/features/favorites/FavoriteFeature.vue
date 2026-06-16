@@ -1,35 +1,32 @@
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
-import ButtonBase from '../../components/ButtonBase.vue'
-import { getFavorites } from './favorites.service.ts'
+import { ref } from 'vue'
 import Favorite from './Favorite.vue'
-import type { FavoriteModel } from 'persona-api/src/db/favorites.schema.ts'
 import FavoriteCreate from './FavoriteCreate.vue'
+import { useFavoriteStore } from './favorite.store.ts'
+import { storeToRefs } from 'pinia'
 
-const favoritesList: Ref<FavoriteModel[]> = ref([])
+const store = useFavoriteStore()
+const { favorites } = storeToRefs(store)
 const errorMessage = ref('')
 
-const refreshList = async () => {
-  const res = await getFavorites()
-  favoritesList.value = res
-}
-
-refreshList()
+await store.loadFavorites()
 </script>
 
 <template>
   <div class="favorites">
-    <div class="actions">
+    <!-- <div class="actions">
       <ButtonBase class="small" icon="folder" />
       <ButtonBase class="small" icon="faviconToggle" />
       <ButtonBase class="small" icon="favoriteSearch" />
-    </div>
-    <div class="list" v-if="favoritesList.length">
+    </div> -->
+    <div class="section">
       <h2>Favorites</h2>
-      <Favorite v-for="favorite in favoritesList" :favorite="favorite" @deleted="refreshList()" />
+      <div class="list">
+        <Favorite v-for="favorite in favorites" :key="favorite.id" :favorite="favorite" />
+      </div>
     </div>
     <div v-if="errorMessage">{{ errorMessage }}</div>
-    <FavoriteCreate @added="refreshList()" />
+    <FavoriteCreate class="big" />
   </div>
 </template>
 
@@ -44,8 +41,6 @@ h2 {
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
-  position: sticky;
-  top: 0;
   background-color: var(--element);
 }
 
@@ -62,24 +57,30 @@ h2 {
   display: flex;
   flex-flow: column;
   gap: 0.6rem;
-  max-width: 25rem;
+  /* max-width: 25rem; */
   justify-self: center;
   align-self: center;
   max-height: 40rem;
   height: 40rem;
 }
 
-.list {
-  flex: 1;
+.section {
   display: flex;
   flex-flow: column;
   border-radius: 0.6rem;
   height: fit-content;
   border: 2.5px solid var(--border);
   background-color: var(--element);
-  /* max-height: 30rem;
-  height: 30rem; */
-  overflow-y: auto;
+  overflow: hidden;
+  flex: 1;
+}
+
+.list {
   scrollbar-color: var(--color) transparent;
+  overflow-y: auto;
+}
+
+.big {
+  flex-shrink: 0;
 }
 </style>

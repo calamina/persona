@@ -10,6 +10,7 @@
   --element: oklch(95% 0.017 85);
   --element-alt: oklch(90% 0.017 85);
   --element-focus: oklch(87% 0.017 85);
+  --element-focusmax: oklch(78% 0.017 85);
 
   --color: oklch(30% 0.017 85);
   --color-dim: oklch(30% 0.017 85 / 0.6);

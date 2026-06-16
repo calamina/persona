@@ -17,5 +17,6 @@ const {
 </script>
 
 <template>
-  <ButtonBase :type :label="loading ? 'Loading...' : label" :icon="loading ? 'loading' : icon" :disabled="loading" />
+  <ButtonBase :type :label :icon="loading ? 'loading' : icon" :disabled="loading" />
+  <!-- <ButtonBase :type :label="loading ? 'Loading...' : label" :icon="loading ? 'loading' : icon" :disabled="loading" /> -->
 </template>
