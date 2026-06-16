@@ -5,6 +5,7 @@
   --weigth-bold: 800;
 
   --bg: oklch(88% 0.04 190);
+  --bg-dim: oklch(78% 0.04 190);
 
   --element: oklch(95% 0.017 85);
   --element-alt: oklch(90% 0.017 85);
@@ -33,6 +34,7 @@ html {
   font-weight: var(--weigth-regular);
   background-image: url('../gggrain.svg');
   background-size: cover;
+  font-size: 17px;
 }
 
 body {

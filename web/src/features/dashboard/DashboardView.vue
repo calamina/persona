@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import FavoriteFeature from '../favorites/FavoriteFeature.vue'
+import FeedFeature from '../feed/FeedFeature.vue'
 import DashboardHeader from './DashboardHeader.vue'
 </script>
 
 <template>
   <div class="dashboard">
     <DashboardHeader />
-    <Suspense>
-      <FavoriteFeature />
-    </Suspense>
+    <div class="elements">
+      <Suspense>
+        <FavoriteFeature />
+      </Suspense>
+      <Suspense>
+        <FeedFeature />
+      </Suspense>
+    </div>
   </div>
 </template>
 
@@ -22,5 +28,11 @@ import DashboardHeader from './DashboardHeader.vue'
   grid-template-rows: var(--header-size) auto auto;
   grid-template-rows: var(--header-size) auto var(--header-size);
   grid-template-columns: 1fr;
+}
+
+.elements {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
 }
 </style>

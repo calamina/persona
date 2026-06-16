@@ -28,16 +28,16 @@ export async function dbCreateFavorite(userId: string, url: string) {
     const urlNoProtocol = url.replace(/^https?:\/\//i, "");
     const urlSafe = new URL("https://" + urlNoProtocol);
 
+    // TODO : this is SUPER TIMECONSUMING !!! fix :/
     const isValid = await isValidUrl(urlSafe.href);
-
     if (!isValid) throw new Error("INVALID_URL");
-
     const title = await getUrlTitle(urlSafe.href);
     const imgLink = "https://icons.duckduckgo.com/ip3/" + urlSafe.host + ".ico";
     const favicon = (await isValidUrl(imgLink)) ? imgLink : "https://api.iconify.design/material-symbols:book.svg";
 
     const [newFavorite]: Pick<FavoriteModel, "id">[] = await db
       .insert(favorite)
+      // .values({ url: urlSafe.href, userId, title: "", favicon: "" })
       .values({ url: urlSafe.href, userId, title, favicon })
       .returning({ id: favorite.id });
 

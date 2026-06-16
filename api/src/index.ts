@@ -3,6 +3,7 @@ import { cors } from "hono/cors";
 import { auth } from "./utils/auth";
 import "dotenv/config";
 import { favorites } from "./features/favorites/favorites.routes";
+import { feed } from "./features/feed/feed.routes";
 
 export const app = new Hono();
 
@@ -50,8 +51,8 @@ const routes = app
   .get("/", async (c) => {
     return c.json({ yo: "yo" });
   })
-  .route("/favorites", favorites);
-// .route('/products', productRoutes);
+  .route("/favorites", favorites)
+  .route("/feed", feed);
 
 console.debug("routes:", routes.routes.length);
 export type AppType = typeof routes;

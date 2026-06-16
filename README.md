@@ -23,9 +23,17 @@ Tech :
 
 ## TODO
 
+- [ ] clean feed parser
 - [ ] add password reset
 - [ ] check account existing
-- [ ] add Dashboard :)
+- [ ] finish feed block
+- [ ] add animations / transitionGroups
+- [ ] add favorite folders
+- [ ] add favorite singleton check
+- [ ] add todos
+- [ ] add rss
+- [ ] add main links
+- [ ] add calendar ??
 
 ## Info
 

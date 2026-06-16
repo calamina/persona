@@ -1,9 +1,15 @@
+<script <script setup lang='ts'>
+const {errorMessage} = defineProps<{
+  errorMessage: string | null
+}>()
+</script>
+
 <template>
-  <p data-form-error class="error-msg"></p>
+  <p>{{ errorMessage }}</p>
 </template>
 
 <style scoped>
-p[data-form-error].error-msg {
+p {
   color: var(--color-highlight);
   margin-top: 0.3rem;
   text-align: center;

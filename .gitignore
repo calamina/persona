@@ -26,3 +26,5 @@ yarn-error.log*
 *.db-shm
 *.db-wal
 api/data/
+
+*.sqlite

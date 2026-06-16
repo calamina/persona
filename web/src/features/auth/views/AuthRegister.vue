@@ -7,9 +7,11 @@ import TextInfo from '../../../components/TextInfo.vue'
 import { registerSchema } from '../auth.schema.ts'
 import { handleRegister } from '../auth.service.ts'
 import ErrorBase from '../../../components/ErrorBase.vue'
+import { router } from '../../../utils/router.ts'
 
 const registerForm = useTemplateRef('registerForm')
 const loading = ref(false)
+const errorMessage = ref<string | null>(null)
 
 const register = async () => {
   loading.value = true
@@ -18,7 +20,11 @@ const register = async () => {
   const formDataObj = Object.fromEntries(formData.entries())
   const parsedData = registerSchema.parse(formDataObj)
   const { data, error } = await handleRegister(parsedData)
-  console.debug(data, error?.message)
+  if (data) {
+    router.push('/auth/login')
+    errorMessage.value = null
+  }
+  if (error?.message) errorMessage.value = error?.message
   loading.value = false
 }
 </script>
@@ -29,7 +35,7 @@ const register = async () => {
       <FieldBase id="username" minlength="3" hint="At least 3 characters" label="Username" />
       <FieldBase id="email" label="Email" type="email" error-message="Must be a valid email" />
       <FieldPassword id="password" label="Password" minlength="12" hint="At least 12 characters" />
-      <ErrorBase />
+      <ErrorBase :errorMessage />
     </div>
     <ButtonBase type="submit" label="Register" />
     <TextInfo>

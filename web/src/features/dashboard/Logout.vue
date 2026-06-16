@@ -8,9 +8,8 @@ const loading = ref(false)
 
 const logout = async () => {
   loading.value = true
-  const { data, error } = await handleLogout()
-  if (data) router.push('/')
-  console.debug(data, error?.message)
+  const { error } = await handleLogout()
+  if (!error) router.push('/')
   loading.value = false
 }
 </script>

@@ -16,6 +16,7 @@ const registered = query.registered === 'registered'
 
 const loginForm = useTemplateRef('loginForm')
 const loading = ref(false)
+const errorMessage = ref<string | null>(null)
 
 const login = async () => {
   loading.value = true
@@ -24,8 +25,12 @@ const login = async () => {
   const formDataObj = Object.fromEntries(formData.entries())
   const parsedData = loginSchema.parse(formDataObj)
   const { data, error } = await handleLogin(parsedData)
-  if (data) router.push('/dashboard')
-  console.debug(data, error?.message)
+  if (data) {
+    router.push('/dashboard')
+    errorMessage.value = null
+  }
+  if (error?.message) errorMessage.value = error?.message
+
   loading.value = false
 }
 </script>
@@ -35,7 +40,7 @@ const login = async () => {
     <div class="fields">
       <FieldBase id="identifier" label="Username (or Email)" minlength="3" error-message="At least 3 characters" />
       <FieldPassword id="password" label="Password" minlength="12" error-message="At least 12 characters" />
-      <ErrorBase />
+      <ErrorBase :errorMessage />
     </div>
     <ButtonLoading :loading label="Login" />
     <TextInfo v-if="verified">Verified! You can login :)</TextInfo>

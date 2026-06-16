@@ -1,6 +1,6 @@
 import { api } from '../../utils/api-client'
 
-export async function handleGetFavorites() {
+export async function getFavorites() {
   // TODO :: util to return {data, error} !
   try {
     const res = await api.favorites.$get()
@@ -17,7 +17,7 @@ export async function handleGetFavorites() {
   }
 }
 
-export async function handleCreateFavorite(data: { url: string }) {
+export async function createFavorite(data: { url: string }) {
   try {
     const res = await api.favorites.$post({
       form: { url: data.url },
@@ -32,7 +32,7 @@ export async function handleCreateFavorite(data: { url: string }) {
   }
 }
 
-export async function handleDeleteFavorite(id: number) {
+export async function deleteFavorite(id: number) {
   try {
     return await api.favorites.$delete({
       json: { id },

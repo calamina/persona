@@ -5,8 +5,6 @@ services:
     build:
       context: .
       dockerfile: api/Dockerfile
-    ports:
-      - "3005:3000"
     volumes:
       - sqlite_data:/app/api/data
     environment:

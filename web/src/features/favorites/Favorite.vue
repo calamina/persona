@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FavoriteModel } from 'persona-api/src/db/favorites.schema'
-import { handleDeleteFavorite } from './favorites.service'
+import { deleteFavorite } from './favorites.service'
 import ButtonLoading from '../../components/ButtonLoading.vue'
 import { ref } from 'vue'
 
@@ -8,42 +8,42 @@ const { favorite } = defineProps<{ favorite: FavoriteModel }>()
 const emit = defineEmits(['deleted'])
 const loading = ref(false)
 
-const deleteFavorite = (id: number) => {
+const remove = (id: number) => {
   loading.value = true
-  handleDeleteFavorite(id)
+  deleteFavorite(id)
   emit('deleted')
   loading.value = false
 }
 </script>
 
 <template>
-  <div class="favorite">
-    <a class="link" :href="favorite.url">
-      <img :src="favorite.favicon" :alt="favorite.title + 'favicon'" />
-      {{ favorite.title }}
-    </a>
-    <ButtonLoading :loading @click.prevent="deleteFavorite(favorite.id)" class="deleteButton" icon="favoriteDelete" />
-  </div>
+  <a class="link" :href="favorite.url">
+    <img :src="favorite.favicon" :alt="favorite.title + 'favicon'" />
+    {{ favorite.title }}
+    <ButtonLoading :loading @click.prevent="remove(favorite.id)" class="deleteButton" icon="favoriteDelete" />
+  </a>
 </template>
 
 <style scoped>
-.favorite {
-  display: flex;
-}
-
 .deleteButton {
   border: none;
   display: none;
   background-color: transparent;
+  border: 2.5px solid transparent;
+
+  &:focus-within {
+    border-color: var(--border);
+  }
 }
 
 .link {
+  margin: 0 0.3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: calc(100% - 0.6rem);
   border-radius: 0.3rem;
-  border: 2px solid transparent;
+  border: 2.5px solid transparent;
   gap: 0.6rem;
   text-decoration: none;
   padding: 0 0.3rem;
@@ -58,9 +58,15 @@ const deleteFavorite = (id: number) => {
   &:focus-within {
     border-color: var(--border);
     background-color: var(--element-focus);
-    + button {
+    button {
       display: flex;
     }
+  }
+  &:first-of-type {
+    margin-top: 0.3rem;
+  }
+  &:last-of-type {
+    margin-bottom: 0.3rem;
   }
 }
 
