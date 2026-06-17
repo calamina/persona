@@ -1,39 +1,58 @@
-import { api, useApi } from '../../utils/api-client'
+import { api, networkError } from '../../utils/api-client'
 import type { Channel } from './youtube.model'
 
-export function getVideos() {
-  return useApi(() => api.youtube.videos.$get())
+export async function getVideos() {
+  try {
+    const res = await api.youtube.videos.$get()
+    return await res.json()
+  } catch {
+    return networkError
+  }
 }
 
-export function getChannels() {
-  return useApi(() => api.youtube.channels.$get())
+export async function getChannels() {
+  try {
+    const res = await api.youtube.channels.$get()
+    return await res.json()
+  } catch {
+    return networkError
+  }
 }
 
-export function searchChannel(query: string) {
-  return useApi(() =>
-    api.youtube.channels.search.$get({
+export async function searchChannel(query: string) {
+  try {
+    const res = await api.youtube.channels.search.$get({
       query: { query },
-    }),
-  )
+    })
+    return await res.json()
+  } catch {
+    return networkError
+  }
 }
 
-export function addChannel(data: Channel) {
-  return useApi(() =>
-    api.youtube.channels.$post({
+export async function addChannel(data: Channel) {
+  try {
+    const res = await api.youtube.channels.$post({
       json: {
         youtubeId: data.id,
         name: data.name,
         url: data.url,
         iconURL: data.iconURL,
       },
-    }),
-  )
+    })
+    return await res.json()
+  } catch {
+    return networkError
+  }
 }
 
-export function deleteChannel(id: number) {
-  return useApi(() =>
-    api.youtube.channels[':id'].$delete({
+export async function deleteChannel(id: number) {
+  try {
+    const res = await api.youtube.channels[':id'].$delete({
       param: { id: id.toString() },
-    }),
-  )
+    })
+    return await res.json()
+  } catch {
+    return networkError
+  }
 }

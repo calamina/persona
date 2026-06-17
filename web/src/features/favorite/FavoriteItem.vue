@@ -1,23 +1,8 @@
 <script setup lang="ts">
-import { deleteFavorite } from './favorites.service'
-import ButtonLoading from '../../components/ButtonLoading.vue'
-import { ref } from 'vue'
-import { useFavoriteStore, type FavoriteDisplay } from './favorite.store.ts'
+import type { FavoriteDisplay } from './favorite.model.ts'
+import FavoriteDelete from './FavoriteDelete.vue'
 
-const store = useFavoriteStore()
 const { favorite } = defineProps<{ favorite: FavoriteDisplay }>()
-const emit = defineEmits(['deleted'])
-const loading = ref(false)
-
-const remove = async (id: number) => {
-  loading.value = true
-  const { data } = await deleteFavorite(id)
-  if (data) {
-    store.clearFavoriteCache()
-    store.loadFavorites(true)
-  }
-  loading.value = false
-}
 
 const faviconError = (e: Event) => {
   const imgElement = e?.target as HTMLImageElement | null
@@ -26,10 +11,8 @@ const faviconError = (e: Event) => {
 
 const faviconCheck = (e: Event) => {
   const imgElement = e?.target as HTMLImageElement | null
-  if (imgElement) {
-    if (imgElement.naturalWidth === 16 && imgElement.naturalHeight === 16) {
-      imgElement.src = 'https://api.iconify.design/material-symbols:book-outline.svg'
-    }
+  if (imgElement?.naturalWidth === 16 && imgElement?.naturalHeight === 16) {
+    imgElement.src = 'https://api.iconify.design/material-symbols:book-outline.svg'
   }
 }
 </script>
@@ -43,27 +26,11 @@ const faviconCheck = (e: Event) => {
       @load="faviconCheck"
     />
     <p>{{ favorite.title }}</p>
-    <ButtonLoading
-      :loading
-      @click.prevent="remove(favorite.id)"
-      class="deleteButton"
-      icon="favoriteDelete"
-    />
+    <FavoriteDelete :favorite />
   </a>
 </template>
 
 <style scoped>
-.deleteButton {
-  border: none;
-  display: none;
-  background-color: transparent;
-  border: 2.5px solid transparent;
-
-  &:focus-within {
-    background-color: var(--element-focusmax);
-  }
-}
-
 .link {
   display: flex;
   justify-content: space-between;

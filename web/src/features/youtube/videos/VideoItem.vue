@@ -1,38 +1,21 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useDateFormat } from '../../utils/date'
-import { useYoutubeStore } from './youtube.store'
-
-const store = useYoutubeStore()
-const { videos } = storeToRefs(store)
-await store.loadVideos()
+import { useDateFormat } from '../../../utils/date'
+import type { VideoDisplay } from '../youtube.model'
+const { video } = defineProps<{ video: VideoDisplay }>()
 </script>
 
 <template>
-  <div class="list">
-    <a
-      class="video"
-      v-for="video in videos"
-      :href="'https://www.youtube.com/watch?v=' + video.id"
-      :title="video.title"
-    >
-      <img width="100" :src="`http://img.youtube.com/vi/${video.id}/sddefault.jpg`" alt="" />
-      <div class="infos">
-        <p class="info">{{ video.title }}</p>
-        <p class="info">{{ video.author }}</p>
-        <p class="info">{{ useDateFormat(video.published) }}</p>
-      </div>
-    </a>
-  </div>
+  <a class="video" :href="'https://www.youtube.com/watch?v=' + video.id" :title="video.title">
+    <img width="100" :src="`http://img.youtube.com/vi/${video.id}/sddefault.jpg`" alt="" />
+    <div class="infos">
+      <p class="info">{{ video.title }}</p>
+      <p class="info">{{ video.author }}</p>
+      <p class="info">{{ useDateFormat(video.published) }}</p>
+    </div>
+  </a>
 </template>
 
 <style scoped>
-.list {
-  height: 100%;
-  overflow-y: scroll;
-  scrollbar-color: var(--color) transparent;
-}
-
 a {
   text-decoration: none;
   color: var(--color);

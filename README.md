@@ -23,7 +23,7 @@ Tech :
 
 ## TODO
 
-- [ ] ADD MIG FOLDER TO FMT EXCLUDES !!
+- [ ] favorite v-model instead of form
 - [ ] format favorite url on submit
 - [ ] change default favorite icon link
 - [ ] manage errors (store mmessages ?)

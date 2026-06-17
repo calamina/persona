@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FavoriteFeature from '../favorites/FavoriteFeature.vue'
+import FavoriteFeature from '../favorite/FavoriteFeature.vue'
 import YoutubeFeed from '../youtube/YoutubeFeed.vue'
 import DashboardHeader from './DashboardHeader.vue'
 </script>

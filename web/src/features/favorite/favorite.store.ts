@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { getFavorites } from './favorites.service'
+import { getFavorites } from './favorite.service'
 import type { FavoriteDisplay } from './favorite.model'
 
 export const useFavoriteStore = defineStore('favorite', () => {

@@ -1,96 +1,96 @@
-import { XMLParser } from "fast-xml-parser";
-import type { ChannelModel } from "../db/channel.schema";
+import { XMLParser } from 'fast-xml-parser'
+import type { ChannelModel } from '../db/channel.schema'
 
 export interface Video {
-  id: string;
-  author: string;
-  published: string;
-  title: string;
+  id: string
+  author: string
+  published: string
+  title: string
 }
 
 interface XmlAuthor {
-  name: string;
-  uri: string;
+  name: string
+  uri: string
 }
 
 interface YouTubeXmlEntry {
-  id: string;
-  title: string;
-  author: XmlAuthor;
-  published: string;
+  id: string
+  title: string
+  author: XmlAuthor
+  published: string
 }
 
 type GetVideos = Promise<
   { data: Video[]; error: null } | { data: null; error: { message: string } }
->;
+>
 
-const IGNORED_TAGS = new Set(["yt:videoId", "yt:channelId", "link", "updated", "media:group"]);
+const IGNORED_TAGS = new Set(['yt:videoId', 'yt:channelId', 'link', 'updated', 'media:group'])
 
 const parser = new XMLParser({
   ignoreAttributes: true,
   updateTag(tagName) {
-    if (IGNORED_TAGS.has(tagName)) return false;
-    return tagName;
+    if (IGNORED_TAGS.has(tagName)) return false
+    return tagName
   },
-});
+})
 
 export const getVideos = async (channels: ChannelModel[]): GetVideos => {
-  const MAX_VIDEOS_PER_CHANNEL = 3;
-  const MAX_VIDEOS_TOTAL = 40;
-  const FETCH_TIMEOUT_MS = 2500;
+  const MAX_VIDEOS_PER_CHANNEL = 3
+  const MAX_VIDEOS_TOTAL = 40
+  const FETCH_TIMEOUT_MS = 2500
 
-  const baseUrl = "http://www.youtube.com/feeds/videos.xml?channel_id=";
+  const baseUrl = 'http://www.youtube.com/feeds/videos.xml?channel_id='
 
   const fetchPromises = channels.map(async (channel) => {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
 
     try {
       const response = await fetch(baseUrl + channel.youtubeId, {
         signal: controller.signal,
-      });
+      })
 
-      clearTimeout(timeoutId);
+      clearTimeout(timeoutId)
 
-      if (!response.ok) return [];
+      if (!response.ok) return []
 
-      const result = await response.text();
-      const chan = parser.parse(result);
-      let entries: YouTubeXmlEntry[] | YouTubeXmlEntry | undefined = chan?.feed?.entry;
+      const result = await response.text()
+      const chan = parser.parse(result)
+      let entries: YouTubeXmlEntry[] | YouTubeXmlEntry | undefined = chan?.feed?.entry
 
-      if (!entries) return [];
+      if (!entries) return []
 
       if (!Array.isArray(entries)) {
-        entries = [entries];
+        entries = [entries]
       }
 
-      const slicedEntries = entries.slice(0, MAX_VIDEOS_PER_CHANNEL);
+      const slicedEntries = entries.slice(0, MAX_VIDEOS_PER_CHANNEL)
 
       return slicedEntries.map((entry) => ({
-        id: entry.id ? entry.id.replace("yt:video:", "") : "",
-        title: entry.title || "Untitled Video",
+        id: entry.id ? entry.id.replace('yt:video:', '') : '',
+        title: entry.title || 'Untitled Video',
         author: entry.author?.name || channel.name,
         published: entry.published || new Date().toISOString(),
-      }));
+      }))
     } catch (error) {
-      console.debug(error);
-      return [];
+      console.debug(error)
+      return []
     } finally {
-      clearTimeout(timeoutId);
+      clearTimeout(timeoutId)
     }
-  });
+  })
 
   try {
-    const unresolvedResults = await Promise.all(fetchPromises);
-    const results = unresolvedResults.flat();
+    const unresolvedResults = await Promise.all(fetchPromises)
+    const results = unresolvedResults.flat()
 
     const orderedResults = results
       .sort((a: Video, b: Video) => (a.published > b.published ? -1 : 1))
-      .slice(0, MAX_VIDEOS_TOTAL);
+      .slice(0, MAX_VIDEOS_TOTAL)
 
-    return { data: orderedResults, error: null };
+    return { data: orderedResults, error: null }
   } catch (error) {
-    console.debug(error);
-    return { data: null, error: { message: "Error getting videos" } };
+    console.debug(error)
+    return { data: null, error: { message: 'Error getting videos' } }
   }
-};
+}

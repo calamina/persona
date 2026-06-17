@@ -1,6 +1,3 @@
-import type { UnpackData } from '../../utils/api-client'
-import type { getChannels, getVideos } from './youtube.service'
-
 export interface Channel {
   name: string
   verified: boolean
@@ -11,5 +8,16 @@ export interface Channel {
   subscribers: string
 }
 
-export type ChannelDisplay = UnpackData<typeof getChannels>
-export type VideoDisplay = UnpackData<typeof getVideos>
+export interface ChannelDisplay {
+  id: number
+  name: string
+  url: string
+  iconURL: string | null
+}
+
+export interface VideoDisplay {
+  id: string
+  author: string
+  published: string
+  title: string
+}
