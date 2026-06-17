@@ -1,41 +1,36 @@
 <script setup lang="ts">
-import { ref, useTemplateRef } from 'vue'
+import { ref } from 'vue'
 import FieldBase from '../../components/FieldBase.vue'
 import { addFavorite } from './favorite.service'
-import z from 'zod'
 import { cleanUrl } from '../../utils/url.ts'
 import ButtonLoading from '../../components/ButtonLoading.vue'
 import { useFavoriteStore } from './favorite.store.ts'
 
 const store = useFavoriteStore()
-const addFavoriteForm = useTemplateRef('addFavoriteForm')
-const loading = ref(false)
 
-const schema = z.object({
-  url: z.url(),
-})
+const loading = ref(false)
+const url = ref('')
 
 const create = async () => {
+  if (!url.value) return
+
   loading.value = true
-  const formData = new FormData(addFavoriteForm?.value ?? undefined)
-  const formDataObj = Object.fromEntries(formData.entries()) as { url: string }
-  cleanUrl(formDataObj.url)
-  const parsedData = schema.parse(formDataObj)
-  const { data } = await addFavorite(parsedData)
+  url.value = cleanUrl(url.value)
+
+  const { data } = await addFavorite(url.value)
   if (data) {
     store.clearFavoriteCache()
     store.loadFavorites(true)
+    url.value = ''
   }
+
   loading.value = false
 }
 </script>
 
 <template>
   <form ref="addFavoriteForm" class="form" @submit.prevent="create()">
-    <!-- <ButtonBase @click="" slot="button" label="Add favorite" icon="favoriteAdd" id="openCreateFavoriteDialog" /> -->
-    <!-- <DialogForm id="favoriteCreateContainer" submitLabel="Add"> -->
-    <FieldBase id="url" :required="false" type="url" errorMessage="Must be a valid url" />
-    <!-- </DialogForm> -->
+    <FieldBase id="url" v-model="url" :required="false" />
     <ButtonLoading :loading label="Add favorite" icon="favoriteAdd" />
   </form>
 </template>

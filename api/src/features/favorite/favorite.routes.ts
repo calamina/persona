@@ -1,15 +1,9 @@
 import { Hono } from 'hono'
 import { dbCreateFavorite, dbDeleteFavorite, dbGetFavorites } from './favorite.queries'
 import { zValidator } from '@hono/zod-validator'
-import z from 'zod'
 import { protectedRouteHelpers } from '../../middleware/protectedRouteHelper'
 import { sendError, sendSuccess } from '../../utils/api'
-
-const createFavoriteSchema = z.object({
-  url: z.url(),
-})
-
-const deleteFavoriteSchema = z.object({ id: z.coerce.number() })
+import { createFavoriteSchema, deleteFavoriteSchema } from './favorite.schema'
 
 export const favorites = new Hono()
   .use('*', protectedRouteHelpers)
@@ -26,8 +20,8 @@ export const favorites = new Hono()
     return c.json(sendSuccess(data))
   })
 
-  .post('/', zValidator('form', createFavoriteSchema), async (c) => {
-    const { url } = c.req.valid('form')
+  .post('/', zValidator('json', createFavoriteSchema), async (c) => {
+    const { url } = c.req.valid('json')
     const user = c.get('user')
 
     const { data, error } = await dbCreateFavorite(user.id, url)

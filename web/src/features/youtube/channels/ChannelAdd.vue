@@ -7,7 +7,6 @@ import ButtonLoading from '../../../components/ButtonLoading.vue'
 import FieldBase from '../../../components/FieldBase.vue'
 import ButtonBase from '../../../components/ButtonBase.vue'
 
-const emit = defineEmits(['added'])
 const store = useYoutubeStore()
 
 const loadingSearch = ref(false)

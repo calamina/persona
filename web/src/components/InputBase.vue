@@ -16,11 +16,9 @@ const {
 }>()
 
 const model = defineModel<string>()
-const emit = defineEmits(['error'])
 
 const hintId = `${id}-hint`
 const errorId = `${id}-error`
-
 const describedBy = hasHint ? `${hintId} ${errorId}` : errorId
 </script>
 

@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { auth } from './utils/auth'
 import 'dotenv/config'
-import { favorites } from './features/favorites/favorites.routes'
+import { favorites } from './features/favorite/favorite.routes'
 import { youtube } from './features/youtube/youtube.routes'
 
 export const app = new Hono()

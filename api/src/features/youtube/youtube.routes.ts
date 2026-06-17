@@ -1,26 +1,11 @@
 import { Hono } from 'hono'
 import { getVideos } from '../../utils/youtube'
-import z from 'zod'
 import { zValidator } from '@hono/zod-validator'
 import { dbCreateChannel, dbDeleteChannel, dbGetChannels } from './youtube.queries'
 import YouTube from 'youtube-sr'
 import { protectedRouteHelpers } from '../../middleware/protectedRouteHelper'
 import { sendError, sendSuccess } from '../../utils/api'
-
-const searchSchema = z.object({
-  query: z.string().trim().min(1),
-})
-
-const createChannelSchema = z.object({
-  name: z.string(),
-  youtubeId: z.string(),
-  url: z.string(),
-  iconURL: z.string().optional(),
-})
-
-const deleteChannelSchema = z.object({
-  id: z.coerce.number(),
-})
+import { createChannelSchema, deleteChannelSchema, searchSchema } from './youtube.schema'
 
 export const youtube = new Hono()
   .use('*', protectedRouteHelpers)

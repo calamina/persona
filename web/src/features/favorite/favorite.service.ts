@@ -9,10 +9,10 @@ export async function getFavorites() {
   }
 }
 
-export async function addFavorite(data: { url: string }) {
+export async function addFavorite(url: string) {
   try {
     const res = await api.favorites.$post({
-      form: { url: data.url },
+      json: { url },
     })
     return await res.json()
   } catch {

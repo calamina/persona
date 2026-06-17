@@ -21,10 +21,18 @@ Tech :
 
 ![Persona App Screenshot](https://github.com/calamina/persona/raw/refs/heads/master/.github/persona.avif)
 
+## Features
+
+- [x] Favorites
+- [x] Youtube
+- [ ] Todos
+- [ ] Links
+- [ ] RSS ?
+- [ ] 4chan feed ?
+- [ ] Calendar ?
+
 ## TODO
 
-- [ ] favorite v-model instead of form
-- [ ] format favorite url on submit
 - [ ] change default favorite icon link
 - [ ] manage errors (store mmessages ?)
 - [ ] multi-use inputs ? search and add if not found
@@ -33,10 +41,6 @@ Tech :
 - [ ] check account existing
 - [ ] add animations / transitionGroups
 - [ ] add favorite folders
-- [ ] add todos
-- [ ] add rss
-- [ ] add main links
-- [ ] add calendar ??
 
 ## Info
 
