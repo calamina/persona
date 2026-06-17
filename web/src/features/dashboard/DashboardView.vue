@@ -32,10 +32,10 @@ import DashboardHeader from './DashboardHeader.vue'
 
 .elements {
   display: grid;
-  grid-template-columns: 8rem 1fr 1fr 8rem;
+  /* grid-template-columns: 8rem 1fr 1fr 8rem; */
   align-items: center;
   gap: 8rem;
-  /* grid-template-columns: auto auto; */
+  grid-template-columns: 0 auto auto 0;
 }
 
 .col2 {

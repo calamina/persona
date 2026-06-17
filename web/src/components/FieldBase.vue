@@ -27,7 +27,15 @@ const model = defineModel<string>()
 <template>
   <div class="field-wrapper">
     <FieldWrapper :id :label :error-message="errorMessage ?? hint" :hint>
-      <InputBase v-model="model" :id :type :placeholder :required :has-hint="!!hint" v-bind="$attrs" />
+      <InputBase
+        v-model="model"
+        :id
+        :type
+        :placeholder
+        :required
+        :has-hint="!!hint"
+        v-bind="$attrs"
+      />
     </FieldWrapper>
   </div>
 </template>

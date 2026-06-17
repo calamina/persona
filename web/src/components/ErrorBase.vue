@@ -1,5 +1,5 @@
-<script <script setup lang='ts'>
-const {errorMessage} = defineProps<{
+<script setup lang="ts">
+const { errorMessage } = defineProps<{
   errorMessage: string | null
 }>()
 </script>

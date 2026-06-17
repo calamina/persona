@@ -2,56 +2,52 @@ import { Hono } from "hono";
 import { dbCreateFavorite, dbDeleteFavorite, dbGetFavorites } from "./favorite.queries";
 import { zValidator } from "@hono/zod-validator";
 import z from "zod";
+import { protectedRouteHelpers } from "../../middleware/protectedRouteHelper";
+import { sendError, sendSuccess } from "../../utils/api";
+
+const createFavoriteSchema = z.object({
+  url: z.url(),
+});
+
+const deleteFavoriteSchema = z.object({ id: z.coerce.number() });
 
 export const favorites = new Hono()
+  .use("*", protectedRouteHelpers)
 
   .get("/", async (c) => {
     const user = c.get("user");
 
-    if (!user) return c.json({ data: null, error: { message: "Unauthorized" } }, 401);
+    const { data, error } = await dbGetFavorites(user.id);
+    if (error) {
+      console.error("Failed to get favorites in DB:", error);
+      return c.json(sendError("Database error"), 500);
+    }
 
-    const data = await dbGetFavorites(user.id);
-    if (!data) return c.json({ data: null, error: { message: "Database error" } }, 500);
-
-    return c.json({ data, error: null });
+    return c.json(sendSuccess(data));
   })
 
-  // .get("/:id", (c) => {
-  //   const id = c.req.param("id");
-  //   return c.json({ message: `Get user with ID: ${id}` });
-  // })
+  .post("/", zValidator("form", createFavoriteSchema), async (c) => {
+    const { url } = c.req.valid("form");
+    const user = c.get("user");
 
-  .post(
-    "/",
-    zValidator(
-      "form",
-      z.object({
-        url: z.url(),
-      }),
-    ),
-    async (c) => {
-      const { url } = c.req.valid("form");
-      const user = c.get("user");
+    const { data, error } = await dbCreateFavorite(user.id, url);
+    if (error) {
+      console.error("Failed to add favorite in DB:", error);
+      return c.json(sendError("Database error"), 500);
+    }
 
-      if (!user) return c.json({ error: "Unauthorized" }, 401);
+    return c.json(sendSuccess(data));
+  })
 
-      const { data, error } = await dbCreateFavorite(user.id, url);
-
-      if (error) return c.json({ error: "Database error" }, 500);
-
-      return c.json(data);
-    },
-  )
-
-  .delete("/:id", zValidator("param", z.object({ id: z.coerce.number() })), async (c) => {
+  .delete("/:id", zValidator("param", deleteFavoriteSchema), async (c) => {
     const { id } = c.req.valid("param");
     const user = c.get("user");
 
-    if (!user) return c.json({ error: "Unauthorized" }, 401);
-
     const { data, error } = await dbDeleteFavorite(user.id, id);
+    if (error) {
+      console.error("Failed to delete favorite in DB:", error);
+      return c.json(sendError("Database error"), 500);
+    }
 
-    if (error) return c.json({ error: "Database error" }, 500);
-
-    return c.json(data);
+    return c.json(sendSuccess(data));
   });

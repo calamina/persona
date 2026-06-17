@@ -32,8 +32,18 @@ const remove = async (channel: ChannelDisplay) => {
 
 <template>
   <div class="list">
-    <a class="channel" v-for="channel in channels" :key="channel.id" :href="channel.url" :title="channel.name">
-      <img :src="channel.iconURL" :alt="channel.name + ' channel icon'" referrerpolicy="no-referrer" />
+    <a
+      class="channel"
+      v-for="channel in channels"
+      :key="channel.id"
+      :href="channel.url"
+      :title="channel.name"
+    >
+      <img
+        :src="channel.iconURL ?? ''"
+        :alt="channel.name + ' channel icon'"
+        referrerpolicy="no-referrer"
+      />
       <p>{{ channel.name }}</p>
 
       <ButtonLoading

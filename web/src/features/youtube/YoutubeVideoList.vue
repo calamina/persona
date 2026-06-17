@@ -10,7 +10,12 @@ await store.loadVideos()
 
 <template>
   <div class="list">
-    <a class="video" v-for="video in videos" :href="'https://www.youtube.com/watch?v=' + video.id" :title="video.title">
+    <a
+      class="video"
+      v-for="video in videos"
+      :href="'https://www.youtube.com/watch?v=' + video.id"
+      :title="video.title"
+    >
       <img width="100" :src="`http://img.youtube.com/vi/${video.id}/sddefault.jpg`" alt="" />
       <div class="infos">
         <p class="info">{{ video.title }}</p>

@@ -16,6 +16,13 @@
       "persona-api": ["../api/src/index.ts"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.d.ts", "env.d.ts", "vite-env.d.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.d.ts",
+    "env.d.ts",
+    "vite-env.d.ts"
+  ],
   "exclude": ["node_modules"]
 }

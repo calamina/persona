@@ -23,7 +23,9 @@ Tech :
 
 ## TODO
 
-- [ ] streamline routes + {data, error}
+- [ ] ADD MIG FOLDER TO FMT EXCLUDES !!
+- [ ] format favorite url on submit
+- [ ] change default favorite icon link
 - [ ] manage errors (store mmessages ?)
 - [ ] multi-use inputs ? search and add if not found
 - [ ] redirect on register + redirect on mail send

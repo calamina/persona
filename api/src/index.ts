@@ -45,7 +45,7 @@ app.use("*", async (c, next) => {
   await next();
 });
 
-app.on(["POST", "GET", "OPTIONS"], "/api/auth/*", (c) => auth.handler(c.req.raw));
+app.all("/api/auth/*", (c) => auth.handler(c.req.raw));
 
 const routes = app
   .get("/", async (c) => {

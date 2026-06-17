@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "48e92f35-615f-40df-ad51-b08e4e0f3cd4",
-  "prevId": "bfa188df-b1a8-4290-b193-f201646f8ce8",
+  "id": "7e4e94fe-1b39-4cf8-a0b8-62092b5c891d",
+  "prevId": "48e92f35-615f-40df-ad51-b08e4e0f3cd4",
   "tables": {
     "channel": {
       "name": "channel",
@@ -39,7 +39,7 @@
           "name": "iconURL",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "user_id": {
@@ -105,13 +105,6 @@
         },
         "url": {
           "name": "url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "favicon": {
-          "name": "favicon",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

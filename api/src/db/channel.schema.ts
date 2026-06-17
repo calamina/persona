@@ -6,7 +6,7 @@ export const channel = sqliteTable("channel", {
   youtubeId: text("youtubeId").notNull().unique(),
   name: text("name").notNull(),
   url: text("url").notNull(),
-  iconURL: text("iconURL").notNull(),
+  iconURL: text("iconURL"),
 
   userId: text("user_id")
     .notNull()

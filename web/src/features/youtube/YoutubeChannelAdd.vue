@@ -52,12 +52,22 @@ const subscribe = async () => {
   </form>
   <div v-if="result" class="element result">
     <a :href="result.url" :title="result.name">
-      <img :src="result.iconURL" :alt="result.name + ' channel icon'" referrerpolicy="no-referrer" />
+      <img
+        :src="result.iconURL"
+        :alt="result.name + ' channel icon'"
+        referrerpolicy="no-referrer"
+      />
       <p class="test">{{ result.name }}</p>
     </a>
     <div class="actions">
       <ButtonBase class="small" @click="cancel()" label="Cancel" icon="favoriteDelete" />
-      <ButtonLoading class="small" :loading="loadingAdd" @click="subscribe()" label="Subscribe" icon="favoriteAdd" />
+      <ButtonLoading
+        class="small"
+        :loading="loadingAdd"
+        @click="subscribe()"
+        label="Subscribe"
+        icon="favoriteAdd"
+      />
     </div>
   </div>
 </template>

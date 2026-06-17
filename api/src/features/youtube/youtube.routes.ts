@@ -1,79 +1,94 @@
 import { Hono } from "hono";
-import { getChannel, getVideos } from "../../utils/youtube";
+import { getVideos } from "../../utils/youtube";
 import z from "zod";
 import { zValidator } from "@hono/zod-validator";
 import { dbCreateChannel, dbDeleteChannel, dbGetChannels } from "./youtube.queries";
-import type { ChannelNewModel } from "../../db/channel.schema";
+import YouTube from "youtube-sr";
+import { protectedRouteHelpers } from "../../middleware/protectedRouteHelper";
+import { sendError, sendSuccess } from "../../utils/api";
+
+const searchSchema = z.object({
+  query: z.string().trim().min(1),
+});
+
+const createChannelSchema = z.object({
+  name: z.string(),
+  youtubeId: z.string(),
+  url: z.string(),
+  iconURL: z.string().optional(),
+});
+
+const deleteChannelSchema = z.object({
+  id: z.coerce.number(),
+});
 
 export const youtube = new Hono()
+  .use("*", protectedRouteHelpers)
 
   .get("/videos", async (c) => {
     const user = c.get("user");
-    if (!user) return c.json({ data: null, error: { message: "Unauthorized" } }, 401);
 
-    const channels = await dbGetChannels(user.id);
-    if (!channels) return c.json({ data: null, error: { message: "Database error" } }, 500);
+    const { data: channels, error: channelError } = await dbGetChannels(user.id);
+    if (channelError) {
+      console.error("Failed to get channels in DB:", channelError);
+      return c.json(sendError("Database error"), 500);
+    }
 
-    const data = await getVideos(channels);
-    if (!data) return c.json({ data: null, error: { message: "Database error" } }, 500);
+    const { data, error: videoError } = await getVideos(channels);
+    if (videoError) {
+      console.error("Failed to get videos over network:", videoError);
+      return c.json(sendError("Database error"), 500);
+    }
 
-    return c.json({ data, error: null });
+    return c.json(sendSuccess(data));
   })
 
   .get("/channels", async (c) => {
     const user = c.get("user");
-    if (!user) return c.json({ data: null, error: { message: "Unauthorized" } }, 401);
 
-    const data = await dbGetChannels(user.id);
-    if (!data) return c.json({ data: null, error: { message: "Database error" } }, 500);
+    const { data, error } = await dbGetChannels(user.id);
+    if (error) {
+      console.error("Failed to get channels in DB:", error);
+      return c.json(sendError("Database error"), 500);
+    }
 
-    return c.json({ data, error: null });
+    return c.json(sendSuccess(data));
   })
 
-  .get("/channels/search", zValidator("query", z.object({ query: z.string().trim().min(1) })), async (c) => {
+  .get("/channels/search", zValidator("query", searchSchema), async (c) => {
     const { query } = c.req.valid("query");
-    const data = await getChannel(query);
 
-    if (!data) return c.json({ data: null, error: { message: "Database error" } }, 500);
+    const data = await YouTube.searchOne(query, "channel");
+    if (!data) {
+      console.error("Failed to find channel data via YouTube lookup");
+      return c.json(sendError("Database error"), 404);
+    }
 
-    return c.json({ data, error: null });
+    return c.json(sendSuccess(data));
   })
 
-  .post(
-    "/channels/add",
-    zValidator(
-      "json",
-      z.object({
-        name: z.string(),
-        youtubeId: z.string(),
-        url: z.string(),
-        iconURL: z.string(),
-      }),
-    ),
-    async (c) => {
-      const user = c.get("user");
-      if (!user) return c.json({ data: null, error: { message: "Unauthorized" } }, 401);
+  .post("/channels", zValidator("json", createChannelSchema), async (c) => {
+    const user = c.get("user");
+    const channelData = c.req.valid("json");
 
-      const channelData = c.req.valid("json");
-      const channelPayload: ChannelNewModel = {
-        ...channelData,
-        userId: user.id,
-      };
+    const { data, error } = await dbCreateChannel({ ...channelData, userId: user.id });
+    if (error) {
+      console.error("Failed to build channel record in DB:", error);
+      return c.json(sendError("Database error"), 500);
+    }
 
-      const res = await dbCreateChannel(channelPayload);
+    return c.json(sendSuccess(data));
+  })
 
-      if (res.error) return c.json({ data: null, error: res.error }, 500);
-
-      return c.json({ data: res.data, error: null }, 200);
-    },
-  )
-  .delete("/channels/:id", zValidator("param", z.object({ id: z.coerce.number() })), async (c) => {
+  .delete("/channels/:id", zValidator("param", deleteChannelSchema), async (c) => {
     const { id } = c.req.valid("param");
     const user = c.get("user");
-    if (!user) return c.json({ data: null, error: { message: "Unauthorized" } }, 401);
 
     const { data, error } = await dbDeleteChannel(user.id, id);
+    if (error) {
+      console.error("Failed to execute channel removal in DB:", error);
+      return c.json(sendError("Database error"), 500);
+    }
 
-    if (error) return c.json({ error: "Database error" }, 500);
-    return c.json({ data, error: null });
+    return c.json(sendSuccess(data));
   });

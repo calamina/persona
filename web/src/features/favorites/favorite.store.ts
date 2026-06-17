@@ -1,16 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { api } from '../../utils/api-client'
-
-export interface FavoriteDisplay {
-  id: number
-  title: string
-  url: string
-  favicon: string
-  createdAt: string
-  updatedAt: string
-  userId: string
-}
+import { getFavorites } from './favorites.service'
+import type { FavoriteDisplay } from './favorite.model'
 
 export const useFavoriteStore = defineStore('favorite', () => {
   const favorites = ref<FavoriteDisplay[]>([])
@@ -27,21 +18,13 @@ export const useFavoriteStore = defineStore('favorite', () => {
     }
 
     loading.value = true
-    try {
-      const response = await api.favorites.$get()
+    const { data } = await getFavorites()
 
-      if (response.ok) {
-        const resData = await response.json()
-        if (resData && resData.data) {
-          favorites.value = resData.data
-          videoCache.value = { data: resData.data, timestamp: now }
-        }
-      }
-    } catch (err) {
-      console.error('Failed to load favorites:', err)
-    } finally {
-      loading.value = false
+    if (data) {
+      favorites.value = data
+      videoCache.value = { data, timestamp: now }
     }
+    loading.value = false
   }
 
   function clearFavoriteCache() {

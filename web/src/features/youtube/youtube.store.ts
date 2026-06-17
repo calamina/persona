@@ -1,15 +1,14 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { getChannels } from './youtube.service'
-import type { ChannelDisplay, Video } from './youtube.model'
-import { api } from '../../utils/api-client'
+import { getChannels, getVideos } from './youtube.service'
+import type { ChannelDisplay, VideoDisplay } from './youtube.model'
 
 export const useYoutubeStore = defineStore('youtube', () => {
   const channels = ref<ChannelDisplay[]>([])
-  const videos = ref<Video[]>([])
+  const videos = ref<VideoDisplay[]>([])
   const loading = ref(false)
 
-  const videoCache = ref<{ data: Video[]; timestamp: number } | null>(null)
+  const videoCache = ref<{ data: VideoDisplay[]; timestamp: number } | null>(null)
   const CACHE_TTL = 5 * 60 * 1000
 
   async function loadChannels() {
@@ -26,14 +25,14 @@ export const useYoutubeStore = defineStore('youtube', () => {
 
     loading.value = true
     try {
-      const response = await api.youtube.videos.$get()
-
-      if (response.ok) {
-        const resData = await response.json()
-        if (resData && resData.data) {
-          videos.value = resData.data
-          videoCache.value = { data: resData.data, timestamp: now }
-        }
+      const { data, error } = await getVideos()
+      if (error) {
+        console.debug(error)
+        return
+      }
+      if (data) {
+        videos.value = data
+        videoCache.value = { data, timestamp: now }
       }
     } catch (err) {
       console.error('Failed to load videos:', err)

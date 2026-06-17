@@ -57,7 +57,7 @@ h2 {
   display: flex;
   flex-flow: column;
   gap: 0.6rem;
-  /* max-width: 25rem; */
+  max-width: 25rem;
   justify-self: center;
   align-self: center;
   max-height: 40rem;

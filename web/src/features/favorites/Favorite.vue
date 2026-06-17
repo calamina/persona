@@ -18,13 +18,37 @@ const remove = async (id: number) => {
   }
   loading.value = false
 }
+
+const faviconError = (e: Event) => {
+  const imgElement = e?.target as HTMLImageElement | null
+  if (imgElement) imgElement.src = ''
+}
+
+const faviconCheck = (e: Event) => {
+  const imgElement = e?.target as HTMLImageElement | null
+  if (imgElement) {
+    if (imgElement.naturalWidth === 16 && imgElement.naturalHeight === 16) {
+      imgElement.src = 'https://api.iconify.design/material-symbols:book-outline.svg'
+    }
+  }
+}
 </script>
 
 <template>
   <a class="link" :href="favorite.url">
-    <img :src="favorite.favicon" :alt="favorite.title + 'favicon'" />
+    <img
+      :src="`https://www.google.com/s2/favicons?sz=64&domain=${favorite.url}`"
+      :alt="favorite.title + 'favicon'"
+      @error="faviconError"
+      @load="faviconCheck"
+    />
     <p>{{ favorite.title }}</p>
-    <ButtonLoading :loading @click.prevent="remove(favorite.id)" class="deleteButton" icon="favoriteDelete" />
+    <ButtonLoading
+      :loading
+      @click.prevent="remove(favorite.id)"
+      class="deleteButton"
+      icon="favoriteDelete"
+    />
   </a>
 </template>
 

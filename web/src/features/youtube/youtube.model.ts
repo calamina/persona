@@ -1,9 +1,5 @@
-export interface Video {
-  id: string
-  author: string
-  published: string
-  title: string
-}
+import type { UnpackData } from '../../utils/api-client'
+import type { getChannels, getVideos } from './youtube.service'
 
 export interface Channel {
   name: string
@@ -15,19 +11,5 @@ export interface Channel {
   subscribers: string
 }
 
-export type ChannelCore = Pick<Channel, 'name' | 'id' | 'url' | 'iconURL'>
-
-export type ChannelCreatePayload = Omit<ChannelCore, 'id'> & {
-  youtubeId: string
-}
-
-export interface ChannelDisplay {
-  id: number
-  youtubeId: string
-  name: string
-  url: string
-  iconURL: string
-  userId: string
-  createdAt: string
-  updatedAt: string
-}
+export type ChannelDisplay = UnpackData<typeof getChannels>
+export type VideoDisplay = UnpackData<typeof getVideos>

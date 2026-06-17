@@ -6,7 +6,6 @@ export const favorite = sqliteTable("favorite", {
 
   title: text("title").notNull().unique(),
   url: text("url").notNull().unique(),
-  favicon: text("favicon").notNull(),
 
   userId: text("user_id")
     .notNull()

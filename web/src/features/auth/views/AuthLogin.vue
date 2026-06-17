@@ -38,8 +38,18 @@ const login = async () => {
 <template>
   <form ref="loginForm" class="form" @submit.prevent="login">
     <div class="fields">
-      <FieldBase id="identifier" label="Username (or Email)" minlength="3" error-message="At least 3 characters" />
-      <FieldPassword id="password" label="Password" minlength="12" error-message="At least 12 characters" />
+      <FieldBase
+        id="identifier"
+        label="Username (or Email)"
+        minlength="3"
+        error-message="At least 3 characters"
+      />
+      <FieldPassword
+        id="password"
+        label="Password"
+        minlength="12"
+        error-message="At least 12 characters"
+      />
       <ErrorBase :errorMessage />
     </div>
     <ButtonLoading :loading label="Login" />

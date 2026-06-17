@@ -17,7 +17,12 @@
       fill="currentColor"
       fill-opacity=".3"
       data-color="color-2"></path> -->
-      <path d="M6 13.75L5 14.25" stroke-width="2" stroke="currentColor" stroke-linecap="round"></path>
+      <path
+        d="M6 13.75L5 14.25"
+        stroke-width="2"
+        stroke="currentColor"
+        stroke-linecap="round"
+      ></path>
       <path d="M18 7.75V21.75" stroke-width="2" stroke="currentColor"></path>
       <path
         d="M10 3.75L17.5528 7.52639C17.8343 7.66716 18.1657 7.66716 18.4472 7.52639L21 6.25"
