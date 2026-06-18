@@ -50,8 +50,8 @@ p {
 }
 
 img {
-  width: 2.1rem;
-  height: 2.1rem;
+  width: 2.7rem;
+  height: 2.7rem;
   border-radius: 0.3rem;
 }
 </style>

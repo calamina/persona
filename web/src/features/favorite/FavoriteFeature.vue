@@ -14,9 +14,9 @@ await store.loadFavorites()
 <template>
   <div class="favorites">
     <LayoutWindow title="Favorites">
+      <FavoriteAdd />
       <FavoriteItem v-for="favorite in favorites" :key="favorite.id" :favorite="favorite" />
     </LayoutWindow>
-    <FavoriteAdd class="big" />
   </div>
 </template>
 
@@ -35,9 +35,5 @@ await store.loadFavorites()
     height: fit-content;
     max-width: unset;
   }
-}
-
-.big {
-  flex-shrink: 0;
 }
 </style>

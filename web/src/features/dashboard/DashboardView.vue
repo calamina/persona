@@ -29,10 +29,8 @@ import DashboardHeader from './DashboardHeader.vue'
   display: grid;
   padding: var(--spacing);
   gap: var(--spacing);
-  padding: 3.6rem;
+  padding: 2.4rem;
   gap: 2.4rem;
-  /* grid-template-rows: var(--header-size) auto auto; */
-  /* grid-template-rows: var(--header-size) auto var(--header-size); */
   grid-template-rows: var(--header-size) auto;
   @media (max-width: 1250px) {
     align-items: start;
@@ -44,7 +42,7 @@ import DashboardHeader from './DashboardHeader.vue'
   overflow: hidden;
   align-items: center;
   gap: var(--spacing);
-  gap: 1.2rem;
+  gap: 2.4rem;
   max-height: 100%;
   display: flex;
   @media (max-width: 1250px) {

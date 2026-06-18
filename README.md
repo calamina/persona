@@ -34,9 +34,10 @@ Tech :
 ## TODO
 
 - [ ] DRY Tabs : component / shared styles
-- [ ] Decide actions positioning
-- [ ] Split channel add : channelActions -> add & search
 - [ ] Channel add : refacto style for widescreen
+- [ ] Add 4chan searchbar
+- [ ] Register 4chan boards, favorite one ?
+- [ ] Enable / disable features
 - [ ] change default favorite icon link
 - [ ] manage errors (store mmessages ?)
 - [ ] Loading component

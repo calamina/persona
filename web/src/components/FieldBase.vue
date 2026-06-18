@@ -25,25 +25,15 @@ const model = defineModel<string>()
 </script>
 
 <template>
-  <div class="field-wrapper">
-    <FieldWrapper :id :label :error-message="errorMessage ?? hint" :hint>
-      <InputBase
-        v-model="model"
-        :id
-        :type
-        :placeholder
-        :required
-        :has-hint="!!hint"
-        v-bind="$attrs"
-      />
-    </FieldWrapper>
-  </div>
+  <FieldWrapper :id :label :error-message="errorMessage ?? hint" :hint>
+    <InputBase
+      v-model="model"
+      :id
+      :type
+      :placeholder
+      :required
+      :has-hint="!!hint"
+      v-bind="$attrs"
+    />
+  </FieldWrapper>
 </template>
-
-<style scoped>
-div {
-  display: flex;
-  flex-flow: column;
-  position: relative;
-}
-</style>

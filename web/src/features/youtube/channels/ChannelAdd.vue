@@ -4,8 +4,8 @@ import { useYoutubeStore } from '../youtube.store'
 import type { Channel } from '../youtube.model'
 import { addChannel, searchChannel } from '../youtube.service'
 import ButtonLoading from '../../../components/ButtonLoading.vue'
-import FieldBase from '../../../components/FieldBase.vue'
 import ButtonBase from '../../../components/ButtonBase.vue'
+import FieldAction from '../../../components/FieldAction.vue'
 
 const store = useYoutubeStore()
 
@@ -45,10 +45,14 @@ const subscribe = async () => {
 </script>
 
 <template>
-  <form v-if="!result" class="element" @submit.prevent="search()">
-    <FieldBase id="query" v-model="query" :required="false" type="text" />
-    <ButtonLoading :loading="loadingSearch" label="Seach channel" icon="favoriteSearch" />
-  </form>
+  <FieldAction
+    v-model="query"
+    :action="search"
+    :loading="loadingSearch"
+    icon="favoriteSearch"
+    label="Search"
+    placeholder="search channels ..."
+  />
   <div v-if="result" class="element result">
     <a :href="result.url" :title="result.name">
       <img
@@ -58,13 +62,13 @@ const subscribe = async () => {
       />
       <p class="name">{{ result.name }}</p>
     </a>
-    <div class="actions">
-      <ButtonBase class="button-full" @click="cancel()" label="Cancel" icon="favoriteDelete" />
+    <div class="channel-actions">
+      <ButtonBase class="button" @click="cancel()" label="Cancel" icon="favoriteDelete" />
       <ButtonLoading
-        class="button-full"
+        class="button"
         :loading="loadingAdd"
         @click="subscribe()"
-        label="Subscribe"
+        label="Follow"
         icon="favoriteAdd"
       />
     </div>
@@ -73,59 +77,51 @@ const subscribe = async () => {
 
 <style scoped>
 .element {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  height: fit-content;
-  background-color: var(--element);
   padding: var(--spacing);
   width: 100%;
   border-bottom: var(--border);
-  /* background-color: var(--element-alt); */
-  /* border: var(--border); */
-  /* border-radius: var(--spacing); */
 
   @media (max-width: 1250px) {
     flex-flow: column;
   }
 }
 
-.test {
-  color: red !important;
-}
-
 .result {
-  display: flex;
-  flex-flow: column;
+  display: grid;
+  grid-template-columns: 1fr auto;
   padding: 0;
+  height: fit-content;
 }
 
 a {
   display: flex;
-  flex-flow: column;
   text-decoration: none;
   overflow: hidden;
+  border-right: var(--border);
+  height: fit-content;
 }
 
 img {
   align-self: center;
-  aspect-ratio: 1;
   object-fit: cover;
-  width: 5rem;
-  border-left: var(--border);
+  height: calc(2.1rem * 2);
   border-right: var(--border);
-  /* height: auto; */
-  /* border-top-left-radius: calc(var(--spacing) - var(--border-width));
-  border-top-right-radius: calc(var(--spacing) - var(--border-width)); */
 }
 
-.actions {
-  padding: var(--spacing);
+.channel-actions {
   display: flex;
-  gap: var(--spacing);
+  flex-flow: column;
 }
 
 .button {
   width: 100%;
+  border: none;
+  border-radius: 0;
+  height: 2.1rem;
+
+  &:first-child {
+    border-bottom: var(--border);
+  }
 }
 
 .name {
@@ -133,8 +129,6 @@ img {
   align-items: center;
   justify-content: center;
   padding: var(--spacing);
-  border-top: var(--border);
-  border-bottom: var(--border);
 }
 
 a:hover .name,

@@ -46,7 +46,6 @@ input {
   background-color: var(--element-alt);
   width: 100%;
   overflow: hidden;
-  outline-offset: -2px;
 
   &:focus-visible {
     outline: none;

@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { protectedRouteHelpers } from '../../middleware/protectedRouteHelper'
 import { sendError, sendSuccess } from '../../utils/api'
-import { Chan } from './chan.model'
+import type { Chan } from './chan.model'
 import { searchChanSchema } from './chan.schema'
 import { zValidator } from '@hono/zod-validator'
 

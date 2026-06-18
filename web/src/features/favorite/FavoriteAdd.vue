@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import FieldBase from '../../components/FieldBase.vue'
 import { addFavorite } from './favorite.service'
 import { cleanUrl } from '../../utils/url.ts'
-import ButtonLoading from '../../components/ButtonLoading.vue'
 import { useFavoriteStore } from './favorite.store.ts'
+import FieldAction from '../../components/FieldAction.vue'
 
 const store = useFavoriteStore()
 
@@ -29,23 +28,12 @@ const create = async () => {
 </script>
 
 <template>
-  <form ref="addFavoriteForm" class="form" @submit.prevent="create()">
-    <FieldBase id="url" v-model="url" :required="false" />
-    <ButtonLoading :loading label="Add favorite" icon="favoriteAdd" />
-  </form>
+  <FieldAction
+    v-model="url"
+    :action="create"
+    :loading
+    icon="favoriteAdd"
+    label="Add"
+    placeholder="add link ..."
+  />
 </template>
-
-<style scoped>
-form {
-  display: flex;
-  flex-flow: column;
-  border-radius: var(--spacing);
-  height: fit-content;
-  border: var(--border);
-  background-color: var(--element);
-  padding: var(--spacing);
-  width: 100%;
-  overflow-y: auto;
-  scrollbar-color: var(--color) transparent;
-}
-</style>

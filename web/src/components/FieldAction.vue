@@ -1,0 +1,60 @@
+<script setup lang="ts">
+import type { IconName } from '../utils/icon.ts'
+import ButtonLoading from './ButtonLoading.vue'
+
+const { action, label, icon, loading, placeholder } = defineProps<{
+  action: () => void
+  label: string
+  icon: IconName
+  loading: boolean
+  placeholder?: string
+}>()
+
+const model = defineModel<string>()
+</script>
+
+<template>
+  <form class="form" @submit.prevent="action()">
+    <input id="url" v-model="model" :placeholder="placeholder ?? '...'" :required="false" />
+    <ButtonLoading class="button" :loading :label :icon />
+  </form>
+</template>
+
+<style scoped>
+form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0;
+  background-color: var(--element);
+  width: 100%;
+  height: fit-content;
+  border-bottom: var(--border);
+  justify-content: end;
+}
+
+.button {
+  border: none;
+  height: 100%;
+  background-color: transparent;
+  border-radius: 0;
+  border-left: var(--border);
+}
+
+input {
+  border: none;
+  background-color: transparent;
+  padding: 0.25rem 0.3rem;
+  color: inherit;
+  background-color: var(--element-alt);
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--border-focus);
+  }
+
+  &:user-invalid {
+    border-color: var(--color-highlight);
+    color: var(--color-highlight);
+  }
+}
+</style>
