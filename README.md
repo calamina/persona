@@ -38,6 +38,7 @@ Tech :
 - [ ] Add 4chan searchbar
 - [ ] Register 4chan boards, favorite one ?
 - [ ] Enable / disable features
+- [ ] Features tabs fullscreen on mobile + main + small core recap ?
 - [ ] change default favorite icon link
 - [ ] manage errors (store mmessages ?)
 - [ ] Loading component

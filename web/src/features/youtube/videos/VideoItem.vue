@@ -11,7 +11,7 @@ const { video } = defineProps<{ video: VideoDisplay }>()
     <div class="infos">
       <p class="info">{{ video.title }}</p>
       <p class="info">{{ video.author }}</p>
-      <p class="info">{{ useDateFormat(video.published) }}</p>
+      <p class="info date">{{ useDateFormat(video.published) }}</p>
     </div>
   </a>
 </template>
@@ -54,6 +54,7 @@ img {
   flex-shrink: 0;
   height: 4rem;
   object-fit: cover;
+  background-color: var(--element-focus);
 }
 
 .infos {
@@ -68,8 +69,12 @@ img {
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 100%;
+  line-height: 1.25rem;
   &:not(:first-child) {
     color: var(--color-dim);
+  }
+  &.date {
+    line-height: 1.5rem;
   }
 }
 </style>

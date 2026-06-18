@@ -30,6 +30,10 @@ const { title } = defineProps<{ title: string }>()
   overflow-y: auto;
   scrollbar-color: var(--color) transparent;
   flex: 1;
+
+  @media (max-width: 1250px) {
+    max-height: 30svh;
+  }
 }
 
 .window {
