@@ -20,7 +20,7 @@ const { video } = defineProps<{ video: VideoDisplay }>()
 a {
   text-decoration: none;
   color: var(--color);
-  padding: 0.6rem;
+  padding: var(--spacing);
 
   &:hover,
   &:focus-within {
@@ -29,8 +29,9 @@ a {
 
   &.video {
     display: grid;
+    align-items: center;
     grid-template-columns: 6rem auto;
-    gap: 0.6rem;
+    gap: var(--spacing);
   }
 
   &.channel {
@@ -38,7 +39,7 @@ a {
     display: block;
     flex-flow: row wrap;
     gap: 1ch;
-    padding: 0.3rem 0.6rem;
+    padding: 0.3rem var(--spacing);
     overflow-x: hidden;
 
     span {
@@ -51,6 +52,7 @@ img {
   border-radius: 0.3rem;
   width: 100%;
   flex-shrink: 0;
+  height: 4rem;
   object-fit: cover;
 }
 

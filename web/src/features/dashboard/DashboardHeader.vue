@@ -19,11 +19,11 @@ div {
   place-self: center;
   align-items: center;
   justify-content: space-between;
-  gap: 0.6rem;
+  gap: var(--spacing);
   height: var(--header-size);
-  border: var(--border-width) solid var(--border);
+  border: var(--border);
   background-color: var(--element);
   overflow: hidden;
-  border-radius: 0.6rem;
+  border-radius: var(--spacing);
 }
 </style>

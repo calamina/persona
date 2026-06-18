@@ -59,9 +59,9 @@ const subscribe = async () => {
       <p class="name">{{ result.name }}</p>
     </a>
     <div class="actions">
-      <ButtonBase class="button" @click="cancel()" label="Cancel" icon="favoriteDelete" />
+      <ButtonBase class="button-full" @click="cancel()" label="Cancel" icon="favoriteDelete" />
       <ButtonLoading
-        class="button"
+        class="button-full"
         :loading="loadingAdd"
         @click="subscribe()"
         label="Subscribe"
@@ -73,14 +73,24 @@ const subscribe = async () => {
 
 <style scoped>
 .element {
-  display: flex;
-  flex-flow: column;
-  border-radius: 0.6rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
   height: fit-content;
-  border: var(--border-width) solid var(--border);
   background-color: var(--element);
-  padding: 0.6rem;
+  padding: var(--spacing);
   width: 100%;
+  border-bottom: var(--border);
+  /* background-color: var(--element-alt); */
+  /* border: var(--border); */
+  /* border-radius: var(--spacing); */
+
+  @media (max-width: 1250px) {
+    flex-flow: column;
+  }
+}
+
+.test {
+  color: red !important;
 }
 
 .result {
@@ -97,17 +107,21 @@ a {
 }
 
 img {
-  border-top-left-radius: calc(0.6rem - var(--border-width));
-  border-top-right-radius: calc(0.6rem - var(--border-width));
+  align-self: center;
   aspect-ratio: 1;
+  object-fit: cover;
+  width: 5rem;
+  border-left: var(--border);
+  border-right: var(--border);
   /* height: auto; */
-  /* object-fit: contain; */
+  /* border-top-left-radius: calc(var(--spacing) - var(--border-width));
+  border-top-right-radius: calc(var(--spacing) - var(--border-width)); */
 }
 
 .actions {
-  padding: 0.6rem;
+  padding: var(--spacing);
   display: flex;
-  gap: 0.6rem;
+  gap: var(--spacing);
 }
 
 .button {
@@ -118,9 +132,9 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.6rem;
-  border-top: var(--border-width) solid var(--border);
-  border-bottom: var(--border-width) solid var(--border);
+  padding: var(--spacing);
+  border-top: var(--border);
+  border-bottom: var(--border);
 }
 
 a:hover .name,

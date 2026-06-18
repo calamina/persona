@@ -38,7 +38,7 @@ button {
   background-color: var(--element);
   color: var(--color);
   cursor: pointer;
-  border: var(--border-width) solid var(--border);
+  border: var(--border);
   padding: 0 0.3rem;
   height: 2.1rem;
   border-radius: 0.6rem;
@@ -48,6 +48,7 @@ button {
   justify-content: center;
   position: relative;
   outline: none;
+  width: fit-content;
 
   &:focus-visible {
     background-color: var(--element-focus);

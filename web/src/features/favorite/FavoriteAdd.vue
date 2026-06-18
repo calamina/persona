@@ -39,11 +39,11 @@ const create = async () => {
 form {
   display: flex;
   flex-flow: column;
-  border-radius: 0.6rem;
+  border-radius: var(--spacing);
   height: fit-content;
-  border: var(--border-width) solid var(--border);
+  border: var(--border);
   background-color: var(--element);
-  padding: 0.6rem;
+  padding: var(--spacing);
   width: 100%;
   overflow-y: auto;
   scrollbar-color: var(--color) transparent;

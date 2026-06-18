@@ -7,6 +7,7 @@ const { title } = defineProps<{ title: string }>()
 <template>
   <div class="window">
     <h2>{{ title }}</h2>
+    <slot name="tabs" />
     <Transition mode="out-in">
       <div class="content">
         <Suspense>
@@ -32,10 +33,9 @@ const { title } = defineProps<{ title: string }>()
 }
 
 .window {
-  position: relative;
   background-color: var(--element);
-  border: var(--border-width) solid var(--border);
-  border-radius: 0.6rem;
+  border: var(--border);
+  border-radius: var(--spacing);
   display: flex;
   flex-flow: column;
   overflow: hidden;
@@ -46,8 +46,8 @@ const { title } = defineProps<{ title: string }>()
 h2 {
   font-size: 1rem;
   font-weight: 300;
-  border-bottom: var(--border-width) solid var(--border);
-  padding: 0 0.6rem;
+  border-bottom: var(--border);
+  padding: 0 var(--spacing);
   height: var(--header-size);
   display: flex;
   flex-shrink: 0;

@@ -21,7 +21,7 @@ const { channel } = defineProps<{ channel: ChannelDisplay }>()
 a {
   text-decoration: none;
   color: var(--color);
-  padding: 0.6rem;
+  padding: var(--spacing);
   width: 100%;
   display: flex;
   flex-flow: row;

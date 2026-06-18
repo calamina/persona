@@ -29,23 +29,25 @@ import DashboardHeader from './DashboardHeader.vue'
   display: grid;
   padding: var(--spacing);
   gap: var(--spacing);
-  grid-template-rows: var(--header-size) auto auto;
-  grid-template-rows: var(--header-size) auto var(--header-size);
+  padding: 3.6rem;
+  gap: 2.4rem;
+  /* grid-template-rows: var(--header-size) auto auto; */
+  /* grid-template-rows: var(--header-size) auto var(--header-size); */
   grid-template-rows: var(--header-size) auto;
   @media (max-width: 1250px) {
     align-items: start;
+    height: auto;
   }
 }
 
 .elements {
-  flex: 1;
+  overflow: hidden;
   align-items: center;
-  gap: 0.6rem;
-  /* display: grid; */
-  /* grid-template-columns: auto auto; */
+  gap: var(--spacing);
+  gap: 1.2rem;
+  max-height: 100%;
   display: flex;
   @media (max-width: 1250px) {
-    /* grid-template-columns: 1fr; */
     flex-flow: column;
     align-items: start;
   }

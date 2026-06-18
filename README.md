@@ -33,10 +33,15 @@ Tech :
 
 ## TODO
 
+- [ ] DRY Tabs : component / shared styles
+- [ ] Decide actions positioning
+- [ ] Split channel add : channelActions -> add & search
+- [ ] Channel add : refacto style for widescreen
 - [ ] change default favorite icon link
 - [ ] manage errors (store mmessages ?)
-- [ ] add 4chan board selection / tabs
+- [ ] Loading component
 - [ ] multi-use inputs ? search and add if not found
+- [ ] add themes
 - [ ] redirect on register + redirect on mail send
 - [ ] add password reset
 - [ ] check account existing

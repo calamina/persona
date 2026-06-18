@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "better-auth": "^1.6.18",
+    "dompurify": "^3.4.11",
     "hono": "^4.12.25",
     "persona-api": "workspace:*",
     "pinia": "^3.0.4",

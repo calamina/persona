@@ -39,7 +39,7 @@ input {
   border-top-left-radius: 0.3rem;
   border-top-right-radius: 0.3rem;
   border: none;
-  border-bottom: var(--border-width) solid var(--border);
+  border-bottom: var(--border);
   background-color: transparent;
   padding: 0.25rem 0.3rem;
   color: inherit;

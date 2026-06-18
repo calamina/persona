@@ -4,12 +4,12 @@
 
 .fields {
   background-color: var(--element);
-  padding: 0.6rem;
-  border-radius: 0.6rem;
-  border: var(--border-width) solid var(--border);
+  padding: var(--spacing);
+  border-radius: var(--spacing);
+  border: var(--border);
   display: flex;
   flex-flow: column;
-  gap: 0.6rem;
+  gap: var(--spacing);
 }
 
 .actions {
@@ -18,7 +18,7 @@
 
   &:has(> :nth-child(2)) {
     grid-template-columns: 1fr 2fr;
-    gap: 0.6rem;
+    gap: var(--spacing);
   }
 }
 
@@ -26,5 +26,5 @@ form {
   display: flex;
   width: 25rem;
   flex-flow: column;
-  gap: 0.6rem;
+  gap: var(--spacing);
 }

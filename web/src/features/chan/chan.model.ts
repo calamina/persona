@@ -1,6 +1,7 @@
 export interface ChanDisplay {
-  id: string
+  id: number
   name: string
+  replies: string
   url: string
   com: string
   picture: string
