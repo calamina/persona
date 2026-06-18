@@ -4,6 +4,7 @@ import { auth } from './utils/auth'
 import 'dotenv/config'
 import { favorites } from './features/favorite/favorite.routes'
 import { youtube } from './features/youtube/youtube.routes'
+import { chan } from './features/chan/chan.routes'
 
 export const app = new Hono()
 
@@ -53,6 +54,7 @@ const routes = app
   })
   .route('/favorites', favorites)
   .route('/youtube', youtube)
+  .route('/chan', chan)
 
 console.debug('routes:', routes.routes.length)
 export type AppType = typeof routes

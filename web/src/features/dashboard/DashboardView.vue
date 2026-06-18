@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ChanList from '../chan/ChanList.vue'
 import FavoriteFeature from '../favorite/FavoriteFeature.vue'
 import YoutubeFeed from '../youtube/YoutubeFeed.vue'
 import DashboardHeader from './DashboardHeader.vue'
@@ -9,10 +10,13 @@ import DashboardHeader from './DashboardHeader.vue'
     <DashboardHeader />
     <div class="elements">
       <Suspense>
-        <FavoriteFeature class="col2" />
+        <FavoriteFeature />
       </Suspense>
       <Suspense>
-        <YoutubeFeed class="col3" />
+        <ChanList />
+      </Suspense>
+      <Suspense>
+        <YoutubeFeed />
       </Suspense>
     </div>
   </div>
@@ -27,21 +31,23 @@ import DashboardHeader from './DashboardHeader.vue'
   gap: var(--spacing);
   grid-template-rows: var(--header-size) auto auto;
   grid-template-rows: var(--header-size) auto var(--header-size);
-  grid-template-columns: 1fr;
+  grid-template-rows: var(--header-size) auto;
+  @media (max-width: 1250px) {
+    align-items: start;
+  }
 }
 
 .elements {
-  display: grid;
-  /* grid-template-columns: 8rem 1fr 1fr 8rem; */
+  flex: 1;
   align-items: center;
-  gap: 8rem;
-  grid-template-columns: 0 auto auto 0;
-}
-
-.col2 {
-  grid-column: 2;
-}
-.col3 {
-  grid-column: 3;
+  gap: 0.6rem;
+  /* display: grid; */
+  /* grid-template-columns: auto auto; */
+  display: flex;
+  @media (max-width: 1250px) {
+    /* grid-template-columns: 1fr; */
+    flex-flow: column;
+    align-items: start;
+  }
 }
 </style>

@@ -8,35 +8,45 @@ const { title } = defineProps<{ title: string }>()
   <div class="window">
     <h2>{{ title }}</h2>
     <Transition mode="out-in">
-      <Suspense>
-        <slot></slot>
-        <template #fallback>
-          <div class="loading">
-            Loading
-            <IconBase name="loading" />
-          </div>
-        </template>
-      </Suspense>
+      <div class="content">
+        <Suspense>
+          <slot />
+          <template #fallback>
+            <div class="loading">
+              Loading
+              <IconBase name="loading" />
+            </div>
+          </template>
+        </Suspense>
+      </div>
     </Transition>
   </div>
 </template>
 
 <style scoped>
+.content {
+  flex-shrink: 0;
+  overflow-y: auto;
+  scrollbar-color: var(--color) transparent;
+  flex: 1;
+}
+
 .window {
   position: relative;
   background-color: var(--element);
-  border: 2.5px solid var(--border);
+  border: var(--border-width) solid var(--border);
   border-radius: 0.6rem;
   display: flex;
   flex-flow: column;
-  overflow-x: hidden;
-  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  max-height: calc(100svh - var(--header-size) - 1.8rem);
 }
 
 h2 {
   font-size: 1rem;
   font-weight: 300;
-  border-bottom: 2.5px solid var(--border);
+  border-bottom: var(--border-width) solid var(--border);
   padding: 0 0.6rem;
   height: var(--header-size);
   display: flex;

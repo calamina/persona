@@ -9,3 +9,10 @@
     !
   </p>
 </template>
+
+<style>
+p {
+  width: 100%;
+  text-align: center;
+}
+</style>

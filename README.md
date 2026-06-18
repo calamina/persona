@@ -25,22 +25,25 @@ Tech :
 
 - [x] Favorites
 - [x] Youtube
+- [x] 4chan
 - [ ] Todos
 - [ ] Links
 - [ ] RSS ?
-- [ ] 4chan feed ?
 - [ ] Calendar ?
 
 ## TODO
 
 - [ ] change default favorite icon link
 - [ ] manage errors (store mmessages ?)
+- [ ] add 4chan board selection / tabs
 - [ ] multi-use inputs ? search and add if not found
 - [ ] redirect on register + redirect on mail send
 - [ ] add password reset
 - [ ] check account existing
 - [ ] add animations / transitionGroups
 - [ ] add favorite folders
+- [ ] responsive
+- [ ] yaml config ?
 
 ## Info
 

@@ -38,7 +38,7 @@ button {
   background-color: var(--element);
   color: var(--color);
   cursor: pointer;
-  border: 2.5px solid var(--border);
+  border: var(--border-width) solid var(--border);
   padding: 0 0.3rem;
   height: 2.1rem;
   border-radius: 0.6rem;

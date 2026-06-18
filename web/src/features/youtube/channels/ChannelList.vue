@@ -10,15 +10,5 @@ await store.loadChannels()
 </script>
 
 <template>
-  <div class="list">
-    <ChannelItem v-for="channel in channels" :channel :key="channel.id" />
-  </div>
+  <ChannelItem v-for="channel in channels" :channel :key="channel.id" />
 </template>
-
-<style scoped>
-.list {
-  height: 100%;
-  overflow-y: scroll;
-  scrollbar-color: var(--color) transparent;
-}
-</style>

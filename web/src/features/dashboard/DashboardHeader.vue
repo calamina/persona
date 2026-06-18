@@ -21,7 +21,7 @@ div {
   justify-content: space-between;
   gap: 0.6rem;
   height: var(--header-size);
-  border: 2.5px solid var(--border);
+  border: var(--border-width) solid var(--border);
   background-color: var(--element);
   overflow: hidden;
   border-radius: 0.6rem;

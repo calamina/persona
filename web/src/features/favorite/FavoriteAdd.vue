@@ -41,10 +41,10 @@ form {
   flex-flow: column;
   border-radius: 0.6rem;
   height: fit-content;
-  border: 2.5px solid var(--border);
+  border: var(--border-width) solid var(--border);
   background-color: var(--element);
   padding: 0.6rem;
-  max-height: 50vh;
+  width: 100%;
   overflow-y: auto;
   scrollbar-color: var(--color) transparent;
 }

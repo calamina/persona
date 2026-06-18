@@ -6,7 +6,7 @@
   background-color: var(--element);
   padding: 0.6rem;
   border-radius: 0.6rem;
-  border: 2.5px solid var(--border);
+  border: var(--border-width) solid var(--border);
   display: flex;
   flex-flow: column;
   gap: 0.6rem;

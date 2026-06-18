@@ -59,9 +59,9 @@ const subscribe = async () => {
       <p class="name">{{ result.name }}</p>
     </a>
     <div class="actions">
-      <ButtonBase class="small" @click="cancel()" label="Cancel" icon="favoriteDelete" />
+      <ButtonBase class="button" @click="cancel()" label="Cancel" icon="favoriteDelete" />
       <ButtonLoading
-        class="small"
+        class="button"
         :loading="loadingAdd"
         @click="subscribe()"
         label="Subscribe"
@@ -77,10 +77,10 @@ const subscribe = async () => {
   flex-flow: column;
   border-radius: 0.6rem;
   height: fit-content;
-  border: 2.5px solid var(--border);
+  border: var(--border-width) solid var(--border);
   background-color: var(--element);
   padding: 0.6rem;
-  width: auto;
+  width: 100%;
 }
 
 .result {
@@ -94,15 +94,14 @@ a {
   flex-flow: column;
   text-decoration: none;
   overflow: hidden;
-  width: 100%;
 }
 
 img {
-  border-top-left-radius: calc(0.6rem - 2.5px);
-  border-top-right-radius: calc(0.6rem - 2.5px);
-  width: 100%;
+  border-top-left-radius: calc(0.6rem - var(--border-width));
+  border-top-right-radius: calc(0.6rem - var(--border-width));
+  aspect-ratio: 1;
   /* height: auto; */
-  object-fit: cover;
+  /* object-fit: contain; */
 }
 
 .actions {
@@ -111,8 +110,8 @@ img {
   gap: 0.6rem;
 }
 
-.small {
-  width: fit-content;
+.button {
+  width: 100%;
 }
 
 .name {
@@ -120,8 +119,8 @@ img {
   align-items: center;
   justify-content: center;
   padding: 0.6rem;
-  border-top: 2.5px solid var(--border);
-  border-bottom: 2.5px solid var(--border);
+  border-top: var(--border-width) solid var(--border);
+  border-bottom: var(--border-width) solid var(--border);
 }
 
 a:hover .name,

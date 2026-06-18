@@ -9,15 +9,5 @@ await store.loadVideos()
 </script>
 
 <template>
-  <div class="list">
-    <VideoItem v-for="video in videos" :video :key="video.id" />
-  </div>
+  <VideoItem v-for="video in videos" :video :key="video.id" />
 </template>
-
-<style scoped>
-.list {
-  height: 100%;
-  overflow-y: scroll;
-  scrollbar-color: var(--color) transparent;
-}
-</style>

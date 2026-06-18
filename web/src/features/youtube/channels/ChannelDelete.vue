@@ -38,7 +38,7 @@ const remove = async (channel: ChannelDisplay) => {
   border: none;
   display: none;
   background-color: transparent;
-  border: 2.5px solid transparent;
+  border: var(--border-width) solid transparent;
 
   &:focus-within {
     background-color: var(--element-focusmax);

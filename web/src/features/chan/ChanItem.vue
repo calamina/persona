@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { useDateFormat } from '../../../utils/date'
-import type { VideoDisplay } from '../youtube.model'
-const { video } = defineProps<{ video: VideoDisplay }>()
+import { useDateFormat } from '../../utils/date'
+import type { ChanDisplay } from './chan.model'
+const { chan } = defineProps<{ chan: ChanDisplay }>()
 </script>
 
 <template>
-  <a class="video" :href="'https://www.youtube.com/watch?v=' + video.id" :title="video.title">
-    <!-- TODO : alt -->
-    <img width="100" :src="`http://img.youtube.com/vi/${video.id}/sddefault.jpg`" alt="" />
+  <a class="video" :href="chan.url" :title="chan.name">
+    <img width="100" :src="chan.picture" :alt="chan.picture" referrerpolicy="no-referrer" />
     <div class="infos">
-      <p class="info">{{ video.title }}</p>
-      <p class="info">{{ video.author }}</p>
-      <p class="info">{{ useDateFormat(video.published) }}</p>
+      <p class="info">{{ chan.name }}</p>
+      <p class="info">{{ chan.com }}</p>
+      <p class="info">{{ useDateFormat(chan.updatedAt) }}</p>
     </div>
   </a>
 </template>
@@ -51,6 +50,7 @@ img {
   border-radius: 0.3rem;
   width: 100%;
   flex-shrink: 0;
+  height: 5rem;
   object-fit: cover;
 }
 
