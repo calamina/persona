@@ -6,6 +6,7 @@ import { favorites } from './features/favorite/favorite.routes'
 import { youtube } from './features/youtube/youtube.routes'
 import { chan } from './features/chan/chan.routes'
 import { todos } from './features/todo/todo.routes'
+import { rss } from './features/rss/rss.routes'
 
 export const app = new Hono()
 
@@ -57,6 +58,7 @@ const routes = app
   .route('/youtube', youtube)
   .route('/chan', chan)
   .route('/todos', todos)
+  .route('/rss', rss)
 
 console.debug('routes:', routes.routes.length)
 export type AppType = typeof routes

@@ -50,11 +50,9 @@ fetchChans()
           <IconBase name="loading" />
         </div>
         <div v-else-if="error" class="error">{{ error }}</div>
-        <template v-else>
-          <div class="list">
-            <ChanItem v-for="chan in chans" :key="chan.id" :chan="chan" />
-          </div>
-        </template>
+        <div class="list" v-else>
+          <ChanItem v-for="chan in chans" :key="chan.id" :chan="chan" />
+        </div>
       </Transition>
     </LayoutWindow>
   </div>
@@ -62,13 +60,13 @@ fetchChans()
 
 <style scoped>
 .chans {
+  max-height: 100%;
+  height: 100%;
   display: flex;
   flex-flow: column;
   gap: var(--spacing);
-  justify-self: center;
-  align-self: center;
-  width: 100%;
-  height: 100%;
+  overflow: hidden;
+
   @media (max-width: 1250px) {
     height: fit-content;
     max-width: unset;
@@ -116,8 +114,11 @@ fetchChans()
 }
 
 .list {
+  /* flex-shrink: 1; */
   display: flex;
   flex-flow: column;
+  /* overflow: hidden; */
+  padding: var(--spacing-small);
 }
 
 .v-enter-active,

@@ -48,7 +48,7 @@ const toggleDone = async (id: number) => {
 </script>
 
 <template>
-  <LayoutWindow title="Todo" :fit="true">
+  <LayoutWindow title="Todo" fit>
     <FieldAction
       v-model="newTodo"
       :action="create"
@@ -87,7 +87,8 @@ const toggleDone = async (id: number) => {
 .list {
   display: flex;
   flex-flow: column;
-  gap: 0.25rem;
+  gap: 0;
+  padding: var(--spacing-small);
   height: fit-content;
 }
 
@@ -95,6 +96,7 @@ const toggleDone = async (id: number) => {
   width: 100%;
   padding: var(--spacing-small);
   display: flex;
+  border-radius: var(--border-radius-small);
 
   &:hover,
   &:focus-visible {
@@ -112,7 +114,9 @@ const toggleDone = async (id: number) => {
 
 .test,
 .deleteButton {
-  border-color: transparent;
+  padding: 0;
+  height: fit-content;
+  border: none;
   background-color: transparent;
 
   &:focus-visible {

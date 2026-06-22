@@ -14,6 +14,16 @@ await store.loadFavorites()
 <template>
   <LayoutWindow title="Favorites">
     <FavoriteAdd />
-    <FavoriteItem v-for="favorite in favorites" :key="favorite.id" :favorite="favorite" />
+    <div class="list">
+      <FavoriteItem v-for="favorite in favorites" :key="favorite.id" :favorite="favorite" />
+    </div>
   </LayoutWindow>
 </template>
+
+<style scoped>
+.list {
+  display: flex;
+  flex-flow: column;
+  padding: var(--spacing-small);
+}
+</style>

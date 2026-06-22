@@ -37,9 +37,10 @@ const faviconCheck = (e: Event) => {
   align-items: center;
   gap: var(--spacing);
   text-decoration: none;
-  padding: var(--spacing);
+  padding: var(--spacing-small);
   line-height: 1.2rem;
   outline: none;
+  border-radius: var(--border-radius-small);
 
   &:hover,
   &:focus-within {
@@ -63,8 +64,8 @@ p {
 img {
   background-color: var(--element-focus);
   border-radius: var(--border-radius-small);
-  padding: 0.45rem;
-  width: var(--icon-size);
-  height: var(--icon-size);
+  padding: var(--spacing-small);
+  width: var(--favicon-size);
+  height: var(--favicon-size);
 }
 </style>

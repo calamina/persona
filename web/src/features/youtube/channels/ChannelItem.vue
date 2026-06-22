@@ -21,7 +21,7 @@ const { channel } = defineProps<{ channel: ChannelDisplay }>()
 a {
   text-decoration: none;
   color: var(--color);
-  padding: var(--spacing);
+  padding: var(--spacing-small);
   width: 100%;
   display: flex;
   flex-flow: row;
@@ -39,6 +39,11 @@ a {
     button {
       display: flex;
     }
+  }
+
+  &:last-child {
+    border-bottom-right-radius: calc(var(--border-radius) - var(--spacing-small));
+    border-bottom-left-radius: calc(var(--border-radius) - var(--spacing-small));
   }
 }
 

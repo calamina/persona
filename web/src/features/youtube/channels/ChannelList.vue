@@ -10,5 +10,15 @@ await store.loadChannels()
 </script>
 
 <template>
-  <ChannelItem v-for="channel in channels" :channel :key="channel.id" />
+  <div class="list">
+    <ChannelItem v-for="channel in channels" :channel :key="channel.id" />
+  </div>
 </template>
+
+<style scoped>
+.list {
+  display: flex;
+  flex-flow: column;
+  padding: var(--spacing-small);
+}
+</style>

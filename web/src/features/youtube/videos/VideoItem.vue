@@ -20,7 +20,8 @@ const { video } = defineProps<{ video: VideoDisplay }>()
 a {
   text-decoration: none;
   color: var(--color);
-  padding: var(--spacing);
+  padding: var(--spacing-small);
+  border-radius: var(--border-radius-small);
 
   &:hover,
   &:focus-within {

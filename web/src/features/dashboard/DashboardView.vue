@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ChanList from '../chan/ChanList.vue'
 import FavoriteFeature from '../favorite/FavoriteFeature.vue'
+import RssFeed from '../rss/RssFeed.vue'
 import TodoList from '../todo/TodoList.vue'
 import YoutubeFeed from '../youtube/YoutubeFeed.vue'
 import DashboardHeader from './DashboardHeader.vue'
@@ -17,7 +18,10 @@ import DashboardHeader from './DashboardHeader.vue'
         </div>
       </Suspense>
       <Suspense>
-        <ChanList />
+        <div class="main">
+          <ChanList />
+          <RssFeed />
+        </div>
       </Suspense>
       <div class="sidebar">
         <Suspense>
@@ -49,12 +53,21 @@ import DashboardHeader from './DashboardHeader.vue'
   align-items: center;
   gap: var(--spacing);
   gap: var(--spacing-dashboard);
+  height: 100%;
   max-height: 100%;
   display: flex;
   @media (max-width: 1250px) {
     flex-flow: column;
     align-items: start;
   }
+}
+
+.main {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: var(--spacing-dashboard);
+  overflow: hidden;
+  height: 100%;
 }
 
 .sidebar {

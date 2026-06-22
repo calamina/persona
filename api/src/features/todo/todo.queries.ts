@@ -30,7 +30,6 @@ export const dbUpdateTodo = (userId: string, id: number) =>
       .where(and(eq(todo.id, id), eq(todo.userId, userId)))
       .returning()
 
-    console.debug(updatedTodo)
     return updatedTodo
   })
 

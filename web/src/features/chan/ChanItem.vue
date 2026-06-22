@@ -33,7 +33,8 @@ const safeText = computed(() => {
 a {
   text-decoration: none;
   color: var(--color);
-  padding: var(--spacing);
+  padding: var(--spacing-small);
+  border-radius: var(--border-radius-small);
 
   &:hover,
   &:focus-within {

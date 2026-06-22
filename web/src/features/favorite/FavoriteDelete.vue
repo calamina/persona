@@ -34,6 +34,8 @@ const remove = async (id: number) => {
   border: none;
   display: none;
   background-color: transparent;
+  padding: 0;
+  height: fit-content;
   border: var(--border-width) solid transparent;
 
   &:focus-within {

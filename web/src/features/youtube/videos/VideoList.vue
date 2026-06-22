@@ -9,5 +9,15 @@ await store.loadVideos()
 </script>
 
 <template>
-  <VideoItem v-for="video in videos" :video :key="video.id" />
+  <div class="list">
+    <VideoItem v-for="video in videos" :video :key="video.id" />
+  </div>
 </template>
+
+<style scoped>
+.list {
+  display: flex;
+  flex-flow: column;
+  padding: var(--spacing-small);
+}
+</style>

@@ -34,6 +34,8 @@ Homepage / dashboard with several features
 
 ## TODO
 
+- [ ] ! Finish rss feed parse
+- [ ] ! shared list
 - [ ] DRY Tabs : component / shared styles
 - [ ] Favorite add : on title check fill field and enable edit
 - [ ] Add 4chan searchbar
