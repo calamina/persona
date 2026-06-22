@@ -26,18 +26,21 @@ Tech :
 - [x] Favorites
 - [x] Youtube
 - [x] 4chan
-- [ ] Todos
+- [x] Todos
 - [ ] Links
 - [ ] RSS ?
 - [ ] Calendar ?
+- [ ] Note ?
 
 ## TODO
 
+- [ ] redirection home -> dashboard if session active
 - [ ] DRY Tabs : component / shared styles
 - [ ] Channel add : refacto style for widescreen
 - [ ] Add 4chan searchbar
 - [ ] Register 4chan boards, favorite one ?
 - [ ] Enable / disable features
+- [ ] add scrollbar css color
 - [ ] Features tabs fullscreen on mobile + main + small core recap ?
 - [ ] change default favorite icon link
 - [ ] manage errors (store mmessages ?)
@@ -51,6 +54,15 @@ Tech :
 - [ ] add favorite folders
 - [ ] responsive
 - [ ] yaml config ?
+
+## Config
+
+```yaml
+- theme
+- spacing (compact / minimal / biggie)
+- features
+- chan selection & default
+```
 
 ## Info
 

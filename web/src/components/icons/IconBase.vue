@@ -22,11 +22,16 @@ div {
   width: 24px;
   height: 24px;
   min-width: 24px;
-  color: var(--icon);
+  color: var(--icon-color);
 
   svg {
     width: 100%;
     height: 100%;
+
+    :global(path),
+    :global(g) {
+      stroke-width: var(--icon-stroke);
+    }
   }
 }
 </style>

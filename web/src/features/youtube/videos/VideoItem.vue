@@ -49,7 +49,7 @@ a {
 }
 
 img {
-  border-radius: 0.3rem;
+  border-radius: var(--border-radius-small);
   width: 100%;
   flex-shrink: 0;
   height: 4rem;

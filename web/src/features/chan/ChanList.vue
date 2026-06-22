@@ -30,7 +30,7 @@ fetchChans()
 
 <template>
   <div class="chans">
-    <LayoutWindow title="4Chan">
+    <LayoutWindow title="4chan">
       <template v-slot:tabs>
         <div class="tabs">
           <button
@@ -90,7 +90,7 @@ fetchChans()
 
 .tabs {
   display: flex;
-  height: 2.1rem;
+  height: var(--icon-size);
   border-bottom: var(--border);
 }
 
@@ -113,6 +113,11 @@ fetchChans()
     color: var(--color);
     background-color: var(--element-focus);
   }
+}
+
+.list {
+  display: flex;
+  flex-flow: column;
 }
 
 .v-enter-active,

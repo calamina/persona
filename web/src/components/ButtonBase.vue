@@ -40,8 +40,8 @@ button {
   cursor: pointer;
   border: var(--border);
   padding: 0 0.3rem;
-  height: 2.1rem;
-  border-radius: 0.6rem;
+  height: var(--icon-size);
+  border-radius: var(--border-radius);
   gap: 0.2rem;
   display: flex;
   align-items: center;

@@ -25,7 +25,7 @@ export const chan = new Hono()
           replies: replies.toString().padStart(3, '0'),
           url: `https://boards.4chan.org/${board}/thread/${no}/${semantic_url}`,
           com: com
-            ?.slice(0, 100)
+            ?.slice(0, 250)
             .replace(/href="\/([^"]+)"/g, 'href="https://boards.4chan.org/$1"'),
           picture: `https://i.4cdn.org/${board}/${tim}${ext}`,
           pictureName: filename,

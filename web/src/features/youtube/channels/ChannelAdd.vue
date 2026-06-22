@@ -104,7 +104,7 @@ a {
 img {
   align-self: center;
   object-fit: cover;
-  height: calc(2.1rem * 2);
+  height: calc(var(--icon-size) * 2);
   border-right: var(--border);
 }
 
@@ -117,7 +117,7 @@ img {
   width: 100%;
   border: none;
   border-radius: 0;
-  height: 2.1rem;
+  height: var(--icon-size);
 
   &:first-child {
     border-bottom: var(--border);

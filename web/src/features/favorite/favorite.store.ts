@@ -7,13 +7,13 @@ export const useFavoriteStore = defineStore('favorite', () => {
   const favorites = ref<FavoriteDisplay[]>([])
   const loading = ref(false)
 
-  const videoCache = ref<{ data: FavoriteDisplay[]; timestamp: number } | null>(null)
+  const cache = ref<{ data: FavoriteDisplay[]; timestamp: number } | null>(null)
   const CACHE_TTL = 5 * 60 * 1000
 
   async function loadFavorites(forceRefresh = false) {
     const now = Date.now()
-    if (!forceRefresh && videoCache.value && now - videoCache.value.timestamp < CACHE_TTL) {
-      favorites.value = videoCache.value.data
+    if (!forceRefresh && cache.value && now - cache.value.timestamp < CACHE_TTL) {
+      favorites.value = cache.value.data
       return
     }
 
@@ -22,13 +22,13 @@ export const useFavoriteStore = defineStore('favorite', () => {
 
     if (data) {
       favorites.value = data
-      videoCache.value = { data, timestamp: now }
+      cache.value = { data, timestamp: now }
     }
     loading.value = false
   }
 
   function clearFavoriteCache() {
-    videoCache.value = null
+    cache.value = null
   }
 
   return {

@@ -22,7 +22,7 @@ try {
   background-color: transparent;
   border: none;
   :global(path) {
-    stroke: var(--color);
+    stroke: var(--icon-color);
   }
 }
 </style>

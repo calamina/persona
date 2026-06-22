@@ -52,6 +52,6 @@ p {
 img {
   width: 2.7rem;
   height: 2.7rem;
-  border-radius: 0.3rem;
+  border-radius: var(--border-radius-small);
 }
 </style>

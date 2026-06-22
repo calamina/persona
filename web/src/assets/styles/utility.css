@@ -5,7 +5,7 @@
 .fields {
   background-color: var(--element);
   padding: var(--spacing);
-  border-radius: var(--spacing);
+  border-radius: var(--border-radius);
   border: var(--border);
   display: flex;
   flex-flow: column;
@@ -24,7 +24,7 @@
 
 form {
   display: flex;
-  width: 25rem;
+  /* width: 25rem; */
   flex-flow: column;
   gap: var(--spacing);
 }

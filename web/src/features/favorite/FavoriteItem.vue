@@ -62,9 +62,9 @@ p {
 
 img {
   background-color: var(--element-focus);
-  border-radius: 0.3rem;
+  border-radius: var(--border-radius-small);
   padding: 0.45rem;
-  width: 2.1rem;
-  height: 2.1rem;
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
 </style>

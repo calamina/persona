@@ -21,9 +21,9 @@ div {
   justify-content: space-between;
   gap: var(--spacing);
   height: var(--header-size);
-  border: var(--border);
+  border: var(--border-dashboard);
   background-color: var(--element);
   overflow: hidden;
-  border-radius: var(--spacing);
+  border-radius: var(--border-radius);
 }
 </style>

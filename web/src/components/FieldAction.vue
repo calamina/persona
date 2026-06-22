@@ -28,8 +28,9 @@ form {
   background-color: var(--element);
   width: 100%;
   height: fit-content;
-  border-bottom: var(--border);
   justify-content: end;
+  height: var(--icon-size);
+  border-bottom: var(--border);
 }
 
 .button {
@@ -44,6 +45,7 @@ input {
   border: none;
   background-color: transparent;
   padding: 0.25rem 0.3rem;
+  height: calc(var(--icon-size) - var(--border-width));
   color: inherit;
   background-color: var(--element-alt);
 

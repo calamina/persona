@@ -21,12 +21,20 @@
   --border-color: oklch(30% 0.017 85);
   --border-focus: oklch(20% 0.017 85);
   --border-width: 2.5px;
+  --border-width-dashboard: 2.5px;
   --border: var(--border-width) solid var(--border-color);
+  --border-dashboard: var(--border-width-dashboard) solid var(--border-color);
+  --border-radius: 0.6rem;
+  --border-radius-small: 0.3rem;
 
-  --icon: oklch(30% 0.017 85);
+  --icon-color: oklch(30% 0.017 85);
   --icon-focus: oklch(70% 0.017 85);
+  --icon-size: 2.1rem;
+  --icon-stroke: 2px;
 
   --spacing: 0.6rem;
+  --spacing-small: 0.3rem;
+  --spacing-dashboard: 2.4rem;
 
   --header-size: 2.1rem;
 }
@@ -38,6 +46,7 @@
   --weigth-bold: 800;
 
   --bg: oklch(65% 0.017 85);
+  --bg: oklch(40% 0.017 85);
   --bg-dim: oklch(78% 0.04 190);
   --bg-image: none;
 
@@ -51,16 +60,105 @@
   --color-focus: oklch(10% 0.017 85);
   --color-highlight: oklch(64.137% 0.11206 77.645);
 
-  --border-color: transparent;
-  --border-width: 0;
-  --border-focus: transparent;
+  --border-color: oklch(40% 0.017 85);
+  --border-width-dashboard: 0;
+  --border-width: 1px;
+  --border-focus: oklch(30% 0.017 85);
   --border: var(--border-width) solid var(--border-color);
+  --border-dashboard: var(--border-width-dashboard) solid var(--border-color);
+  --border-radius: 0;
+  --border-radius-small: 0;
 
-  --icon: oklch(30% 0.017 85);
+  --icon-color: oklch(30% 0.017 85);
   --icon-focus: oklch(70% 0.017 85);
+  --icon-size: 1.75rem;
+  --icon-stroke: 1px;
 
-  --spacing: 0.6rem;
-  --header-size: 2.1rem;
+  --spacing: 0rem;
+  --spacing-small: 0rem;
+  --spacing-dashboard: 1px;
+
+  --header-size: 2rem;
+} */
+/* :root {
+  --font: 'necto';
+  --weigth-regular: 400;
+  --weigth-medium: 600;
+  --weigth-bold: 800;
+
+  --bg: oklch(32% 0.017 136);
+  --bg-dim: oklch(25% 0.04 190);
+  --bg-image: none;
+
+  --element: oklch(40% 0.017 136);
+  --element-alt: oklch(45% 0.017 136);
+  --element-focus: oklch(50% 0.017 136);
+  --element-focusmax: oklch(55% 0.017 136);
+
+  --color: oklch(70% 0.017 136);
+  --color-dim: oklch(70% 0.017 136 / 0.6);
+  --color-focus: oklch(85% 0.017 136);
+  --color-highlight: oklch(64.137% 0.11206 77.645);
+
+  --border-color: oklch(32% 0.017 136);
+  --border-focus: oklch(65% 0.017 136);
+  --border-width-dashboard: 0;
+  --border-width: 1px;
+  --border: var(--border-width) solid var(--border-color);
+  --border-dashboard: var(--border-width-dashboard) solid var(--border-color);
+  --border-radius: 0;
+  --border-radius-small: 0;
+
+  --icon-color: oklch(80% 0.017 136);
+  --icon-focus: oklch(85% 0.017 136);
+  --icon-size: 1.75rem;
+  --icon-stroke: 1px;
+
+  --spacing: 3px;
+  --spacing-small: 3px;
+  --spacing-dashboard: 6px;
+
+  --header-size: 2rem;
+} */
+/* :root {
+  --font: 'necto';
+  --weigth-regular: 400;
+  --weigth-medium: 600;
+  --weigth-bold: 800;
+
+  --bg: oklch(40% 0.017 300);
+  --bg-dim: oklch(35% 0.04 300);
+  --bg-image: none;
+
+  --element: oklch(40% 0.017 300);
+  --element-alt: oklch(35% 0.017 300);
+  --element-focus: oklch(45% 0.017 300);
+  --element-focusmax: oklch(50% 0.017 300);
+
+  --color: oklch(85% 0.017 300);
+  --color-dim: oklch(80% 0.017 300 / 0.6);
+  --color-focus: oklch(85% 0.017 300);
+  --color-highlight: oklch(64.137% 0.11206 77.645);
+
+  --border-color: oklch(55% 0.017 300);
+  --border-focus: oklch(65% 0.017 300);
+  --border-width-dashboard: 1px;
+  --border-width: 1px;
+  --border: var(--border-width) solid var(--border-color);
+  --border-dashboard: var(--border-width-dashboard) solid var(--border-color);
+  --border-radius: 4px;
+  --border-radius-small: 3px;
+
+  --icon-color: oklch(70% 0.017 300);
+  --icon-focus: oklch(85% 0.017 300);
+  --icon-size: 2rem;
+  --icon-stroke: 1.25px;
+
+  --spacing: 6px;
+  --spacing-small: 6px;
+  --spacing-dashboard: 10px;
+
+  --header-size: 2.4rem;
 } */
 
 html {

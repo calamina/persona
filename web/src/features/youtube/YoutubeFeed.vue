@@ -68,7 +68,7 @@ const changeTab = (newTab: Tab) => (tab.value = newTab)
 
 .tabs {
   display: flex;
-  height: 2.1rem;
+  height: var(--icon-size);
   border-bottom: var(--border);
 }
 

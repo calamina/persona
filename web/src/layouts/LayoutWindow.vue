@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import IconBase from '../components/icons/IconBase.vue'
 
-const { title } = defineProps<{ title: string }>()
+const { title, fit } = defineProps<{ title: string; fit?: boolean }>()
 </script>
 
 <template>
-  <div class="window">
+  <div class="window" :class="{ fit }">
     <h2>{{ title }}</h2>
     <slot name="tabs" />
     <Transition mode="out-in">
@@ -25,6 +25,17 @@ const { title } = defineProps<{ title: string }>()
 </template>
 
 <style scoped>
+.window {
+  background-color: var(--element);
+  border: var(--border-dashboard);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-flow: column;
+  overflow: hidden;
+  height: 100%;
+  max-height: calc(100svh - var(--header-size) - 3 * var(--spacing-dashboard));
+}
+
 .content {
   flex-shrink: 0;
   overflow-y: auto;
@@ -36,15 +47,9 @@ const { title } = defineProps<{ title: string }>()
   }
 }
 
-.window {
-  background-color: var(--element);
-  border: var(--border);
-  border-radius: var(--spacing);
-  display: flex;
-  flex-flow: column;
-  overflow: hidden;
-  height: 100%;
-  max-height: calc(100svh - var(--header-size) - 1.8rem);
+.fit {
+  height: fit-content;
+  flex-shrink: 0;
 }
 
 h2 {
@@ -57,7 +62,6 @@ h2 {
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
-  background-color: var(--element);
 }
 
 .loading {

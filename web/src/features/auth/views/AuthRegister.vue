@@ -37,10 +37,20 @@ const register = async () => {
       <FieldPassword id="password" label="Password" minlength="12" hint="At least 12 characters" />
       <ErrorBase :errorMessage />
     </div>
-    <ButtonBase type="submit" label="Register" />
+    <ButtonBase type="submit" label="Register" class="large" />
     <TextInfo>
       Already have an account ?
       <router-link to="/auth/login">Login</router-link>
     </TextInfo>
   </form>
 </template>
+
+<style scoped>
+form {
+  width: 25rem;
+}
+
+.large {
+  width: 100%;
+}
+</style>

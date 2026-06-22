@@ -52,7 +52,7 @@ const login = async () => {
       />
       <ErrorBase :errorMessage />
     </div>
-    <ButtonLoading :loading label="Login" />
+    <ButtonLoading :loading label="Login" class="large" />
     <TextInfo v-if="verified">Verified! You can login :)</TextInfo>
     <TextInfo v-if="registered">Registered! Check your email :)</TextInfo>
     <TextInfo>
@@ -61,3 +61,13 @@ const login = async () => {
     </TextInfo>
   </form>
 </template>
+
+<style scoped>
+form {
+  width: 25rem;
+}
+
+.large {
+  width: 100%;
+}
+</style>

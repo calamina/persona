@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ChanList from '../chan/ChanList.vue'
 import FavoriteFeature from '../favorite/FavoriteFeature.vue'
+import TodoList from '../todo/TodoList.vue'
 import YoutubeFeed from '../youtube/YoutubeFeed.vue'
 import DashboardHeader from './DashboardHeader.vue'
 </script>
@@ -10,14 +11,19 @@ import DashboardHeader from './DashboardHeader.vue'
     <DashboardHeader />
     <div class="elements">
       <Suspense>
-        <FavoriteFeature />
+        <div class="sidebar">
+          <FavoriteFeature />
+          <TodoList />
+        </div>
       </Suspense>
       <Suspense>
         <ChanList />
       </Suspense>
-      <Suspense>
-        <YoutubeFeed />
-      </Suspense>
+      <div class="sidebar">
+        <Suspense>
+          <YoutubeFeed />
+        </Suspense>
+      </div>
     </div>
   </div>
 </template>
@@ -29,8 +35,8 @@ import DashboardHeader from './DashboardHeader.vue'
   display: grid;
   padding: var(--spacing);
   gap: var(--spacing);
-  padding: 2.4rem;
-  gap: 2.4rem;
+  padding: var(--spacing-dashboard);
+  gap: var(--spacing-dashboard);
   grid-template-rows: var(--header-size) auto;
   @media (max-width: 1250px) {
     align-items: start;
@@ -42,12 +48,28 @@ import DashboardHeader from './DashboardHeader.vue'
   overflow: hidden;
   align-items: center;
   gap: var(--spacing);
-  gap: 2.4rem;
+  gap: var(--spacing-dashboard);
   max-height: 100%;
   display: flex;
   @media (max-width: 1250px) {
     flex-flow: column;
     align-items: start;
+  }
+}
+
+.sidebar {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-dashboard);
+  max-width: max(18rem, 22vw);
+  justify-self: center;
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  @media (max-width: 1250px) {
+    height: fit-content;
+    max-width: unset;
   }
 }
 </style>
