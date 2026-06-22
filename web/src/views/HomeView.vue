@@ -1,4 +1,14 @@
-<!-- <router-link :to="{ path: '/auth/login', query: { type: 'login' } }">login</router-link> -->
+<script setup lang="ts">
+import { onBeforeMount } from 'vue'
+import { authClient } from '../utils/auth-client'
+import { router } from '../utils/router'
+
+onBeforeMount(async () => {
+  const { data } = await authClient.getSession()
+  if (data?.session) router.push('/dashboard')
+})
+</script>
+
 <template>
   <p>
     <router-link to="/auth/login">login</router-link>
@@ -10,7 +20,7 @@
   </p>
 </template>
 
-<style>
+<style scoped>
 p {
   width: 100%;
   text-align: center;
