@@ -74,10 +74,12 @@
   --icon-color: oklch(30% 0.017 85);
   --icon-focus: oklch(70% 0.017 85);
   --icon-size: 1.75rem;
+  --icon-size: 2rem;
   --icon-stroke: 1px;
 
   --spacing: 0rem;
   --spacing-small: 0rem;
+  --spacing-small: 6px;
   --spacing-dashboard: 1px;
 
   --header-size: 2rem;

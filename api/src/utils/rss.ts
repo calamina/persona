@@ -1,27 +1,29 @@
 import { XMLParser } from 'fast-xml-parser'
 
-export interface Video {
-  id: string
-  author: string
-  published: string
+interface RssFeed {
   title: string
+  item: RssItem[]
 }
 
-interface XmlAuthor {
-  name: string
-  uri: string
-}
-
-interface YouTubeXmlEntry {
-  id: string
+interface RssItem {
+  source: string
   title: string
-  author: XmlAuthor
-  published: string
+  pubDate: Date
+  category: string[]
+  guid: string
+  description: string
 }
 
-type GetVideos = Promise<
-  { data: Video[]; error: null } | { data: null; error: { message: string } }
->
+interface Item {
+  title: string
+  date: Date
+  description: string
+  categories: string[]
+  source: string
+  url: string
+}
+
+type GetRss = Promise<{ data: Item[]; error: null } | { data: null; error: { message: string } }>
 
 const IGNORED_TAGS = new Set(['yt:videoId', 'yt:channelId', 'link', 'updated', 'media:group'])
 
@@ -33,18 +35,17 @@ const parser = new XMLParser({
   },
 })
 
-export const getRss = async (channels: string[]): GetVideos => {
-  const MAX_VIDEOS_PER_CHANNEL = 3
-  const MAX_VIDEOS_TOTAL = 40
+export const getRss = async (urls: string[]): GetRss => {
+  const MAX_ITEMS_PER_FEED = 2
   const FETCH_TIMEOUT_MS = 2500
+  // const MAX_ITEMS_TOTAL = 40
 
-  const fetchPromises = channels.map(async (channel) => {
+  const fetchPromises = urls.map(async (url: string) => {
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
 
     try {
-      console.debug('hey')
-      const response = await fetch(channel, {
+      const response = await fetch(url, {
         signal: controller.signal,
       })
 
@@ -53,25 +54,21 @@ export const getRss = async (channels: string[]): GetVideos => {
       if (!response.ok) return []
 
       const result = await response.text()
-      const chan = parser.parse(result)
-      console.debug(chan)
+      const rss = parser.parse(result)
 
-      let entries: YouTubeXmlEntry[] | YouTubeXmlEntry | undefined = chan?.feed?.entry
-
-      if (!entries) return []
-
-      if (!Array.isArray(entries)) {
-        entries = [entries]
-      }
-
-      const slicedEntries = entries.slice(0, MAX_VIDEOS_PER_CHANNEL)
-
-      return slicedEntries.map((entry) => ({
-        id: entry.id ? entry.id.replace('yt:video:', '') : '',
-        title: entry.title || 'Untitled Video',
-        author: entry.author?.name || channel,
-        published: entry.published || new Date().toISOString(),
+      const channel: RssFeed = rss?.rss?.channel
+      const feed: Item[] | undefined = channel?.item?.map((item: RssItem) => ({
+        source: channel.title,
+        title: item.title,
+        date: new Date(item.pubDate),
+        description: item.description,
+        categories: item.category,
+        url: item.guid,
       }))
+
+      if (!feed.length) return []
+
+      return feed.slice(0, MAX_ITEMS_PER_FEED)
     } catch (error) {
       console.debug(error)
       return []
@@ -84,9 +81,8 @@ export const getRss = async (channels: string[]): GetVideos => {
     const unresolvedResults = await Promise.all(fetchPromises)
     const results = unresolvedResults.flat()
 
-    const orderedResults = results
-      .sort((a: Video, b: Video) => (a.published > b.published ? -1 : 1))
-      .slice(0, MAX_VIDEOS_TOTAL)
+    const orderedResults = results.sort((a: Item, b: Item) => (a.date > b.date ? -1 : 1))
+    // .slice(0, MAX_ITEMS_TOTAL)
 
     return { data: orderedResults, error: null }
   } catch (error) {

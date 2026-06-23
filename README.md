@@ -8,8 +8,8 @@ Homepage / dashboard with several features
 - [x] Youtube
 - [x] 4chan
 - [x] Todos
+- [x] RSS
 - [ ] Links
-- [ ] RSS
 - [ ] Note
 - [ ] Calendar ?
 
@@ -34,7 +34,6 @@ Homepage / dashboard with several features
 
 ## TODO
 
-- [ ] ! Finish rss feed parse
 - [ ] ! shared list
 - [ ] DRY Tabs : component / shared styles
 - [ ] Favorite add : on title check fill field and enable edit
