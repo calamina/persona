@@ -28,7 +28,7 @@ a {
   align-items: center;
   justify-content: space-between;
   align-items: center;
-  gap: 1ch;
+  gap: var(--item-gap);
   overflow-x: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

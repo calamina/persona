@@ -9,7 +9,7 @@
   border: var(--border);
   display: flex;
   flex-flow: column;
-  gap: var(--spacing);
+  gap: var(--list-gap);
 }
 
 .actions {
@@ -26,5 +26,5 @@ form {
   display: flex;
   /* width: 25rem; */
   flex-flow: column;
-  gap: var(--spacing);
+  gap: var(--list-gap);
 }

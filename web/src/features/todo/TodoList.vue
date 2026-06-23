@@ -87,8 +87,8 @@ const toggleDone = async (id: number) => {
 .list {
   display: flex;
   flex-flow: column;
-  gap: 0;
-  padding: var(--spacing-small);
+  gap: var(--list-gap);
+  padding: var(--spacing-list-vr) var(--spacing-list-hr);
   height: fit-content;
 }
 

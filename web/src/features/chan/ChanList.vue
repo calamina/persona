@@ -118,7 +118,8 @@ fetchChans()
   display: flex;
   flex-flow: column;
   /* overflow: hidden; */
-  padding: var(--spacing-small);
+  padding: var(--spacing-list-vr) var(--spacing-list-hr);
+  gap: var(--list-gap);
 }
 
 .v-enter-active,

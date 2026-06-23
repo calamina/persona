@@ -66,7 +66,7 @@ export const getRss = async (urls: string[]): GetRss => {
         url: item.guid,
       }))
 
-      if (!feed.length) return []
+      if (!feed?.length) return []
 
       return feed.slice(0, MAX_ITEMS_PER_FEED)
     } catch (error) {

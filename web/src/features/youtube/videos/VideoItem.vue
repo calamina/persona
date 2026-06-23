@@ -22,30 +22,14 @@ a {
   color: var(--color);
   padding: var(--spacing-small);
   border-radius: var(--border-radius-small);
+  display: grid;
+  align-items: center;
+  grid-template-columns: 6rem auto;
+  gap: var(--item-gap);
 
   &:hover,
   &:focus-within {
     background-color: var(--element-focus);
-  }
-
-  &.video {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 6rem auto;
-    gap: var(--spacing);
-  }
-
-  &.channel {
-    width: 100%;
-    display: block;
-    flex-flow: row wrap;
-    gap: 1ch;
-    padding: 0.3rem var(--spacing);
-    overflow-x: hidden;
-
-    span {
-      color: var(--bg-dim);
-    }
   }
 }
 

@@ -35,7 +35,7 @@ const faviconCheck = (e: Event) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: var(--spacing);
+  gap: var(--list-gap);
   text-decoration: none;
   padding: var(--spacing-small);
   line-height: 1.2rem;

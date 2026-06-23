@@ -19,6 +19,7 @@ await store.loadChannels()
 .list {
   display: flex;
   flex-flow: column;
-  padding: var(--spacing-small);
+  padding: var(--spacing-list-vr) var(--spacing-list-hr);
+  gap: var(--list-gap);
 }
 </style>

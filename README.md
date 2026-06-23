@@ -34,12 +34,14 @@ Homepage / dashboard with several features
 
 ## TODO
 
-- [ ] ! shared list
+- [ ] ! shared list layout
+- [ ] ! shared item component (small/regular)
+- [ ] ! rss performance + loading
+- [ ] refacto login / register for theme
 - [ ] DRY Tabs : component / shared styles
 - [ ] Favorite add : on title check fill field and enable edit
 - [ ] Add 4chan searchbar
 - [ ] Register 4chan boards, favorite one ?
-- [ ] add scrollbar css color
 - [ ] Features tabs on mobile instead of stack
 - [ ] change default favorite icon link
 - [ ] manage errors (store messages ?)

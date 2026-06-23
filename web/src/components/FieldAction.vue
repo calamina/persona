@@ -44,7 +44,7 @@ form {
 input {
   border: none;
   background-color: transparent;
-  padding: 0.25rem 0.3rem;
+  padding: 0.25rem var(--title-spacing);
   height: calc(var(--icon-size) - var(--border-width));
   color: inherit;
   background-color: var(--element-alt);

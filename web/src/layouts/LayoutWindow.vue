@@ -33,13 +33,12 @@ const { title, fit } = defineProps<{ title: string; fit?: boolean }>()
   flex-flow: column;
   overflow: hidden;
   height: 100%;
-  max-height: calc(100svh - var(--header-size) - 3 * var(--spacing-dashboard));
 }
 
 .content {
   flex-shrink: 0;
   overflow-y: auto;
-  scrollbar-color: var(--color) transparent;
+  scrollbar-color: var(--scroll-color) transparent;
   flex: 1;
 
   @media (max-width: 1250px) {
@@ -56,12 +55,13 @@ h2 {
   font-size: 1rem;
   font-weight: 300;
   border-bottom: var(--border);
-  padding: 0 var(--spacing);
+  padding: 0 var(--title-spacing);
   height: var(--header-size);
   display: flex;
   flex-shrink: 0;
-  justify-content: center;
+  justify-content: var(--title-align);
   align-items: center;
+  background-color: var(--title-color);
 }
 
 .loading {

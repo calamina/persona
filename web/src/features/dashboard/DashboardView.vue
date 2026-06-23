@@ -9,18 +9,21 @@ import DashboardHeader from './DashboardHeader.vue'
 
 <template>
   <div class="dashboard">
-    <DashboardHeader />
+    <!-- <DashboardHeader /> -->
     <div class="elements">
       <Suspense>
         <div class="sidebar">
+          <Suspense>
+            <DashboardHeader />
+          </Suspense>
           <FavoriteFeature />
           <TodoList />
         </div>
       </Suspense>
       <Suspense>
         <div class="main">
-          <ChanList />
           <RssFeed />
+          <ChanList />
         </div>
       </Suspense>
       <div class="sidebar">
@@ -41,7 +44,7 @@ import DashboardHeader from './DashboardHeader.vue'
   gap: var(--spacing);
   padding: var(--spacing-dashboard);
   gap: var(--spacing-dashboard);
-  grid-template-rows: var(--header-size) auto;
+  /* grid-template-rows: var(--header-size) auto; */
   @media (max-width: 1250px) {
     align-items: start;
     height: auto;

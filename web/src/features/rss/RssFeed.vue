@@ -28,7 +28,7 @@ onMounted(async () => {
 
 <template>
   <div class="rss">
-    <LayoutWindow title="rss">
+    <LayoutWindow title="Rss">
       <div class="list">
         <div v-for="item in rss" class="item">
           <a :href="item.source">
@@ -55,8 +55,8 @@ onMounted(async () => {
 .list {
   display: flex;
   flex-flow: column;
-  padding: var(--spacing-small);
-  gap: var(--spacing);
+  padding: var(--spacing-list-vr) var(--spacing-list-hr);
+  gap: var(--list-gap);
 }
 
 a {
@@ -78,7 +78,7 @@ a {
   }
 
   &:hover .categs span {
-    background-color: var(--element-focusmax);
+    background-color: var(--tag-focus);
   }
 }
 
@@ -86,10 +86,10 @@ a {
   margin-top: 0.15rem;
   display: flex;
   flex-flow: row wrap;
-  gap: var(--spacing);
+  gap: var(--tag-gap);
 
   span {
-    background-color: var(--element-alt);
+    background-color: var(--tag);
     text-transform: lowercase;
     border-radius: var(--border-radius-small);
     padding: 0 0.15rem;
