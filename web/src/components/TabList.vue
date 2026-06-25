@@ -24,6 +24,7 @@ const switchTab = (tab: Tab) => {
       v-for="tab in tabs"
       class="tab"
       :key="tab.name"
+      role="tab"
       :class="{ active: activeTab === tab.name }"
       @click="switchTab(tab)"
     >
@@ -73,7 +74,8 @@ const switchTab = (tab: Tab) => {
     &::before,
     &::after {
       content: '=';
-      color: var(--border-color);
+      opacity: 0.4;
+      /* color: var(--border-color); */
     }
 
     &::before {

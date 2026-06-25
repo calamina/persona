@@ -12,6 +12,7 @@ export const youtube = new Hono()
 
   .get('/videos', async (c) => {
     const user = c.get('user')
+    const forceRefresh = c.req.query('refresh') === 'true'
 
     const { data: channels, error: channelError } = await dbGetChannels(user.id)
     if (channelError) {
@@ -19,7 +20,7 @@ export const youtube = new Hono()
       return c.json(sendError('Database error'), 500)
     }
 
-    const { data, error: videoError } = await getVideos(channels)
+    const { data, error: videoError } = await getVideos(channels, forceRefresh)
     if (videoError) {
       console.error('Failed to get videos over network:', videoError)
       return c.json(sendError('Database error'), 500)

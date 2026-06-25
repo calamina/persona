@@ -30,7 +30,9 @@ export const rss = new Hono()
   .use('*', protectedRouteHelpers)
 
   .get('/', async (c) => {
-    const { data, error } = await getRss(feeds)
+    const forceRefresh = c.req.query('refresh') === 'true'
+
+    const { data, error } = await getRss(feeds, forceRefresh)
     if (error) {
       console.error('Failed to get rss in DB:', error)
       return c.json(sendError('Database error'), 500)

@@ -10,7 +10,7 @@ Homepage / dashboard with several features
 - [x] Todos
 - [x] RSS
 - [x] Note
-- [ ] Links
+- [ ] Shortcuts
 - [ ] Calendar ?
 
 ## Frontend
@@ -34,12 +34,12 @@ Homepage / dashboard with several features
 
 ## TODO
 
-- [ ] ! shared loading layout + async loading
 - [ ] ! shared action wrapper
 - [ ] ! shared item component (small/regular)
-- [ ] ! rss performance + dynamic list
+- [ ] ! dynamic rss feeds
 
 - [ ] refacto login / register for theme
+- [ ] clean notes / rss (api + components)
 - [ ] Favorite add : on title check fill field and enable edit
 - [ ] Add 4chan searchbar
 - [ ] Register 4chan boards, favorite one ?

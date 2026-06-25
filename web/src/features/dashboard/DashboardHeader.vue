@@ -23,7 +23,7 @@ div {
   gap: var(--spacing);
   height: var(--header-size);
   border: var(--border-header);
-  background-color: var(--element);
+  background-color: var(--header-bg);
   overflow: hidden;
   border-radius: var(--border-radius);
 }

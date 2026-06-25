@@ -1,18 +1,20 @@
 import { XMLParser } from 'fast-xml-parser'
 
-interface RssFeed {
-  title: string
-  item: RssItem[]
+interface GlobalCache {
+  data: Item[]
+  lastFetched: number
 }
 
-interface RssItem {
-  source: string
-  title: string
-  pubDate: Date
-  category: string[]
-  guid: string
-  description: string
+const globalRef = globalThis as unknown as { __backendCache?: GlobalCache }
+
+if (!globalRef.__backendCache) {
+  globalRef.__backendCache = {
+    data: [],
+    lastFetched: 0,
+  }
 }
+
+const backendCache = globalRef.__backendCache
 
 interface Item {
   title: string
@@ -25,52 +27,104 @@ interface Item {
 
 type GetRss = Promise<{ data: Item[]; error: null } | { data: null; error: { message: string } }>
 
-const IGNORED_TAGS = new Set(['yt:videoId', 'yt:channelId', 'link', 'updated', 'media:group'])
-
 const parser = new XMLParser({
-  ignoreAttributes: true,
-  updateTag(tagName) {
-    if (IGNORED_TAGS.has(tagName)) return false
-    return tagName
-  },
+  ignoreAttributes: false,
+  attributeNamePrefix: '@_',
+  parseTagValue: true,
+  trimValues: true,
 })
 
-export const getRss = async (urls: string[]): GetRss => {
-  const MAX_ITEMS_PER_FEED = 2
-  const FETCH_TIMEOUT_MS = 2500
-  // const MAX_ITEMS_TOTAL = 40
+interface XmlAttributePayload {
+  '@_href'?: string
+  '@_term'?: string
+  '#text'?: string
+}
 
-  const fetchPromises = urls.map(async (url: string) => {
+type FlexibleXmlValue = string | XmlAttributePayload | undefined
+
+interface RawParsedItem {
+  title?: string | { '#text'?: string }
+  pubDate?: string | Date
+  updated?: string
+  published?: string
+  category?: FlexibleXmlValue | FlexibleXmlValue[]
+  tags?: FlexibleXmlValue | FlexibleXmlValue[]
+  description?: string | { '#text'?: string }
+  summary?: string | { '#text'?: string }
+  content?: string | { '#text'?: string }
+  guid?: string | XmlAttributePayload
+  link?: string | XmlAttributePayload
+}
+
+const ensureArray = <T>(val: T | T[] | undefined): T[] => {
+  if (!val) return []
+  return Array.isArray(val) ? val : [val]
+}
+
+export const getRss = async (urls: string[], forceRefresh = false): GetRss => {
+  const now = Date.now()
+  const CACHE_TTL = 15 * 60 * 1000 // 15 minutes in milliseconds
+
+  if (!forceRefresh && backendCache.data.length > 0 && now - backendCache.lastFetched < CACHE_TTL) {
+    return { data: backendCache.data, error: null }
+  }
+
+  const FEED_ITEMS = 2
+  const FEED_TIMEOUT = 3000
+
+  const fetchPromises = urls.map(async (url: string): Promise<Item[]> => {
     const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
+    const timeoutId = setTimeout(() => controller.abort(), FEED_TIMEOUT)
 
     try {
       const response = await fetch(url, {
         signal: controller.signal,
+        headers: { 'User-Agent': 'RSS-Aggregator-Bot/1.0' },
       })
-
-      clearTimeout(timeoutId)
 
       if (!response.ok) return []
 
       const result = await response.text()
       const rss = parser.parse(result)
 
-      const channel: RssFeed = rss?.rss?.channel
-      const feed: Item[] | undefined = channel?.item?.map((item: RssItem) => ({
-        source: channel.title,
-        title: item.title,
-        date: new Date(item.pubDate),
-        description: item.description,
-        categories: item.category,
-        url: item.guid,
-      }))
+      const root = rss?.rss?.channel || rss?.feed || rss?.channel
+      if (!root) return []
 
-      if (!feed?.length) return []
+      const channelTitle = root.title || 'Unknown Source'
 
-      return feed.slice(0, MAX_ITEMS_PER_FEED)
-    } catch (error) {
-      console.debug(error)
+      const rawItems = root.item || root.entry || []
+      const items = ensureArray(rawItems)
+      const targetItems = items.slice(0, FEED_ITEMS)
+
+      return targetItems.map((item: RawParsedItem) => {
+        const rawDate = item.pubDate || item.updated || item.published || new Date()
+        const categories = ensureArray(item.category || item.tags)
+          .map((cat: FlexibleXmlValue) => {
+            if (cat && typeof cat === 'object') return String(cat['@_term'] || cat['#text'] || '')
+            return String(cat || '')
+          })
+          .filter(Boolean)
+
+        const description = item.description || item.summary || item.content || ''
+
+        let rawUrl = item.guid || item.link || ''
+        if (typeof rawUrl === 'object') {
+          rawUrl = rawUrl['@_href'] || rawUrl['#text'] || url
+        }
+
+        return {
+          source: channelTitle,
+          title:
+            typeof item.title === 'object'
+              ? item.title['#text'] || 'Untitled'
+              : item.title || 'Untitled',
+          date: new Date(rawDate),
+          description: typeof description === 'object' ? description['#text'] || '' : description,
+          categories: categories,
+          url: String(rawUrl),
+        }
+      })
+    } catch {
       return []
     } finally {
       clearTimeout(timeoutId)
@@ -78,15 +132,19 @@ export const getRss = async (urls: string[]): GetRss => {
   })
 
   try {
-    const unresolvedResults = await Promise.all(fetchPromises)
-    const results = unresolvedResults.flat()
+    const settledResults = await Promise.allSettled(fetchPromises)
+    const results = settledResults.flatMap((result) =>
+      result.status === 'fulfilled' ? result.value : [],
+    )
 
-    const orderedResults = results.sort((a: Item, b: Item) => (a.date > b.date ? -1 : 1))
-    // .slice(0, MAX_ITEMS_TOTAL)
+    const orderedResults = results.sort((a, b) => b.date.getTime() - a.date.getTime())
+
+    backendCache.data = orderedResults
+    backendCache.lastFetched = now
 
     return { data: orderedResults, error: null }
   } catch (error) {
-    console.debug(error)
-    return { data: null, error: { message: 'Error getting videos' } }
+    console.error('RSS Parsing error:', error)
+    return { data: null, error: { message: 'Error getting RSS items' } }
   }
 }

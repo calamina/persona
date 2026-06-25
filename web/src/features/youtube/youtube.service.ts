@@ -1,9 +1,9 @@
 import { api, networkError } from '../../utils/api-client'
 import type { Channel } from './youtube.model'
 
-export async function getVideos() {
+export async function getVideos(options?: { query: { refresh: string } }) {
   try {
-    const res = await api.youtube.videos.$get()
+    const res = await api.youtube.videos.$get(options)
     return await res.json()
   } catch {
     return networkError

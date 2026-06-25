@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LayoutAsync from '../../layouts/LayoutAsync.vue'
 import ChanList from '../chan/ChanList.vue'
 import FavoriteFeature from '../favorite/FavoriteFeature.vue'
 import NoteFeature from '../note/NoteFeature.vue'
@@ -11,28 +12,30 @@ import DashboardHeader from './DashboardHeader.vue'
 
 <template>
   <div class="dashboard">
-    <DashboardHeader />
+    <!-- <DashboardHeader /> -->
     <div class="elements">
       <Suspense>
         <div class="sidebar">
-          <!-- <Suspense>
+          <Suspense>
             <DashboardHeader />
-          </Suspense> -->
+          </Suspense>
           <FavoriteFeature />
           <NoteFeature />
           <TodoList />
         </div>
       </Suspense>
-      <Suspense>
-        <div class="main">
+      <div class="main">
+        <LayoutAsync>
           <RssFeed />
+        </LayoutAsync>
+        <LayoutAsync>
           <ChanList />
-        </div>
-      </Suspense>
+        </LayoutAsync>
+      </div>
       <div class="sidebar sidebar-alt">
-        <Suspense>
+        <LayoutAsync>
           <YoutubeFeed />
-        </Suspense>
+        </LayoutAsync>
         <ThemeSwitch />
       </div>
     </div>
@@ -48,10 +51,11 @@ import DashboardHeader from './DashboardHeader.vue'
   gap: var(--spacing);
   padding: var(--spacing-dashboard);
   gap: var(--spacing-dashboard);
-  grid-template-rows: var(--header-size) auto;
+  /* grid-template-rows: var(--header-size) auto; */
   @media (max-width: 1250px) {
     align-items: start;
-    height: auto;
+    /* height: auto; */
+    max-height: 100svh;
   }
 }
 
@@ -64,20 +68,21 @@ import DashboardHeader from './DashboardHeader.vue'
   max-height: 100%;
   display: flex;
   @media (max-width: 1250px) {
+    display: flex;
     flex-flow: column;
-    align-items: start;
+    height: 100%;
   }
 }
 
 .main {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
+  display: flex;
+  flex-flow: column;
   gap: var(--spacing-dashboard);
   overflow: hidden;
   height: 100%;
 
   @media (max-width: 1250px) {
-    grid-template-rows: auto auto;
+    display: contents;
   }
 }
 
@@ -94,8 +99,7 @@ import DashboardHeader from './DashboardHeader.vue'
   overflow: hidden;
 
   @media (max-width: 1250px) {
-    height: fit-content;
-    max-width: unset;
+    display: contents;
   }
 
   &.sidebar-alt {

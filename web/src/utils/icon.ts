@@ -4,6 +4,7 @@ import IconFaviconToggle from '../components/icons/IconFaviconToggle.vue'
 import IconFavoriteAdd from '../components/icons/IconFavoriteAdd.vue'
 import IconFavoriteDelete from '../components/icons/IconFavoriteDelete.vue'
 import IconFavoriteSearch from '../components/icons/IconFavoriteSearch.vue'
+import IconFold from '../components/icons/IconFold.vue'
 import IconFolder from '../components/icons/IconFolder.vue'
 import IconHide from '../components/icons/IconHide.vue'
 import IconLoading from '../components/icons/IconLoading.vue'
@@ -26,5 +27,6 @@ export const iconMap = {
   check: IconCheck,
   checkNot: IconCheckNot,
   theme: IconTheme,
+  fold: IconFold,
 }
 export type IconName = keyof typeof iconMap

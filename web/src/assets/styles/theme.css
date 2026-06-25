@@ -51,6 +51,7 @@
   --list-gap: 0.3rem;
 
   --header-size: 2.1rem;
+  --header-bg: var(--element);
 
   --title-align: center;
   --title-spacing: 0.6rem;
@@ -66,27 +67,29 @@
 }
 
 [data-theme='mini'] {
-  --bg: #fff;
-  --bg-dim: oklch(78% 0.04 190);
+  font-size: 18px;
+
+  --bg: oklch(100% 0.002 260);
+  --bg-dim: transparent;
   --bg-image: none;
 
-  --element: #efefef;
-  --element-alt: #e5e5e5;
-  --element-focus: #dedede;
+  --element: oklch(94% 0.002 260);
+  --element-alt: oklch(91% 0.002 260);
+  --element-focus: oklch(88% 0.002 260);
   --element-focusmax: transparent;
 
-  --tag: #dedede;
-  --tag-focus: #cdcdcd;
+  --tag: oklch(92% 0.002 260);
+  --tag-focus: oklch(84.832% 0.002 260);
   --tag-gap: 0.3rem;
 
-  --color: oklch(40% 0.017 85);
-  --color-dim: oklch(30% 0.017 85 / 0.6);
-  --color-dimmer: oklch(30% 0.017 85 / 0.4);
-  --color-focus: oklch(20% 0.017 85);
+  --color: oklch(40% 0.002 260);
+  --color-dim: oklch(30% 0.002 260 / 0.6);
+  --color-dimmer: oklch(30% 0.002 260 / 0.4);
+  --color-focus: oklch(20% 0.002 260);
   --color-highlight: oklch(64.137% 0.11206 77.645);
 
-  --border-color: #ccc;
-  --border-focus: oklch(20% 0.017 85);
+  --border-color: oklch(80% 0.002 260);
+  --border-focus: oklch(20% 0.002 260);
   --border-width: 1px;
   --border-width-dashboard: 1px;
   --border-width-header: 1px;
@@ -96,8 +99,8 @@
   --border-radius: 4px;
   --border-radius-small: 4px;
 
-  --icon-color: #787878;
-  --icon-focus: oklch(70% 0.017 85);
+  --icon-color: oklch(57.268% 0.002 260);
+  --icon-focus: oklch(70% 0.002 260);
   --icon-size: 2.1rem;
   --icon-stroke: 1.15px;
 
@@ -105,29 +108,31 @@
 
   --spacing: 0rem;
   --spacing-small: 0.3rem;
-  --spacing-dashboard: 10px;
+  --spacing-dashboard: 12px;
   --spacing-list-hr: 0.3rem;
   --spacing-list-vr: 0.3rem;
 
   --list-gap: 0.3rem;
 
   --header-size: 2.1rem;
+  --header-bg: var(--bg);
 
   --title-align: start;
   --title-spacing: 0.6rem;
-  --title-height: 1.8rem;
-  --title-bg: #a4a4e6;
-  --title-color: #fff;
+  --title-height: 2.1rem;
+  --title-bg: var(--bg);
+  --title-color: var(--color-dim);
 
   --item-gap: 0.6rem;
 
-  --scroll-color: #aaa;
+  --scroll-color: oklch(73.802% 0.002 260);
 
   /* --actions-bg: #f8f8f8; */
   --actions-bg: transparent;
   --actions-input-bg: transparent;
 
   --tab-wrap-bg: var(--element-focus);
+  --tab-wrap-bg: var(--bg);
   --tab-active-bg: var(--element);
 }
 

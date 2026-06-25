@@ -24,6 +24,22 @@ type GetVideos = Promise<
   { data: Video[]; error: null } | { data: null; error: { message: string } }
 >
 
+interface GlobalVideoCache {
+  data: Video[]
+  lastFetched: number
+}
+
+const globalRef = globalThis as unknown as { __backendVideoCache?: GlobalVideoCache }
+
+if (!globalRef.__backendVideoCache) {
+  globalRef.__backendVideoCache = {
+    data: [],
+    lastFetched: 0,
+  }
+}
+
+const backendCache = globalRef.__backendVideoCache
+
 const IGNORED_TAGS = new Set(['yt:videoId', 'yt:channelId', 'link', 'updated', 'media:group'])
 
 const parser = new XMLParser({
@@ -34,7 +50,14 @@ const parser = new XMLParser({
   },
 })
 
-export const getVideos = async (channels: ChannelModel[]): GetVideos => {
+export const getVideos = async (channels: ChannelModel[], forceRefresh = false): GetVideos => {
+  const now = Date.now()
+  const CACHE_TTL = 15 * 60 * 1000 // 15 minutes
+
+  if (!forceRefresh && backendCache.data.length > 0 && now - backendCache.lastFetched < CACHE_TTL) {
+    return { data: backendCache.data, error: null }
+  }
+
   const MAX_VIDEOS_PER_CHANNEL = 3
   const MAX_VIDEOS_TOTAL = 40
   const FETCH_TIMEOUT_MS = 2500
@@ -87,6 +110,9 @@ export const getVideos = async (channels: ChannelModel[]): GetVideos => {
     const orderedResults = results
       .sort((a: Video, b: Video) => (a.published > b.published ? -1 : 1))
       .slice(0, MAX_VIDEOS_TOTAL)
+
+    backendCache.data = orderedResults
+    backendCache.lastFetched = now
 
     return { data: orderedResults, error: null }
   } catch (error) {
