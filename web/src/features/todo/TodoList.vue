@@ -6,6 +6,7 @@ import { useTodoStore } from './todo.store.ts'
 import { storeToRefs } from 'pinia'
 import { addTodo, deleteTodo, updateTodo } from './todo.service.ts'
 import { ref } from 'vue'
+import LayoutList from '../../layouts/LayoutList.vue'
 
 const store = useTodoStore()
 const { todos } = storeToRefs(store)
@@ -58,7 +59,7 @@ const toggleDone = async (id: number) => {
       placeholder="add todo ..."
       class="header"
     />
-    <div class="list" v-if="todos.length">
+    <LayoutList v-if="todos.length" fit>
       <div class="todo" v-for="todo in todos" tabindex="0">
         <ButtonLoading
           class="test"
@@ -75,21 +76,13 @@ const toggleDone = async (id: number) => {
           icon="favoriteDelete"
         />
       </div>
-    </div>
+    </LayoutList>
   </LayoutWindow>
 </template>
 
 <style scoped>
 .header:only-child {
   border: none;
-}
-
-.list {
-  display: flex;
-  flex-flow: column;
-  gap: var(--list-gap);
-  padding: var(--spacing-list-vr) var(--spacing-list-hr);
-  height: fit-content;
 }
 
 .todo {

@@ -1,9 +1,11 @@
 :root {
   --font: 'necto';
-  --weigth-regular: 400;
-  --weigth-medium: 600;
-  --weigth-bold: 800;
+  --weight-regular: 400;
+  --weight-medium: 600;
+  --weight-bold: 800;
+}
 
+[data-theme='maxi'] {
   --bg: oklch(88% 0.04 190);
   --bg-dim: oklch(78% 0.04 190);
   --bg-image: url('../gggrain.svg');
@@ -46,31 +48,30 @@
   --spacing-list-hr: var(--spacing-small);
   --spacing-list-vr: var(--spacing-small);
 
-  --list-gap: 0;
+  --list-gap: 0.3rem;
 
   --header-size: 2.1rem;
 
   --title-align: center;
   --title-spacing: 0.6rem;
-  --title-color: transparent;
+  --title-bg: transparent;
+  --title-height: var(--icon-size);
 
   --item-gap: 0.6rem;
 
   --scroll-color: var(--color);
+
+  --tab-wrap-bg: transparent;
+  --tab-active-bg: var(--element-focus);
 }
 
-:root {
-  --font: 'necto';
-  --weigth-regular: 400;
-  --weigth-medium: 600;
-  --weigth-bold: 800;
-
-  --bg: #efefef;
+[data-theme='mini'] {
+  --bg: #fff;
   --bg-dim: oklch(78% 0.04 190);
   --bg-image: none;
 
-  --element: transparent;
-  --element-alt: #eee;
+  --element: #efefef;
+  --element-alt: #e5e5e5;
   --element-focus: #dedede;
   --element-focusmax: transparent;
 
@@ -80,10 +81,11 @@
 
   --color: oklch(40% 0.017 85);
   --color-dim: oklch(30% 0.017 85 / 0.6);
+  --color-dimmer: oklch(30% 0.017 85 / 0.4);
   --color-focus: oklch(20% 0.017 85);
   --color-highlight: oklch(64.137% 0.11206 77.645);
 
-  --border-color: #9a9a9a;
+  --border-color: #ccc;
   --border-focus: oklch(20% 0.017 85);
   --border-width: 1px;
   --border-width-dashboard: 1px;
@@ -91,8 +93,8 @@
   --border: var(--border-width) solid var(--border-color);
   --border-dashboard: var(--border-width-dashboard) solid var(--border-color);
   --border-header: var(--border-width-header) solid var(--border-color);
-  --border-radius: 0;
-  --border-radius-small: 0;
+  --border-radius: 4px;
+  --border-radius-small: 4px;
 
   --icon-color: #787878;
   --icon-focus: oklch(70% 0.017 85);
@@ -113,20 +115,27 @@
 
   --title-align: start;
   --title-spacing: 0.6rem;
-  --title-color: #dedef4;
-  /* --title-color: #fcfcfc; */
-  /* --title-color: #d5d5f5; */
+  --title-height: 1.8rem;
+  --title-bg: #a4a4e6;
+  --title-color: #fff;
 
   --item-gap: 0.6rem;
 
   --scroll-color: #aaa;
+
+  /* --actions-bg: #f8f8f8; */
+  --actions-bg: transparent;
+  --actions-input-bg: transparent;
+
+  --tab-wrap-bg: var(--element-focus);
+  --tab-active-bg: var(--element);
 }
 
 html {
   background-color: var(--bg);
   color: var(--color);
   font-family: var(--font);
-  font-weight: var(--weigth-regular);
+  font-weight: var(--weight-regular);
   background-image: var(--bg-image);
   background-size: cover;
   font-size: 17px;

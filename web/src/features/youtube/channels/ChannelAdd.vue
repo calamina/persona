@@ -51,7 +51,7 @@ const subscribe = async () => {
     :loading="loadingSearch"
     icon="favoriteSearch"
     label="Search"
-    placeholder="search channels ..."
+    placeholder="search ..."
   />
   <div v-if="result" class="element result">
     <a :href="result.url" :title="result.name">

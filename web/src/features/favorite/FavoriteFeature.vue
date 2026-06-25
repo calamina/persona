@@ -4,6 +4,7 @@ import FavoriteAdd from './FavoriteAdd.vue'
 import { useFavoriteStore } from './favorite.store.ts'
 import { storeToRefs } from 'pinia'
 import LayoutWindow from '../../layouts/LayoutWindow.vue'
+import LayoutList from '../../layouts/LayoutList.vue'
 
 const store = useFavoriteStore()
 const { favorites } = storeToRefs(store)
@@ -14,17 +15,8 @@ await store.loadFavorites()
 <template>
   <LayoutWindow title="Favorites">
     <FavoriteAdd />
-    <div class="list">
+    <LayoutList>
       <FavoriteItem v-for="favorite in favorites" :key="favorite.id" :favorite="favorite" />
-    </div>
+    </LayoutList>
   </LayoutWindow>
 </template>
-
-<style scoped>
-.list {
-  display: flex;
-  flex-flow: column;
-  padding: var(--spacing-list-vr) var(--spacing-list-hr);
-  gap: var(--list-gap);
-}
-</style>

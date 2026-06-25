@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `note_user_id_unique` ON `note` (`user_id`);

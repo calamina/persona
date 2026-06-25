@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { useYoutubeStore } from '../youtube.store.ts'
 import ChannelItem from './ChannelItem.vue'
+import LayoutList from '../../../layouts/LayoutList.vue'
 
 const store = useYoutubeStore()
 const { channels } = storeToRefs(store)
@@ -10,16 +11,7 @@ await store.loadChannels()
 </script>
 
 <template>
-  <div class="list">
+  <LayoutList>
     <ChannelItem v-for="channel in channels" :channel :key="channel.id" />
-  </div>
+  </LayoutList>
 </template>
-
-<style scoped>
-.list {
-  display: flex;
-  flex-flow: column;
-  padding: var(--spacing-list-vr) var(--spacing-list-hr);
-  gap: var(--list-gap);
-}
-</style>

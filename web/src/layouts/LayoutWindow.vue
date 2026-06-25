@@ -1,37 +1,29 @@
 <script setup lang="ts">
-import IconBase from '../components/icons/IconBase.vue'
-
-const { title, fit } = defineProps<{ title: string; fit?: boolean }>()
+const { fit } = defineProps<{ title?: string; fit?: boolean }>()
+// const { title, fit } = defineProps<{ title: string; fit?: boolean }>()
 </script>
 
 <template>
   <div class="window" :class="{ fit }">
-    <h2>{{ title }}</h2>
+    <!-- <h2>{{ title }}</h2> -->
     <slot name="tabs" />
     <Transition mode="out-in">
       <div class="content">
-        <Suspense>
-          <slot />
-          <template #fallback>
-            <div class="loading">
-              Loading
-              <IconBase name="loading" />
-            </div>
-          </template>
-        </Suspense>
+        <slot />
       </div>
     </Transition>
+    <slot name="actions" class="bottom" />
   </div>
 </template>
 
 <style scoped>
 .window {
+  position: relative;
   background-color: var(--element);
   border: var(--border-dashboard);
   border-radius: var(--border-radius);
   display: flex;
   flex-flow: column;
-  overflow: hidden;
   height: 100%;
 }
 
@@ -56,23 +48,18 @@ h2 {
   font-weight: 300;
   border-bottom: var(--border);
   padding: 0 var(--title-spacing);
-  height: var(--header-size);
+  height: var(--title-height);
   display: flex;
   flex-shrink: 0;
   justify-content: var(--title-align);
   align-items: center;
-  background-color: var(--title-color);
+  background-color: var(--title-bg);
+  color: var(--title-color);
 }
 
-.loading {
-  display: flex;
-  flex-flow: column;
-  flex: 1;
-  gap: 0.3rem;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
+.bottom {
+  position: sticky;
+  bottom: 0;
 }
 
 .v-enter-active,

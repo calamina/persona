@@ -25,7 +25,8 @@ form {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 0;
-  background-color: var(--element);
+  /* background-color: var(--element); */
+  background-color: var(--actions-bg);
   width: 100%;
   height: fit-content;
   justify-content: end;
@@ -47,11 +48,13 @@ input {
   padding: 0.25rem var(--title-spacing);
   height: calc(var(--icon-size) - var(--border-width));
   color: inherit;
-  background-color: var(--element-alt);
+  background-color: var(--actions-input-bg);
+  width: 100%;
 
   &:focus-visible {
     outline: none;
     border-color: var(--border-focus);
+    background-color: var(--element-alt);
   }
 
   &:user-invalid {

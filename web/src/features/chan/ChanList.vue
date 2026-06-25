@@ -5,6 +5,9 @@ import { api } from '../../utils/api-client.ts'
 import ChanItem from './ChanItem.vue'
 import type { ChanDisplay } from './chan.model.ts'
 import IconBase from '../../components/icons/IconBase.vue'
+import LayoutList from '../../layouts/LayoutList.vue'
+import TabList, { type Tab } from '../../components/TabList.vue'
+import LoadingContent from '../../components/LoadingContent.vue'
 
 // const BOARDS = ['g', 'wg', 'v', 'a', 'tv', 'p'] as const
 const BOARDS = ['g', 'wg', 'v'] as const
@@ -26,33 +29,26 @@ const fetchChans = async (newBoard?: Board) => {
 }
 
 fetchChans()
+
+const tabs: Tab[] = BOARDS.map((b) => ({
+  name: b,
+  action: () => fetchChans(b),
+}))
 </script>
 
 <template>
   <div class="chans">
     <LayoutWindow title="4chan">
-      <template v-slot:tabs>
-        <div class="tabs">
-          <button
-            v-for="b in BOARDS"
-            class="tab"
-            :class="{ active: board === b }"
-            @click="fetchChans(b)"
-          >
-            {{ b }}
-          </button>
-        </div>
+      <template #tabs>
+        <TabList :tabs />
       </template>
 
       <Transition mode="out-in">
-        <div v-if="isLoading" class="loading">
-          Loading
-          <IconBase name="loading" />
-        </div>
+        <LoadingContent v-if="isLoading" />
         <div v-else-if="error" class="error">{{ error }}</div>
-        <div class="list" v-else>
+        <LayoutList v-else>
           <ChanItem v-for="chan in chans" :key="chan.id" :chan="chan" />
-        </div>
+        </LayoutList>
       </Transition>
     </LayoutWindow>
   </div>
@@ -73,15 +69,6 @@ fetchChans()
   }
 }
 
-.loading {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-  gap: 0.3rem;
-  align-items: center;
-  justify-content: center;
-}
-
 .big {
   flex-shrink: 0;
 }
@@ -90,6 +77,7 @@ fetchChans()
   display: flex;
   height: var(--icon-size);
   border-bottom: var(--border);
+  background-color: var(--tab-wrap-bg);
 }
 
 .tab {
@@ -99,7 +87,7 @@ fetchChans()
   border-right: var(--border);
   background-color: transparent;
   cursor: pointer;
-  color: var(--color-dim);
+  color: var(--color-dimmer);
 
   &:last-child {
     border: none;
@@ -109,17 +97,8 @@ fetchChans()
   &:focus-within,
   &.active {
     color: var(--color);
-    background-color: var(--element-focus);
+    background-color: var(--tab-active-bg);
   }
-}
-
-.list {
-  /* flex-shrink: 1; */
-  display: flex;
-  flex-flow: column;
-  /* overflow: hidden; */
-  padding: var(--spacing-list-vr) var(--spacing-list-hr);
-  gap: var(--list-gap);
 }
 
 .v-enter-active,

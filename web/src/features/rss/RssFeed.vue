@@ -3,6 +3,9 @@ import { onMounted, ref } from 'vue'
 import LayoutWindow from '../../layouts/LayoutWindow.vue'
 import { api, networkError } from '../../utils/api-client.ts'
 import { useDateFormat } from '../../utils/date'
+import LayoutList from '../../layouts/LayoutList.vue'
+import IconBase from '../../components/icons/IconBase.vue'
+import LoadingContent from '../../components/LoadingContent.vue'
 
 interface Item {
   title: string
@@ -14,8 +17,10 @@ interface Item {
 }
 
 const rss = ref<Item[]>([])
+const isLoading = ref(false)
 
 onMounted(async () => {
+  isLoading.value = true
   try {
     const res = await api.rss.$get()
     const { data } = await res.json()
@@ -23,23 +28,27 @@ onMounted(async () => {
   } catch {
     return networkError.error.message
   }
+  isLoading.value = false
 })
 </script>
 
 <template>
   <div class="rss">
     <LayoutWindow title="Rss">
-      <div class="list">
-        <div v-for="item in rss" class="item">
-          <a :href="item.source">
-            <p class="title">{{ item.title }}</p>
-            <p class="categs">
-              <span v-for="categ in item.categories">{{ categ }}</span>
-            </p>
-            <p class="dim">{{ item.source }} — {{ useDateFormat(item.date) }}</p>
-          </a>
-        </div>
-      </div>
+      <Transition mode="out-in">
+        <LoadingContent v-if="isLoading" />
+        <LayoutList v-else space>
+          <div v-for="item in rss" class="item">
+            <a :href="item.source">
+              <p class="title">{{ item.title }}</p>
+              <p class="categs">
+                <span v-for="categ in item.categories">{{ categ }}</span>
+              </p>
+              <p class="dim">{{ item.source }} ▪ {{ useDateFormat(item.date) }}</p>
+            </a>
+          </div>
+        </LayoutList>
+      </Transition>
     </LayoutWindow>
   </div>
 </template>
@@ -50,13 +59,6 @@ onMounted(async () => {
   flex-flow: column;
   overflow: hidden;
   height: 100%;
-}
-
-.list {
-  display: flex;
-  flex-flow: column;
-  padding: var(--spacing-list-vr) var(--spacing-list-hr);
-  gap: var(--list-gap);
 }
 
 a {
@@ -73,15 +75,14 @@ a {
     background-color: var(--element-focus);
   }
 
-  .dim {
-    color: var(--color-dim);
-  }
-
   &:hover .categs span {
     background-color: var(--tag-focus);
   }
 }
 
+.dim {
+  color: var(--color-dim);
+}
 .categs {
   margin-top: 0.15rem;
   display: flex;
@@ -95,5 +96,21 @@ a {
     padding: 0 0.15rem;
     color: var(--color-dim);
   }
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition:
+    opacity 0.085s ease-out,
+    transform 0.085s ease-out;
+}
+
+.v-enter-from {
+  opacity: 0.5;
+  transform: translateY(-0.3rem);
+}
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(0.3rem);
 }
 </style>

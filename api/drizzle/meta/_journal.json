@@ -36,6 +36,20 @@
       "when": 1782128604848,
       "tag": "0004_silent_toxin",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1782319405161,
+      "tag": "0005_greedy_hercules",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1782320284299,
+      "tag": "0006_wild_red_ghost",
+      "breakpoints": true
     }
   ]
 }

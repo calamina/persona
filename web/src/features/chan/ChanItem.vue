@@ -24,7 +24,7 @@ const safeText = computed(() => {
     />
     <div class="infos">
       <p class="com" v-html="safeText" />
-      <p class="info">[{{ chan.replies }}] {{ useDateFormat(chan.updatedAt) }}</p>
+      <p class="info">[{{ chan.replies }}] ▪ {{ useDateFormat(chan.updatedAt) }}</p>
     </div>
   </a>
 </template>

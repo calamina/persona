@@ -4,36 +4,31 @@ import LayoutWindow from '../../layouts/LayoutWindow.vue'
 import ChannelAdd from './channels/ChannelAdd.vue'
 import ChannelList from './channels/ChannelList.vue'
 import VideoList from './videos/VideoList.vue'
+import TabList, { type Tab } from '../../components/TabList.vue'
 
-const TABS = ['videos', 'channels'] as const
-type Tab = (typeof TABS)[number]
+const TABS = ['Videos', 'Channels'] as const
+type TabName = (typeof TABS)[number]
 
-const tab = ref<Tab>('videos')
+const tab = ref<TabName>('Videos')
 
-const changeTab = (newTab: Tab) => (tab.value = newTab)
+const changeTab = (newTab: TabName) => (tab.value = newTab)
+
+const tabs: Tab[] = TABS.map((b) => ({
+  name: b,
+  action: () => changeTab(b),
+}))
 </script>
 
 <template>
   <div class="section">
     <LayoutWindow title="Youtube">
-      <template v-slot:tabs>
-        <div class="tabs">
-          <button class="tab" :class="{ active: tab === 'videos' }" @click="changeTab('videos')">
-            Videos
-          </button>
-          <button
-            class="tab"
-            :class="{ active: tab === 'channels' }"
-            @click="changeTab('channels')"
-          >
-            Channels
-          </button>
-        </div>
+      <template #tabs>
+        <TabList :tabs />
       </template>
 
       <Transition mode="out-in">
         <keep-alive>
-          <div v-if="tab === 'videos'">
+          <div v-if="tab === 'Videos'">
             <VideoList />
           </div>
           <div v-else>
@@ -70,6 +65,7 @@ const changeTab = (newTab: Tab) => (tab.value = newTab)
   display: flex;
   height: var(--icon-size);
   border-bottom: var(--border);
+  background-color: var(--tab-wrap-bg);
 }
 
 .tab {
@@ -79,7 +75,7 @@ const changeTab = (newTab: Tab) => (tab.value = newTab)
   border-right: var(--border);
   background-color: transparent;
   cursor: pointer;
-  color: var(--color-dim);
+  color: var(--color-dimmer);
 
   &:last-child {
     border: none;
@@ -90,6 +86,7 @@ const changeTab = (newTab: Tab) => (tab.value = newTab)
   &.active {
     color: var(--color);
     background-color: var(--element-focus);
+    background-color: var(--tab-active-bg);
   }
 }
 

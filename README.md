@@ -9,8 +9,8 @@ Homepage / dashboard with several features
 - [x] 4chan
 - [x] Todos
 - [x] RSS
+- [x] Note
 - [ ] Links
-- [ ] Note
 - [ ] Calendar ?
 
 ## Frontend
@@ -34,24 +34,23 @@ Homepage / dashboard with several features
 
 ## TODO
 
-- [ ] ! shared list layout
+- [ ] ! shared loading layout + async loading
+- [ ] ! shared action wrapper
 - [ ] ! shared item component (small/regular)
-- [ ] ! rss performance + loading
+- [ ] ! rss performance + dynamic list
+
 - [ ] refacto login / register for theme
-- [ ] DRY Tabs : component / shared styles
 - [ ] Favorite add : on title check fill field and enable edit
 - [ ] Add 4chan searchbar
 - [ ] Register 4chan boards, favorite one ?
 - [ ] Features tabs on mobile instead of stack
 - [ ] change default favorite icon link
 - [ ] manage errors (store messages ?)
-- [ ] Loading component
 - [ ] multi-use inputs ? search / add
 - [ ] redirect on register + redirect on mail send
 - [ ] add password reset
 - [ ] check account existing
 - [ ] add animations / transitionGroups
-- [ ] fix loading transitions
 - [ ] add favorite folders
 
 ## Config (todo)
