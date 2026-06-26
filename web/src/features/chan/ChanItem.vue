@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useDateFormat } from '../../utils/date'
 import type { ChanDisplay } from './chan.model'
 import DOMPurify from 'dompurify'
+import LayoutItem from '../../layouts/LayoutItem.vue'
 
 const { chan } = defineProps<{ chan: ChanDisplay }>()
 
@@ -15,37 +16,21 @@ const safeText = computed(() => {
 </script>
 
 <template>
-  <a class="chan" :href="chan.url" :title="chan.name">
-    <img
-      width="100"
-      :src="chan.picture"
-      :alt="chan.id.toString() + ' thread cover'"
-      referrerpolicy="no-referrer"
-    />
-    <div class="infos">
-      <p class="com" v-html="safeText" />
-      <p class="info">[{{ chan.replies }}] ▪ {{ useDateFormat(chan.updatedAt) }}</p>
-    </div>
-  </a>
+  <LayoutItem cover class="chan" :href="chan.url" :title="chan.name">
+    <template #visual>
+      <img
+        width="100"
+        :src="chan.picture"
+        :alt="chan.id.toString() + ' thread cover'"
+        referrerpolicy="no-referrer"
+      />
+    </template>
+    <p class="description" v-html="safeText"></p>
+    <p class="info">[{{ chan.replies }}] ▪ {{ useDateFormat(chan.updatedAt) }}</p>
+  </LayoutItem>
 </template>
 
 <style scoped>
-a {
-  text-decoration: none;
-  color: var(--color);
-  padding: var(--spacing-small);
-  border-radius: var(--border-radius-small);
-  display: grid;
-  align-items: center;
-  grid-template-columns: 6rem auto;
-  gap: var(--item-gap);
-
-  &:hover,
-  &:focus-within {
-    background-color: var(--element-focus);
-  }
-}
-
 img {
   border-radius: var(--border-radius-small);
   width: 100%;
@@ -53,11 +38,6 @@ img {
   height: 4rem;
   object-fit: cover;
   background-color: var(--element-focus);
-}
-
-.infos {
-  width: 100%;
-  overflow: hidden;
 }
 
 .info {
@@ -70,13 +50,17 @@ img {
   }
 }
 
-.com {
+.description {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  line-clamp: 2;
+
+  white-space: normal;
   overflow: hidden;
-  line-height: 1.25rem;
+
+  max-height: 2.5rem;
   height: 2.5rem;
+  line-height: 1.25rem;
+  width: 100%;
 }
 </style>

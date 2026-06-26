@@ -1,7 +1,10 @@
 import { Hono } from 'hono'
 import { protectedRouteHelpers } from '../../middleware/protectedRouteHelper'
 import { sendError, sendSuccess } from '../../utils/api'
-import { getRss } from '../../utils/rss'
+import { getFeedName, getRss } from '../../utils/rss'
+import { dbCreateFeed, dbDeleteFeed, dbGetFeeds } from './rss.queries'
+import { zValidator } from '@hono/zod-validator'
+import { createFeedSchema, deleteFeedSchema, searchFeedSchema } from './rss.schema'
 
 const feeds = [
   'https://www.siteinspire.com/websites/feed',
@@ -35,6 +38,56 @@ export const rss = new Hono()
     const { data, error } = await getRss(feeds, forceRefresh)
     if (error) {
       console.error('Failed to get rss in DB:', error)
+      return c.json(sendError('Database error'), 500)
+    }
+
+    return c.json(sendSuccess(data))
+  })
+
+  .get('/feeds', async (c) => {
+    const user = c.get('user')
+
+    const { data, error } = await dbGetFeeds(user.id)
+    if (error) {
+      console.error('Failed to get feeds in DB:', error)
+      return c.json(sendError('Database error'), 500)
+    }
+
+    return c.json(sendSuccess(data))
+  })
+
+  .get('/feeds/search', zValidator('query', searchFeedSchema), async (c) => {
+    const { url } = c.req.valid('query')
+
+    const data = await getFeedName(url)
+    if (!data) {
+      console.error('Failed to find channel data via YouTube lookup')
+      return c.json(sendError('Database error'), 404)
+    }
+
+    return c.json(sendSuccess(data))
+  })
+
+  .post('/feeds', zValidator('json', createFeedSchema), async (c) => {
+    const user = c.get('user')
+    const feedData = c.req.valid('json')
+
+    const { data, error } = await dbCreateFeed({ ...feedData, userId: user.id })
+    if (error) {
+      console.error('Failed to build feed record in DB:', error)
+      return c.json(sendError('Database error'), 500)
+    }
+
+    return c.json(sendSuccess(data))
+  })
+
+  .delete('/feeds/:id', zValidator('param', deleteFeedSchema), async (c) => {
+    const { id } = c.req.valid('param')
+    const user = c.get('user')
+
+    const { data, error } = await dbDeleteFeed(user.id, id)
+    if (error) {
+      console.error('Failed to execute feed removal in DB:', error)
       return c.json(sendError('Database error'), 500)
     }
 

@@ -1,24 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useYoutubeStore } from '../youtube.store'
-import type { Channel } from '../youtube.model'
-import { addChannel, searchChannel } from '../youtube.service'
-import ButtonLoading from '../../../components/ButtonLoading.vue'
-import ButtonBase from '../../../components/ButtonBase.vue'
-import FieldAction from '../../../components/FieldAction.vue'
+import { ref, useTemplateRef } from 'vue'
+import { useRssStore } from './rss.store.ts'
+import { addFeed, searchFeed } from './rss.service.ts'
+import FieldAction from '../../components/FieldAction.vue'
+import ButtonBase from '../../components/ButtonBase.vue'
+import ButtonLoading from '../../components/ButtonLoading.vue'
+import InputBase from '../../components/InputBase.vue'
+import type { Feed } from './rss.model.ts'
 
-const store = useYoutubeStore()
+const store = useRssStore()
 
 const loadingSearch = ref(false)
 const loadingAdd = ref(false)
 const query = ref('')
-const result = ref<Channel | null | undefined>(null)
+const input = useTemplateRef<HTMLInputElement>('input')
+const result = ref<Feed | null | undefined>(null)
 
 const search = async () => {
   if (!query.value.length) return
   loadingSearch.value = true
-  const { data } = await searchChannel(query.value)
-  if (data) result.value = data
+  const { data } = await searchFeed(query.value)
+  if (data) {
+    result.value = data
+    input.value?.focus()
+  } else result.value = null
   loadingSearch.value = false
 }
 
@@ -30,15 +35,12 @@ const cancel = () => {
 const follow = async () => {
   if (!result.value) return
   loadingAdd.value = true
-
-  const { data } = await addChannel(result.value)
-
+  const { data } = await addFeed(result.value)
   if (data) {
-    await store.loadChannels()
-    await store.loadVideos(true)
+    await store.loadFeeds()
+    await store.fetchRssFeeds(true)
     cancel()
   }
-
   loadingAdd.value = false
 }
 </script>
@@ -52,15 +54,8 @@ const follow = async () => {
     label="Search"
     placeholder="search ..."
   />
-  <div v-if="result" class="element result">
-    <a :href="result.url" :title="result.name">
-      <img
-        :src="result.iconURL"
-        :alt="result.name + ' channel icon'"
-        referrerpolicy="no-referrer"
-      />
-      <p class="name">{{ result.name }}</p>
-    </a>
+  <div v-if="result" class="element result-wrap">
+    <InputBase id="feedTitle" v-model="result.name" ref="input" class="input" />
     <div class="channel-actions">
       <ButtonBase class="button" @click="cancel()" label="Cancel" icon="favoriteDelete" />
       <ButtonLoading
@@ -85,18 +80,10 @@ const follow = async () => {
   }
 }
 
-.result {
+.result-wrap {
   display: grid;
   grid-template-columns: 1fr auto;
   padding: 0;
-  height: fit-content;
-}
-
-a {
-  display: flex;
-  text-decoration: none;
-  overflow: hidden;
-  border-right: var(--border);
   height: fit-content;
 }
 
@@ -107,9 +94,12 @@ img {
   border-right: var(--border);
 }
 
+.input {
+  border: none;
+}
+
 .channel-actions {
   display: flex;
-  flex-flow: column;
 }
 
 .button {
@@ -119,19 +109,7 @@ img {
   height: var(--icon-size);
 
   &:first-child {
-    border-bottom: var(--border);
+    border-right: var(--border);
   }
-}
-
-.name {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing);
-}
-
-a:hover .name,
-a:focus-within .name {
-  background-color: var(--element-focus);
 }
 </style>

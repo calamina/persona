@@ -148,3 +148,21 @@ export const getRss = async (urls: string[], forceRefresh = false): GetRss => {
     return { data: null, error: { message: 'Error getting RSS items' } }
   }
 }
+
+export async function getFeedName(url: string) {
+  try {
+    const response = await fetch(url, { signal: AbortSignal.timeout(1500) })
+    const text = await response.text()
+
+    const match = text.match(/<title[^>]*>([\s\S]*?)<\/title>/i)
+    if (!match) return null
+
+    const parser = new XMLParser({ htmlEntities: true })
+    const parsed = parser.parse(match[1])
+    const name = typeof parsed === 'string' ? parsed : match[1]
+
+    return { url, name }
+  } catch {
+    return null
+  }
+}

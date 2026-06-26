@@ -1,0 +1,15 @@
+.load-enter-active,
+.load-leave-active {
+  transition:
+    opacity 0.085s ease-out,
+    transform 0.085s ease-out;
+}
+
+.load-enter-from {
+  opacity: 0.5;
+  transform: translateY(-0.3rem);
+}
+.load-leave-to {
+  opacity: 0;
+  transform: translateY(0.3rem);
+}

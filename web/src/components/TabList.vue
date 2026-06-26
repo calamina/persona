@@ -69,13 +69,10 @@ const switchTab = (tab: Tab) => {
   }
 
   &.active {
-    position: relative;
-
     &::before,
     &::after {
       content: '=';
       opacity: 0.4;
-      /* color: var(--border-color); */
     }
 
     &::before {

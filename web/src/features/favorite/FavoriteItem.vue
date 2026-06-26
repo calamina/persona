@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LayoutItem from '../../layouts/LayoutItem.vue'
 import type { FavoriteDisplay } from './favorite.model.ts'
 import FavoriteDelete from './FavoriteDelete.vue'
 
@@ -18,7 +19,7 @@ const faviconCheck = (e: Event) => {
 </script>
 
 <template>
-  <a class="link" :href="favorite.url">
+  <LayoutItem :href="favorite.url" class="favorite" inline>
     <img
       :src="`https://www.google.com/s2/favicons?sz=64&domain=${favorite.url}`"
       :alt="favorite.title + 'favicon'"
@@ -27,29 +28,18 @@ const faviconCheck = (e: Event) => {
     />
     <p>{{ favorite.title }}</p>
     <FavoriteDelete :favorite />
-  </a>
+  </LayoutItem>
 </template>
 
 <style scoped>
-.link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--item-gap);
-  text-decoration: none;
-  padding: var(--spacing-small);
-  line-height: 1.2rem;
-  outline: none;
-  border-radius: var(--border-radius-small);
-
+.favorite {
   &:hover,
   &:focus-within {
-    background-color: var(--element-focus);
     button {
       display: flex;
     }
     img {
-      background-color: var(--element-focusmax);
+      background-color: var(--tag-focus);
     }
   }
 }
@@ -59,6 +49,7 @@ p {
   overflow-x: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  width: 100%;
 }
 
 img {

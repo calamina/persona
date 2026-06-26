@@ -7,6 +7,7 @@ import { storeToRefs } from 'pinia'
 import { addTodo, deleteTodo, updateTodo } from './todo.service.ts'
 import { ref } from 'vue'
 import LayoutList from '../../layouts/LayoutList.vue'
+import LayoutItem from '../../layouts/LayoutItem.vue'
 
 const store = useTodoStore()
 const { todos } = storeToRefs(store)
@@ -60,7 +61,7 @@ const toggleDone = async (id: number) => {
       class="header"
     />
     <LayoutList v-if="todos.length" fit>
-      <div class="todo" v-for="todo in todos" tabindex="0">
+      <LayoutItem type="div" inline v-for="todo in todos" :key="todo.id" tabindex="0" class="todo">
         <ButtonLoading
           class="test"
           @click="toggleDone(todo.id)"
@@ -75,7 +76,7 @@ const toggleDone = async (id: number) => {
           :loading="false"
           icon="favoriteDelete"
         />
-      </div>
+      </LayoutItem>
     </LayoutList>
   </LayoutWindow>
 </template>
@@ -86,15 +87,8 @@ const toggleDone = async (id: number) => {
 }
 
 .todo {
-  width: 100%;
-  padding: var(--spacing-small);
-  display: flex;
-  border-radius: var(--border-radius-small);
-
   &:hover,
   &:focus-visible {
-    background-color: var(--element-focus);
-    outline: none;
     .deleteButton {
       display: flex;
     }
@@ -103,6 +97,7 @@ const toggleDone = async (id: number) => {
 
 .deleteButton {
   display: none;
+  width: fit-content;
 }
 
 .test,
@@ -118,6 +113,7 @@ const toggleDone = async (id: number) => {
 }
 
 .test {
+  flex: 1;
   display: flex;
   gap: 0.45rem;
   align-items: center;

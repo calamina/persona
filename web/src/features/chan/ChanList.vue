@@ -34,8 +34,10 @@ const tabs: Tab[] = BOARDS.map((b) => ({
       <TabList :tabs />
     </template>
 
-    <LayoutList>
-      <ChanItem v-for="chan in chans" :key="chan.id" :chan="chan" />
-    </LayoutList>
+    <Transition name="load" mode="out-in">
+      <LayoutList :key="board">
+        <ChanItem v-for="chan in chans" :key="chan.id" :chan="chan" />
+      </LayoutList>
+    </Transition>
   </LayoutWindow>
 </template>

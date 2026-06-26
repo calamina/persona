@@ -78,8 +78,8 @@
   --element-focus: oklch(88% 0.002 260);
   --element-focusmax: transparent;
 
-  --tag: oklch(92% 0.002 260);
-  --tag-focus: oklch(84.832% 0.002 260);
+  --tag: oklch(90% 0.002 260);
+  --tag-focus: oklch(82% 0.002 260);
   --tag-gap: 0.3rem;
 
   --color: oklch(40% 0.002 260);

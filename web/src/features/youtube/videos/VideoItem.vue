@@ -1,38 +1,26 @@
 <script setup lang="ts">
+import LayoutItem from '../../../layouts/LayoutItem.vue'
 import { useDateFormat } from '../../../utils/date'
 import type { VideoDisplay } from '../youtube.model'
 const { video } = defineProps<{ video: VideoDisplay }>()
 </script>
 
 <template>
-  <a class="video" :href="'https://www.youtube.com/watch?v=' + video.id" :title="video.title">
-    <!-- TODO : alt -->
-    <img width="100" :src="`http://img.youtube.com/vi/${video.id}/sddefault.jpg`" alt="" />
-    <div class="infos">
-      <p class="info">{{ video.title }}</p>
-      <p class="info">{{ video.author }}</p>
-      <p class="info date">{{ useDateFormat(video.published) }}</p>
-    </div>
-  </a>
+  <LayoutItem cover :href="'https://www.youtube.com/watch?v=' + video.id" :title="video.title">
+    <template #visual>
+      <img
+        width="100"
+        :src="`http://img.youtube.com/vi/${video.id}/sddefault.jpg`"
+        :alt="video.title + 'thumbnail'"
+      />
+    </template>
+    <p class="info">{{ video.title }}</p>
+    <p class="info">{{ video.author }}</p>
+    <p class="info date">{{ useDateFormat(video.published) }}</p>
+  </LayoutItem>
 </template>
 
 <style scoped>
-a {
-  text-decoration: none;
-  color: var(--color);
-  padding: var(--spacing-small);
-  border-radius: var(--border-radius-small);
-  display: grid;
-  align-items: center;
-  grid-template-columns: 6rem auto;
-  gap: var(--item-gap);
-
-  &:hover,
-  &:focus-within {
-    background-color: var(--element-focus);
-  }
-}
-
 img {
   border-radius: var(--border-radius-small);
   width: 100%;
@@ -40,13 +28,6 @@ img {
   height: 4rem;
   object-fit: cover;
   background-color: var(--element-focus);
-}
-
-.infos {
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 .info {

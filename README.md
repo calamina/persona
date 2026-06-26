@@ -34,18 +34,17 @@ Homepage / dashboard with several features
 
 ## TODO
 
-- [ ] ! shared action wrapper
-- [ ] ! shared item component (small/regular)
-- [ ] ! dynamic rss feeds
+- [ ] ! dynamic rss feeds -> check save && get list from db
+- [ ] ! Favorite add : ISO channel / rss add -> get title and confirm
 
+- [ ] confirmation on add ?
+- [ ] actions like minimize -> activate in title bar
 - [ ] refacto login / register for theme
-- [ ] clean notes / rss (api + components)
-- [ ] Favorite add : on title check fill field and enable edit
-- [ ] Add 4chan searchbar
+- [ ] Add 4chan searchbar ?
 - [ ] Register 4chan boards, favorite one ?
 - [ ] Features tabs on mobile instead of stack
 - [ ] change default favorite icon link
-- [ ] manage errors (store messages ?)
+- [ ] manage errors (store messages ? error in title bar ! add orange and green)
 - [ ] multi-use inputs ? search / add
 - [ ] redirect on register + redirect on mail send
 - [ ] add password reset

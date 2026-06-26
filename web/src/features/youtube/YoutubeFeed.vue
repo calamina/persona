@@ -26,13 +26,15 @@ const tabs: Tab[] = TABS.map((b) => ({
     </template>
 
     <keep-alive>
-      <div v-if="tab === 'Videos'">
-        <VideoList />
-      </div>
-      <div v-else>
-        <ChannelAdd />
-        <ChannelList />
-      </div>
+      <Transition name="load" mode="out-in">
+        <div v-if="tab === 'Videos'">
+          <VideoList />
+        </div>
+        <div v-else>
+          <ChannelAdd />
+          <ChannelList />
+        </div>
+      </Transition>
     </keep-alive>
   </LayoutWindow>
 </template>

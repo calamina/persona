@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const { fit, space } = defineProps<{ fit?: boolean; space?: boolean }>()
+const { fit } = defineProps<{ fit?: boolean }>()
 </script>
 
 <template>
-  <div class="list" :class="{ fit, space }">
+  <div class="list" :class="{ fit }">
     <slot />
   </div>
 </template>
@@ -17,10 +17,6 @@ const { fit, space } = defineProps<{ fit?: boolean; space?: boolean }>()
 
   &.fit {
     height: fit-content;
-  }
-
-  &.space {
-    gap: calc(var(--list-gap) * 2.5);
   }
 }
 </style>
