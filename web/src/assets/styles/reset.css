@@ -36,6 +36,10 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1250px) {
+    max-height: fit-content;
+  }
 }
 
 img,

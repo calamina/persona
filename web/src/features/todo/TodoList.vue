@@ -88,7 +88,7 @@ const toggleDone = async (id: number) => {
 
 .todo {
   &:hover,
-  &:focus-visible {
+  &:focus-within {
     .deleteButton {
       display: flex;
     }

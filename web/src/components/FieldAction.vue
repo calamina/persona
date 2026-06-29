@@ -54,7 +54,7 @@ input {
   &:focus-visible {
     outline: none;
     border-color: var(--border-focus);
-    background-color: var(--element-alt);
+    background-color: var(--input-focus);
   }
 
   &:user-invalid {

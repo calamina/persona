@@ -41,7 +41,6 @@ Homepage / dashboard with several features
 - [ ] ! Favorite add : ISO rss add -> get title and confirm
 
 - [ ] confirmation on add (notif / snack) ?
-- [ ] actions like minimize -> activate in title bar
 - [ ] refacto login / register for theme
 - [ ] Add 4chan searchbar ?
 - [ ] Register 4chan boards, favorite one ?

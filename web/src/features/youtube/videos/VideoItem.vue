@@ -22,6 +22,7 @@ const { video } = defineProps<{ video: VideoDisplay }>()
 
 <style scoped>
 img {
+  /* border: var(--border); */
   border-radius: var(--border-radius-small);
   width: 100%;
   flex-shrink: 0;

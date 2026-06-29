@@ -64,6 +64,11 @@ const mediaType = computed(() => {
     .categs span {
       background-color: var(--tag-focus);
     }
+    img,
+    video,
+    .placeholder {
+      background-color: var(--element-focusmax);
+    }
   }
 }
 
@@ -101,11 +106,12 @@ const mediaType = computed(() => {
 img,
 video,
 .placeholder {
+  /* border: var(--border); */
   border-radius: var(--border-radius-small);
   width: 100%;
   flex-shrink: 0;
-  height: 4rem;
   object-fit: cover;
+  height: 4.5rem;
   background-color: var(--element-focus);
 }
 

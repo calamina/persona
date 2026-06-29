@@ -55,7 +55,8 @@ import DashboardHeader from './DashboardHeader.vue'
   @media (max-width: 1250px) {
     align-items: start;
     /* height: auto; */
-    max-height: 100svh;
+    height: auto;
+    min-height: 100svh;
   }
 }
 
@@ -71,6 +72,7 @@ import DashboardHeader from './DashboardHeader.vue'
     display: flex;
     flex-flow: column;
     height: 100%;
+    height: fit-content;
   }
 }
 
@@ -83,6 +85,7 @@ import DashboardHeader from './DashboardHeader.vue'
 
   @media (max-width: 1250px) {
     display: contents;
+    height: fit-content;
   }
 }
 
@@ -100,6 +103,7 @@ import DashboardHeader from './DashboardHeader.vue'
 
   @media (max-width: 1250px) {
     display: contents;
+    height: fit-content;
   }
 
   &.sidebar-alt {

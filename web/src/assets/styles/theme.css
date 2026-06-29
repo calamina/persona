@@ -11,9 +11,10 @@
   --bg-image: url('../gggrain.svg');
 
   --element: oklch(95% 0.017 85);
-  --element-alt: oklch(90% 0.017 85);
   --element-focus: oklch(87% 0.017 85);
   --element-focusmax: oklch(78% 0.017 85);
+
+  --input-focus: oklch(90% 0.017 85);
 
   --tag: oklch(90% 0.017 85);
   --tag-focus: oklch(78% 0.017 85);
@@ -54,7 +55,7 @@
   --header-bg: var(--element);
 
   --title-align: center;
-  --title-spacing: 0.6rem;
+  --title-spacing: 0.3rem;
   --title-bg: transparent;
   --title-height: var(--icon-size);
 
@@ -74,9 +75,10 @@
   --bg-image: none;
 
   --element: oklch(99% 0.015 310);
-  --element-alt: oklch(94% 0.025 310);
   --element-focus: oklch(94% 0.025 310);
   --element-focusmax: oklch(88% 0.035 310);
+
+  --input-focus: oklch(96% 0.025 310);
 
   --tag: var(--element-focus);
   --tag-focus: var(--element-focusmax);
@@ -141,9 +143,10 @@
   --bg-image: none;
 
   --element: oklch(100% 0.002 260);
-  --element-alt: oklch(91% 0.002 260);
   --element-focus: oklch(96% 0.002 260);
   --element-focusmax: transparent;
+
+  --input-focus: oklch(91% 0.002 260);
 
   --tag: oklch(96% 0.002 260);
   --tag-focus: oklch(92% 0.002 260);

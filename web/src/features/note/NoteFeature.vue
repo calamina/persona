@@ -74,7 +74,7 @@ textarea {
   resize: none;
 
   &:focus-within {
-    background-color: var(--element-alt);
+    background-color: var(--input-focus);
   }
 }
 

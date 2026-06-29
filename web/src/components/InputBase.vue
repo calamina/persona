@@ -43,7 +43,7 @@ input {
   background-color: transparent;
   padding: 0.25rem 0.3rem;
   color: inherit;
-  background-color: var(--element-alt);
+  background-color: var(--input-focus);
   width: 100%;
   overflow: hidden;
 

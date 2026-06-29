@@ -31,7 +31,15 @@ const safeText = computed(() => {
 </template>
 
 <style scoped>
+.chan:hover,
+.chan:focus-within {
+  img {
+    background-color: var(--element-focusmax);
+  }
+}
+
 img {
+  /* border: var(--border); */
   border-radius: var(--border-radius-small);
   width: 100%;
   flex-shrink: 0;
