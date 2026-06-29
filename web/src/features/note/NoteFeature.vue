@@ -34,7 +34,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <LayoutWindow title="Note" fit class="rel">
+  <LayoutWindow title="Note" icon="note" fit class="rel">
     <textarea
       v-model="input"
       name="note"

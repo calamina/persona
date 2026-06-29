@@ -13,7 +13,7 @@ await store.loadFavorites()
 </script>
 
 <template>
-  <LayoutWindow title="Favorites">
+  <LayoutWindow title="Favorites" icon="favorite">
     <FavoriteAdd />
     <LayoutList>
       <FavoriteItem v-for="favorite in favorites" :key="favorite.id" :favorite="favorite" />

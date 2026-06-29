@@ -20,7 +20,7 @@ const tabs: Tab[] = TABS.map((b) => ({
 </script>
 
 <template>
-  <LayoutWindow title="Youtube">
+  <LayoutWindow title="Youtube" icon="youtube">
     <template #tabs>
       <TabList :tabs />
     </template>

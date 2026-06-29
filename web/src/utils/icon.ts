@@ -1,6 +1,8 @@
+import IconChan from '../components/icons/IconChan.vue'
 import IconCheck from '../components/icons/IconCheck.vue'
 import IconCheckNot from '../components/icons/IconCheckNot.vue'
 import IconFaviconToggle from '../components/icons/IconFaviconToggle.vue'
+import IconFavorite from '../components/icons/IconFavorite.vue'
 import IconFavoriteAdd from '../components/icons/IconFavoriteAdd.vue'
 import IconFavoriteDelete from '../components/icons/IconFavoriteDelete.vue'
 import IconFavoriteSearch from '../components/icons/IconFavoriteSearch.vue'
@@ -9,10 +11,14 @@ import IconFolder from '../components/icons/IconFolder.vue'
 import IconHide from '../components/icons/IconHide.vue'
 import IconLoading from '../components/icons/IconLoading.vue'
 import IconLogout from '../components/icons/IconLogout.vue'
+import IconNote from '../components/icons/IconNote.vue'
+import IconRss from '../components/icons/IconRss.vue'
 import IconShow from '../components/icons/IconShow.vue'
 import IconSmile from '../components/icons/IconSmile.vue'
 import IconTheme from '../components/icons/IconTheme.vue'
+import IconTodoList from '../components/icons/IconTodoList.vue'
 import IconUser from '../components/icons/IconUser.vue'
+import IconYoutube from '../components/icons/IconYoutube.vue'
 
 export const iconMap = {
   show: IconShow,
@@ -22,6 +28,7 @@ export const iconMap = {
   favoriteAdd: IconFavoriteAdd,
   favoriteDelete: IconFavoriteDelete,
   folder: IconFolder,
+  favorite: IconFavorite,
   faviconToggle: IconFaviconToggle,
   favoriteSearch: IconFavoriteSearch,
   loading: IconLoading,
@@ -30,5 +37,10 @@ export const iconMap = {
   theme: IconTheme,
   fold: IconFold,
   smile: IconSmile,
+  chan: IconChan,
+  note: IconNote,
+  todolist: IconTodoList,
+  rss: IconRss,
+  youtube: IconYoutube,
 }
 export type IconName = keyof typeof iconMap

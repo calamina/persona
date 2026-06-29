@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import IconBase from '../components/icons/IconBase.vue'
-const { title, fit } = defineProps<{ title?: string; fit?: boolean }>()
+import type { IconName } from '../utils/icon.ts'
+const { title, icon, fit } = defineProps<{ title?: string; icon?: IconName; fit?: boolean }>()
 const toggled = ref(true)
 </script>
 
 <template>
   <div class="window" :class="{ fit: fit || !toggled }">
     <h2 :class="{ borderless: !toggled }">
+      <IconBase v-if="icon" :name="icon" class="title-icon" />
       {{ title ?? '' }}
       <button @click="toggled = !toggled">
         <IconBase name="fold" />
@@ -56,12 +58,12 @@ h2 {
   font-size: 1rem;
   font-weight: 300;
   border-bottom: var(--border);
-  /* padding: 0 var(--title-spacing); */
   padding: 0;
   padding-left: var(--title-spacing);
   height: var(--title-height);
   display: flex;
   flex-shrink: 0;
+  gap: var(--list-gap);
   justify-content: var(--title-align);
   align-items: center;
   background-color: var(--title-bg);
@@ -74,6 +76,11 @@ h2 {
     border-bottom-color: transparent;
     border-radius: var(--border-radius);
   }
+}
+
+.title-icon {
+  height: 1.2rem;
+  color: inherit;
 }
 
 button {

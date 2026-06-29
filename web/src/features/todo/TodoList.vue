@@ -50,7 +50,7 @@ const toggleDone = async (id: number) => {
 </script>
 
 <template>
-  <LayoutWindow title="Todo" fit>
+  <LayoutWindow title="Todo" icon="todolist" fit>
     <FieldAction
       v-model="newTodo"
       :action="create"

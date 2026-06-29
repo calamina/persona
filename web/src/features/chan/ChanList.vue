@@ -29,7 +29,7 @@ const tabs: Tab[] = BOARDS.map((b) => ({
 </script>
 
 <template>
-  <LayoutWindow title="4chan">
+  <LayoutWindow title="4chan" icon="chan">
     <template #tabs>
       <TabList :tabs />
     </template>

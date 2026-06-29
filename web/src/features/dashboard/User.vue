@@ -21,6 +21,7 @@ try {
 .user {
   background-color: transparent;
   border: none;
+  gap: var(--list-gap);
   :global(path) {
     stroke: var(--icon-color);
   }

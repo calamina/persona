@@ -29,7 +29,7 @@ const tabs: Tab[] = TABS.map((b) => ({
 </script>
 
 <template>
-  <LayoutWindow title="Rss">
+  <LayoutWindow title="Rss" icon="rss">
     <template #tabs>
       <TabList :tabs />
     </template>
