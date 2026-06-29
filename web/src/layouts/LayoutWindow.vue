@@ -65,7 +65,7 @@ h2 {
   justify-content: var(--title-align);
   align-items: center;
   background-color: var(--title-bg);
-  /* color: var(--title-color); */
+  color: var(--title-color);
   flex-shrink: 0;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);

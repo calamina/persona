@@ -1,12 +1,12 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { api } from '../../utils/api-client'
-import type { Feed, RssDisplay } from './rss.model'
+import type { FeedDisplay, RssDisplay } from './rss.model'
 import { getFeeds } from './rss.service'
 
 export const useRssStore = defineStore('rss', () => {
   const data = ref<RssDisplay[]>([])
-  const feeds = ref<Feed[]>([])
+  const feeds = ref<FeedDisplay[]>([])
   const isError = ref(false)
 
   async function loadFeeds() {

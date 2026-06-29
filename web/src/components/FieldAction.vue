@@ -45,7 +45,7 @@ form {
 input {
   border: none;
   background-color: transparent;
-  padding: 0.25rem var(--title-spacing);
+  padding: 0.25rem calc(var(--spacing) + var(--spacing-list-hr));
   height: calc(var(--icon-size) - var(--border-width));
   color: inherit;
   background-color: var(--actions-input-bg);

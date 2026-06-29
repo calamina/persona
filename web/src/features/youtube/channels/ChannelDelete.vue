@@ -15,7 +15,6 @@ const remove = async (channel: ChannelDisplay) => {
 
   const { data } = await deleteChannel(channel.id)
   if (data) {
-    store.clearVideoCache()
     await store.loadChannels()
     await store.loadVideos(true)
   }

@@ -8,6 +8,14 @@ const { item } = defineProps<{ item: RssDisplay }>()
 
 <template>
   <LayoutItem :href="item.url" class="item">
+    <!-- <template #visual v-if="item.imageUrl">
+      <img
+        width="100"
+        :src="item.imageUrl"
+        :alt="item.title + 'thumbnail'"
+        referrerpolicy="no-referrer"
+      />
+    </template> -->
     <p class="title">{{ item.title }}</p>
     <p class="categs" v-if="item.categories.length">
       <span v-for="categ in item.categories">{{ categ }}</span>

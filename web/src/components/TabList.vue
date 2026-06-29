@@ -40,8 +40,8 @@ const switchTab = (tab: Tab) => {
   height: var(--icon-size);
   background-color: var(--tab-wrap-bg);
   border-bottom: var(--border);
-  border-top-left-radius: var(--border-radius);
-  border-top-right-radius: var(--border-radius);
+  /* border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius); */
   overflow: hidden;
 }
 

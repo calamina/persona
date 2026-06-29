@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { XMLParser } from 'fast-xml-parser'
+import { FeedModel } from '../db/feed.schema'
 
 interface GlobalCache {
   data: Item[]
@@ -23,6 +25,7 @@ interface Item {
   categories: string[]
   source: string
   url: string
+  imageUrl: string
 }
 
 type GetRss = Promise<{ data: Item[]; error: null } | { data: null; error: { message: string } }>
@@ -61,7 +64,7 @@ const ensureArray = <T>(val: T | T[] | undefined): T[] => {
   return Array.isArray(val) ? val : [val]
 }
 
-export const getRss = async (urls: string[], forceRefresh = false): GetRss => {
+export const getRss = async (feeds: FeedModel[], forceRefresh = false): GetRss => {
   const now = Date.now()
   const CACHE_TTL = 15 * 60 * 1000 // 15 minutes in milliseconds
 
@@ -72,12 +75,12 @@ export const getRss = async (urls: string[], forceRefresh = false): GetRss => {
   const FEED_ITEMS = 2
   const FEED_TIMEOUT = 3000
 
-  const fetchPromises = urls.map(async (url: string): Promise<Item[]> => {
+  const fetchPromises = feeds.map(async (feed: FeedModel): Promise<Item[]> => {
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), FEED_TIMEOUT)
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(feed.url, {
         signal: controller.signal,
         headers: { 'User-Agent': 'RSS-Aggregator-Bot/1.0' },
       })
@@ -90,7 +93,7 @@ export const getRss = async (urls: string[], forceRefresh = false): GetRss => {
       const root = rss?.rss?.channel || rss?.feed || rss?.channel
       if (!root) return []
 
-      const channelTitle = root.title || 'Unknown Source'
+      const channelTitle = feed.name || root.title || 'Unknown Source'
 
       const rawItems = root.item || root.entry || []
       const items = ensureArray(rawItems)
@@ -106,11 +109,15 @@ export const getRss = async (urls: string[], forceRefresh = false): GetRss => {
           .filter(Boolean)
 
         const description = item.description || item.summary || item.content || ''
+        const cleanDescription =
+          typeof description === 'object' ? description['#text'] || '' : description
 
         let rawUrl = item.guid || item.link || ''
         if (typeof rawUrl === 'object') {
-          rawUrl = rawUrl['@_href'] || rawUrl['#text'] || url
+          rawUrl = rawUrl['@_href'] || rawUrl['#text'] || feed.url
         }
+
+        const imageUrl = extractImageUrl(item, cleanDescription)
 
         return {
           source: channelTitle,
@@ -122,6 +129,7 @@ export const getRss = async (urls: string[], forceRefresh = false): GetRss => {
           description: typeof description === 'object' ? description['#text'] || '' : description,
           categories: categories,
           url: String(rawUrl),
+          imageUrl: imageUrl,
         }
       })
     } catch {
@@ -147,6 +155,43 @@ export const getRss = async (urls: string[], forceRefresh = false): GetRss => {
     console.error('RSS Parsing error:', error)
     return { data: null, error: { message: 'Error getting RSS items' } }
   }
+}
+
+const extractImageUrl = (item: any, descriptionHtml: string): string => {
+  if (item.enclosure) {
+    const enclosures = Array.isArray(item.enclosure) ? item.enclosure : [item.enclosure]
+    const imgEnclosure = enclosures.find(
+      (enc: any) => enc?.['@_type']?.startsWith('image/') || enc?.['@_url'],
+    )
+    if (imgEnclosure?.['@_url']) return String(imgEnclosure['@_url'])
+  }
+
+  const mediaContent = item['media:content'] || item['content'] || item['media:thumbnail']
+  if (mediaContent) {
+    const mediaArray = Array.isArray(mediaContent) ? mediaContent : [mediaContent]
+    const imgMedia = mediaArray.find(
+      (media: any) => media?.['@_url'] || media?.['@_type']?.startsWith('image/'),
+    )
+    if (imgMedia?.['@_url']) return String(imgMedia['@_url'])
+  }
+
+  if (item.link) {
+    const links = Array.isArray(item.link) ? item.link : [item.link]
+    const imgLink = links.find(
+      (l: any) => l?.['@_rel'] === 'enclosure' || l?.['@_type']?.startsWith('image/'),
+    )
+    if (imgLink?.['@_href']) return String(imgLink['@_href'])
+  }
+
+  if (descriptionHtml) {
+    const imgRegex = /<img[^>]+src=["']([^"']+)["']/i
+    const match = descriptionHtml.match(imgRegex)
+    if (match && match[1]) {
+      return match[1]
+    }
+  }
+
+  return ''
 }
 
 export async function getFeedName(url: string) {

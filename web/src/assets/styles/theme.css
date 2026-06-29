@@ -73,23 +73,23 @@
   --bg-dim: transparent;
   --bg-image: none;
 
-  --element: oklch(94% 0.002 260);
-  --element-alt: oklch(91% 0.002 260);
-  --element-focus: oklch(88% 0.002 260);
+  --element: oklch(96% 0.004 30);
+  --element-alt: oklch(93% 0.004 30);
+  --element-focus: oklch(91% 0.004 30);
   --element-focusmax: transparent;
 
-  --tag: oklch(90% 0.002 260);
-  --tag-focus: oklch(82% 0.002 260);
+  --tag: oklch(90% 0.004 30);
+  --tag-focus: oklch(85% 0.004 30);
   --tag-gap: 0.3rem;
 
-  --color: oklch(40% 0.002 260);
-  --color-dim: oklch(30% 0.002 260 / 0.6);
-  --color-dimmer: oklch(30% 0.002 260 / 0.4);
-  --color-focus: oklch(20% 0.002 260);
+  --color: oklch(40% 0.004 30);
+  --color-dim: oklch(30% 0.004 30 / 0.6);
+  --color-dimmer: oklch(30% 0.004 30 / 0.4);
+  --color-focus: oklch(20% 0.004 30);
   --color-highlight: oklch(64.137% 0.11206 77.645);
 
-  --border-color: oklch(80% 0.002 260);
-  --border-focus: oklch(20% 0.002 260);
+  --border-color: oklch(80% 0.004 30);
+  --border-focus: oklch(20% 0.004 30);
   --border-width: 1px;
   --border-width-dashboard: 1px;
   --border-width-header: 1px;
@@ -99,8 +99,8 @@
   --border-radius: 4px;
   --border-radius-small: 4px;
 
-  --icon-color: oklch(57.268% 0.002 260);
-  --icon-focus: oklch(70% 0.002 260);
+  --icon-color: oklch(57.268% 0.004 30);
+  --icon-focus: oklch(70% 0.004 30);
   --icon-size: 2.1rem;
   --icon-stroke: 1.15px;
 
@@ -125,7 +125,7 @@
 
   --item-gap: 0.6rem;
 
-  --scroll-color: oklch(73.802% 0.002 260);
+  --scroll-color: oklch(73.802% 0.004 30);
 
   /* --actions-bg: #f8f8f8; */
   --actions-bg: transparent;
@@ -134,6 +134,141 @@
   --tab-wrap-bg: var(--element-focus);
   --tab-wrap-bg: var(--bg);
   --tab-active-bg: var(--element);
+}
+
+[data-theme='mini'] {
+  font-size: 18px;
+
+  --bg: oklch(98% 0.015 310);
+  --bg-dim: transparent;
+  --bg-image: none;
+
+  --element: oklch(99% 0.015 310);
+  --element-alt: oklch(94% 0.025 310);
+  --element-focus: oklch(94% 0.025 310);
+  --element-focusmax: oklch(88% 0.035 310);
+
+  --tag: var(--element-focus);
+  --tag-focus: var(--element-focusmax);
+  --tag-gap: 0.3rem;
+
+  --color: oklch(60% 0.06 310);
+  --color-dim: oklch(60% 0.06 310 / 0.6);
+  --color-dimmer: oklch(60% 0.06 310 / 0.4);
+  --color-focus: oklch(20% 0.06 310);
+  --color-highlight: oklch(64.137% 0.11206 77.645);
+
+  --border-color: oklch(80% 0.06 310);
+  --border-focus: oklch(20% 0.06 310);
+  --border-width: 1px;
+  --border-width-dashboard: 1px;
+  --border-width-header: 1px;
+  --border: var(--border-width) solid var(--border-color);
+  --border-dashboard: var(--border-width-dashboard) solid var(--border-color);
+  --border-header: var(--border-width-header) solid var(--border-color);
+  --border-radius: 4px;
+  --border-radius-small: 4px;
+
+  --icon-color: oklch(57.268% 0.06 310);
+  --icon-focus: oklch(70% 0.06 310);
+  --icon-size: 1.8rem;
+  --icon-stroke: 1.15px;
+
+  --favicon-size: 28px;
+
+  --spacing: 0rem;
+  --spacing-small: 0.3rem;
+  --spacing-dashboard: 12px;
+  --spacing-list-hr: 0.3rem;
+  --spacing-list-vr: 0.3rem;
+
+  --list-gap: 0.3rem;
+
+  --header-size: 1.8rem;
+  --header-bg: var(--bg);
+
+  --title-align: start;
+  --title-spacing: 0.6rem;
+  --title-height: 1.8rem;
+  --title-bg: oklch(96% 0.025 310);
+  --title-color: var(--color-dim);
+
+  --item-gap: 0.6rem;
+
+  --scroll-color: oklch(73.802% 0.025 310);
+
+  --actions-bg: transparent;
+  --actions-input-bg: transparent;
+
+  --tab-wrap-bg: var(--element-focus);
+  --tab-wrap-bg: var(--bg);
+  --tab-active-bg: oklch(96% 0.025 310);
+}
+
+[data-theme='micro'] {
+  --bg: oklch(92% 0.002 260);
+  --bg-dim: transparent;
+  --bg-image: none;
+
+  --element: oklch(100% 0.002 260);
+  --element-alt: oklch(91% 0.002 260);
+  --element-focus: oklch(96% 0.002 260);
+  --element-focusmax: transparent;
+
+  --tag: oklch(96% 0.002 260);
+  --tag-focus: oklch(92% 0.002 260);
+  --tag-gap: 0.3rem;
+
+  --color: oklch(65% 0.01 195);
+  --color-dim: oklch(65% 0.01 195 / 0.6);
+  --color-dimmer: oklch(65% 0.01 195 / 0.4);
+  --color-focus: oklch(20% 0.002 260);
+  --color-highlight: oklch(64.137% 0.11206 77.645);
+
+  --border-color: oklch(100% 0.002 260);
+  --border-focus: oklch(20% 0.002 260);
+  --border-width: 0;
+  --border-width-dashboard: 4px;
+  --border-width-header: 0;
+  --border: var(--border-width) solid var(--border-color);
+  --border-dashboard: var(--border-width-dashboard) solid var(--border-color);
+  --border-header: var(--border-width-header) solid var(--border-color);
+  --border-radius: 0;
+  --border-radius-small: 0;
+
+  --icon-color: oklch(57.268% 0.002 260);
+  --icon-focus: oklch(70% 0.002 260);
+  --icon-size: 2rem;
+  --icon-stroke: 1.15px;
+
+  --favicon-size: 28px;
+
+  --spacing: 0.45rem;
+  --spacing-small: 0.45rem;
+  --spacing-dashboard: 16px;
+  --spacing-list-hr: 0;
+  --spacing-list-vr: 0;
+
+  --list-gap: 0;
+
+  --header-size: 2rem;
+  --header-bg: var(--element);
+
+  --title-align: start;
+  --title-spacing: 0.6rem;
+  --title-height: 2rem;
+  --title-bg: oklch(86% 0.08 185);
+  --title-color: oklch(62% 0.05 185);
+
+  --item-gap: 0.6rem;
+
+  --scroll-color: oklch(73.802% 0.002 260);
+
+  --actions-bg: oklch(100% 0.002 260);
+  --actions-input-bg: transparent;
+
+  --tab-wrap-bg: oklch(96% 0.002 260);
+  --tab-active-bg: oklch(100% 0.002 260);
 }
 
 html {

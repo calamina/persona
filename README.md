@@ -12,6 +12,8 @@ Homepage / dashboard with several features
 - [x] Note
 - [ ] Shortcuts
 - [ ] Calendar ?
+- [ ] Git status / repos ?
+- [ ] Apps uptime / up ?
 
 ## Frontend
 
@@ -19,7 +21,7 @@ Homepage / dashboard with several features
 
 ## Backend
 
-- `Drizzle` as an _ORM_ to manage the _SQLite database_
+- `Drizzle ORM` to manage the _SQLite database_
 - `Better-auth` for everything _auth_ related (server/client)
 - `Resend` for everything _email_ related (verification, password reset, ...)
 - `Cron job` for _database backups_ each day at midnight (with _14 day retention_)
@@ -34,10 +36,11 @@ Homepage / dashboard with several features
 
 ## TODO
 
-- [ ] ! dynamic rss feeds -> check save && get list from db
+- [ ] ! Streamline tabs (youtube / feed / 4chan?)
+- [ ] ! Refactor Rss feature : better naming, subfolder
 - [ ] ! Favorite add : ISO channel / rss add -> get title and confirm
 
-- [ ] confirmation on add ?
+- [ ] confirmation on add (notif / snack) ?
 - [ ] actions like minimize -> activate in title bar
 - [ ] refacto login / register for theme
 - [ ] Add 4chan searchbar ?
@@ -59,4 +62,5 @@ Homepage / dashboard with several features
 - spacing (compact / minimal / biggie)
 - features (enable/disable)
 - chan selection & default
+- batch add (rss feeds, youtube channels)
 ```
