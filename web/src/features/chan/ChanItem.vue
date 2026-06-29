@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useDateFormat } from '../../utils/date'
 import type { ChanDisplay } from './chan.model'
 import DOMPurify from 'dompurify'
 import LayoutItem from '../../layouts/LayoutItem.vue'
+import { useTimeAgo } from '@vueuse/core'
 
 const { chan } = defineProps<{ chan: ChanDisplay }>()
 
@@ -26,7 +26,7 @@ const safeText = computed(() => {
       />
     </template>
     <p class="description" v-html="safeText"></p>
-    <p class="info">[{{ chan.replies }}] ▪ {{ useDateFormat(chan.updatedAt) }}</p>
+    <p class="info">[{{ chan.replies }}] ▪ {{ useTimeAgo(chan.updatedAt) }}</p>
   </LayoutItem>
 </template>
 

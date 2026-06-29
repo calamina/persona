@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { useTimeAgo } from '@vueuse/core'
 import LayoutItem from '../../../layouts/LayoutItem.vue'
-import { useDateFormat } from '../../../utils/date'
 import type { VideoDisplay } from '../youtube.model'
 const { video } = defineProps<{ video: VideoDisplay }>()
 </script>
@@ -16,7 +16,7 @@ const { video } = defineProps<{ video: VideoDisplay }>()
     </template>
     <p class="info">{{ video.title }}</p>
     <p class="info">{{ video.author }}</p>
-    <p class="info date">{{ useDateFormat(video.published) }}</p>
+    <p class="info date">{{ useTimeAgo(video.published) }}</p>
   </LayoutItem>
 </template>
 

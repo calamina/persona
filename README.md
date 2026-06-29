@@ -36,9 +36,9 @@ Homepage / dashboard with several features
 
 ## TODO
 
-- [ ] ! Streamline tabs (youtube / feed / 4chan?)
-- [ ] ! Refactor Rss feature : better naming, subfolder
-- [ ] ! Favorite add : ISO channel / rss add -> get title and confirm
+- [ ] ! Streamline tabs (youtube / rss / 4chan?)
+- [ ] ! Streamline cover (youtube / rss / 4chan)
+- [ ] ! Favorite add : ISO rss add -> get title and confirm
 
 - [ ] confirmation on add (notif / snack) ?
 - [ ] actions like minimize -> activate in title bar

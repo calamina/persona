@@ -10,6 +10,7 @@ import IconHide from '../components/icons/IconHide.vue'
 import IconLoading from '../components/icons/IconLoading.vue'
 import IconLogout from '../components/icons/IconLogout.vue'
 import IconShow from '../components/icons/IconShow.vue'
+import IconSmile from '../components/icons/IconSmile.vue'
 import IconTheme from '../components/icons/IconTheme.vue'
 import IconUser from '../components/icons/IconUser.vue'
 
@@ -28,5 +29,6 @@ export const iconMap = {
   checkNot: IconCheckNot,
   theme: IconTheme,
   fold: IconFold,
+  smile: IconSmile,
 }
 export type IconName = keyof typeof iconMap
