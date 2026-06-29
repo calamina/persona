@@ -15,7 +15,7 @@ export const chan = new Hono()
       return c.json(sendError('Database error'), 500)
     }
 
-    const [res]: Chan[] = await response.json()
+    const [res]: Chan[] = ((await response.json()) as Chan[]) ?? []
     if (res) {
       const filteredThreads = res.threads
         .filter((thread) => !thread.sticky)

@@ -45,6 +45,7 @@ a {
 p {
   padding: var(--spacing-small);
   display: flex;
+  align-items: center;
   height: var(--icon-size);
   flex: 1;
   overflow-x: hidden;

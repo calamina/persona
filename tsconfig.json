@@ -1,3 +1,7 @@
 {
-  "include": ["eslint.config.*"]
+  "include": ["eslint.config.*"],
+  "compilerOptions": {
+    "target": "es2025",
+    "lib": ["ES2025"]
+  }
 }

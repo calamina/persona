@@ -10,7 +10,7 @@ Homepage / dashboard with several features
 - [x] Todos
 - [x] RSS
 - [x] Note
-- [ ] Shortcuts
+- [x] Soul (cringe name rn ...)
 - [ ] Calendar ?
 - [ ] Git events / repos ?
 - [ ] Apps uptime / up ?
@@ -35,6 +35,12 @@ Homepage / dashboard with several features
 - `Oxlint` + `Oxfmt`
 
 ## TODO
+
+- [ ] ! Rename soul + add dynamic links & categs + bangs
+- [ ] ! Replace favorites with git info
+- [ ] ! Add param to hide adding / editing
+
+- [ ] ! try positionning actionBar and adding as a list element
 
 - [ ] ! Streamline tabs (youtube / rss / 4chan?)
 - [ ] ! Streamline cover (youtube / rss / 4chan)

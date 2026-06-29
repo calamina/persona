@@ -1,43 +1,45 @@
 <script setup lang="ts">
 import LayoutAsync from '../../layouts/LayoutAsync.vue'
-import ChanList from '../chan/ChanList.vue'
-import FavoriteFeature from '../favorite/FavoriteFeature.vue'
 import NoteFeature from '../note/NoteFeature.vue'
 import RssFeed from '../rss/RssFeed.vue'
+import SoulContent from '../soul/SoulContent.vue'
 import ThemeSwitch from '../theme/ThemeSwitch.vue'
 import TodoList from '../todo/TodoList.vue'
 import YoutubeFeed from '../youtube/YoutubeFeed.vue'
 import DashboardHeader from './DashboardHeader.vue'
+import FavoriteFeature from '../favorite/FavoriteFeature.vue'
+import ChanList from '../chan/ChanList.vue'
 </script>
 
 <template>
   <div class="dashboard">
-    <!-- <DashboardHeader /> -->
-    <div class="elements">
+    <Suspense>
+      <DashboardHeader class="header" />
+    </Suspense>
+    <SoulContent class="soul" />
+    <div class="left">
+      <!-- <DashboardHeader /> -->
       <Suspense>
-        <div class="sidebar">
-          <Suspense>
-            <DashboardHeader />
-          </Suspense>
-          <FavoriteFeature />
-          <NoteFeature />
-          <TodoList />
-        </div>
+        <FavoriteFeature />
       </Suspense>
-      <div class="main">
-        <LayoutAsync>
-          <RssFeed />
-        </LayoutAsync>
-        <LayoutAsync>
-          <ChanList />
-        </LayoutAsync>
-      </div>
-      <div class="sidebar sidebar-alt">
-        <LayoutAsync>
-          <YoutubeFeed />
-        </LayoutAsync>
-        <ThemeSwitch />
-      </div>
+      <NoteFeature />
+      <Suspense>
+        <TodoList />
+      </Suspense>
+    </div>
+    <div class="center">
+      <LayoutAsync>
+        <RssFeed />
+      </LayoutAsync>
+      <LayoutAsync>
+        <ChanList />
+      </LayoutAsync>
+    </div>
+    <div class="right">
+      <LayoutAsync>
+        <YoutubeFeed />
+      </LayoutAsync>
+      <ThemeSwitch />
     </div>
   </div>
 </template>
@@ -47,19 +49,64 @@ import DashboardHeader from './DashboardHeader.vue'
   width: 100%;
   height: 100svh;
   display: grid;
+  grid-template-columns: max(16rem, 20vw) 1fr max(24rem, 28vw);
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas:
+    'header header header'
+    'soul soul soul'
+    'left center right';
+  grid-auto-flow: row;
+
+  padding: var(--spacing-dashboard);
+  gap: var(--spacing-dashboard);
+}
+
+.header {
+  grid-area: header;
+}
+
+.soul {
+  grid-area: soul;
+}
+
+.left {
+  grid-area: left;
+}
+
+.center {
+  grid-area: center;
+}
+
+.right {
+  grid-area: right;
+}
+
+.left,
+.center,
+.right {
+  overflow: hidden;
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-dashboard);
+}
+
+/* .dashboard {
+  width: 100%;
+  height: 100svh;
+  display: grid;
   padding: var(--spacing);
   gap: var(--spacing);
   padding: var(--spacing-dashboard);
   gap: var(--spacing-dashboard);
-  /* grid-template-rows: var(--header-size) auto; */
+  grid grid-template-areas: 
+  ;
   @media (max-width: 1250px) {
     align-items: start;
-    /* height: auto; */
     height: auto;
     min-height: 100svh;
   }
-}
-
+} */
+/* 
 .elements {
   overflow: hidden;
   align-items: center;
@@ -112,5 +159,5 @@ import DashboardHeader from './DashboardHeader.vue'
       max-width: unset;
     }
   }
-}
+} */
 </style>

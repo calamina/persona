@@ -15,6 +15,7 @@ import IconNote from '../components/icons/IconNote.vue'
 import IconRss from '../components/icons/IconRss.vue'
 import IconShow from '../components/icons/IconShow.vue'
 import IconSmile from '../components/icons/IconSmile.vue'
+import IconSoul from '../components/icons/IconSoul.vue'
 import IconTheme from '../components/icons/IconTheme.vue'
 import IconTodoList from '../components/icons/IconTodoList.vue'
 import IconUser from '../components/icons/IconUser.vue'
@@ -42,5 +43,6 @@ export const iconMap = {
   todolist: IconTodoList,
   rss: IconRss,
   youtube: IconYoutube,
+  soul: IconSoul,
 }
 export type IconName = keyof typeof iconMap
