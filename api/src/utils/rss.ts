@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { XMLParser } from 'fast-xml-parser'
-import { FeedModel } from '../db/feed.schema'
+import type { FeedModel } from '../db/feed.schema'
 
 interface GlobalCache {
   data: Item[]

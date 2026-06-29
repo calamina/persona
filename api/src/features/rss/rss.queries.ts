@@ -1,5 +1,5 @@
 import { db, dbWrapper } from '../../utils/db'
-import { feed, FeedNewModel } from '../../db/feed.schema'
+import { feed, type FeedNewModel } from '../../db/feed.schema'
 import { and, eq } from 'drizzle-orm'
 
 export const dbGetFeeds = (userId: string) =>

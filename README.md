@@ -12,7 +12,7 @@ Homepage / dashboard with several features
 - [x] Note
 - [ ] Shortcuts
 - [ ] Calendar ?
-- [ ] Git status / repos ?
+- [ ] Git events / repos ?
 - [ ] Apps uptime / up ?
 
 ## Frontend
