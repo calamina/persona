@@ -3,7 +3,7 @@ import type { IconName } from '../utils/icon.ts'
 import ButtonLoading from './ButtonLoading.vue'
 
 const { action, label, icon, loading, placeholder } = defineProps<{
-  action: () => void
+  action: (...args: any) => void
   label: string
   icon: IconName
   loading: boolean
@@ -14,7 +14,7 @@ const model = defineModel<string>()
 </script>
 
 <template>
-  <form class="form" @submit.prevent="action()">
+  <form class="form" @submit.prevent="action(model)">
     <input id="url" v-model="model" :placeholder="placeholder ?? '...'" :required="false" />
     <ButtonLoading class="button" :loading :label :icon />
   </form>

@@ -1,52 +1,38 @@
 <script setup lang="ts">
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import LayoutWindow from '../../layouts/LayoutWindow.vue'
 import FieldAction from '../../components/FieldAction.vue'
 import ButtonLoading from '../../components/ButtonLoading.vue'
-import { useTodoStore } from './todo.store.ts'
-import { storeToRefs } from 'pinia'
-import { addTodo, deleteTodo, updateTodo } from './todo.service.ts'
+import { addTodo, deleteTodo, getTodos, updateTodo } from './todo.service.ts'
 import { ref } from 'vue'
 import LayoutList from '../../layouts/LayoutList.vue'
 import LayoutItem from '../../layouts/LayoutItem.vue'
 
-const store = useTodoStore()
-const { todos } = storeToRefs(store)
-const loadingCreate = ref(false)
-const loadingDone = ref(false)
-const loadingDelete = ref(false)
+const queryClient = useQueryClient()
 const newTodo = ref('')
 
-await store.loadTodos()
+const { isLoading: _todosLoading, data: todos } = useQuery({
+  queryKey: ['todos'],
+  queryFn: getTodos,
+})
 
-const updateList = () => {
-  store.clearTodoCache()
-  store.loadTodos(true)
-}
-
-const create = async () => {
-  if (!newTodo.value.length) return
-  loadingCreate.value = true
-  const { data } = await addTodo(newTodo.value)
-  if (data) {
-    updateList()
+const { mutate: create, isPending: createLoading } = useMutation({
+  mutationFn: addTodo,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['todos'] })
     newTodo.value = ''
-  }
-  loadingCreate.value = false
-}
+  },
+})
 
-const remove = async (id: number) => {
-  loadingDelete.value = true
-  const { data } = await deleteTodo(id)
-  if (data) updateList()
-  loadingDelete.value = false
-}
+const { mutate: remove, isPending: removeLoading } = useMutation({
+  mutationFn: deleteTodo,
+  onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+})
 
-const toggleDone = async (id: number) => {
-  loadingDone.value = true
-  const { data } = await updateTodo(id)
-  if (data) updateList()
-  loadingDone.value = false
-}
+const { mutate: update, isPending: updateLoading } = useMutation({
+  mutationFn: updateTodo,
+  onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
+})
 </script>
 
 <template>
@@ -54,26 +40,26 @@ const toggleDone = async (id: number) => {
     <FieldAction
       v-model="newTodo"
       :action="create"
-      :loading="loadingCreate"
+      :loading="createLoading"
       icon="favoriteAdd"
       label="Add"
       placeholder="add todo ..."
       class="header"
     />
-    <LayoutList v-if="todos.length" fit>
+    <LayoutList v-if="todos?.length" fit>
       <LayoutItem type="div" inline v-for="todo in todos" :key="todo.id" tabindex="0" class="todo">
         <ButtonLoading
-          class="test"
-          @click="toggleDone(todo.id)"
-          :loading="false"
+          @click.stop="update(todo.id)"
+          class="updateButton"
+          :loading="updateLoading"
           :icon="todo.done ? 'check' : 'checkNot'"
           :label="todo.title"
           :class="{ done: todo.done }"
         />
         <ButtonLoading
+          @click.stop="remove(todo.id)"
           class="deleteButton"
-          @click="remove(todo.id)"
-          :loading="false"
+          :loading="removeLoading"
           icon="favoriteDelete"
         />
       </LayoutItem>
@@ -100,7 +86,7 @@ const toggleDone = async (id: number) => {
   width: fit-content;
 }
 
-.test,
+.updateButton,
 .deleteButton {
   padding: 0;
   height: fit-content;
@@ -112,7 +98,7 @@ const toggleDone = async (id: number) => {
   }
 }
 
-.test {
+.updateButton {
   flex: 1;
   display: flex;
   gap: 0.45rem;

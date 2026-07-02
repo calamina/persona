@@ -2,7 +2,7 @@
 import LayoutAsync from '../../layouts/LayoutAsync.vue'
 import NoteFeature from '../note/NoteFeature.vue'
 import RssFeed from '../rss/RssFeed.vue'
-import SoulContent from '../soul/SoulContent.vue'
+import LinksFeature from '../links/LinksFeature.vue'
 import ThemeSwitch from '../theme/ThemeSwitch.vue'
 import TodoList from '../todo/TodoList.vue'
 import YoutubeFeed from '../youtube/YoutubeFeed.vue'
@@ -16,7 +16,7 @@ import ChanList from '../chan/ChanList.vue'
     <Suspense>
       <DashboardHeader class="header" />
     </Suspense>
-    <SoulContent class="soul" />
+    <LinksFeature class="soul" />
     <div class="left">
       <!-- <DashboardHeader /> -->
       <Suspense>
