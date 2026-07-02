@@ -22,7 +22,7 @@ const tabs: Tab[] = TABS.map((b) => ({
 <template>
   <LayoutWindow title="Youtube" icon="youtube">
     <template #tabs>
-      <TabList :tabs />
+      <TabList :tabs="tabs" />
     </template>
 
     <keep-alive>

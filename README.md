@@ -36,7 +36,7 @@ Homepage / dashboard with several features
 
 ## TODO
 
-- [ ] ! Rename soul + add dynamic links & categs + bangs
+- [ ] ! add dynamic links & categs + bangs
 - [ ] ! Replace favorites with git info
 - [ ] ! Add param to hide adding / editing
 

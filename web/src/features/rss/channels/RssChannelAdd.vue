@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, useTemplateRef } from 'vue'
-import { useRssStore } from '../rss.store.ts'
+import { ref } from 'vue'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { addFeed, searchFeed } from '../rss.service.ts'
 import FieldAction from '../../../components/FieldAction.vue'
 import ButtonBase from '../../../components/ButtonBase.vue'
@@ -8,60 +8,58 @@ import ButtonLoading from '../../../components/ButtonLoading.vue'
 import InputBase from '../../../components/InputBase.vue'
 import type { Feed } from '../rss.model.ts'
 
-const store = useRssStore()
-
-const loadingSearch = ref(false)
-const loadingAdd = ref(false)
+const queryClient = useQueryClient()
 const query = ref('')
-const input = useTemplateRef<HTMLInputElement>('input')
-const result = ref<Feed | null | undefined>(null)
+const result = ref<Feed | null>(null)
 
-const search = async () => {
-  if (!query.value.length) return
-  loadingSearch.value = true
-  const { data } = await searchFeed(query.value)
-  if (data) {
-    result.value = data
-    input.value?.focus()
-  } else result.value = null
-  loadingSearch.value = false
-}
+const { mutate: search, isPending: loadingSearch } = useMutation({
+  mutationFn: async (searchQuery: string) => {
+    if (!searchQuery.length) return
+    return await searchFeed(searchQuery)
+  },
+  onSuccess: (data) => {
+    if (data) result.value = data
+    else result.value = null
+  },
+})
 
 const cancel = () => {
   result.value = null
   query.value = ''
 }
 
-const follow = async () => {
-  if (!result.value) return
-  loadingAdd.value = true
-  const { data } = await addFeed(result.value)
-  if (data) {
-    await store.loadFeeds()
-    await store.fetchRssFeeds(true)
-    cancel()
-  }
-  loadingAdd.value = false
-}
+const { mutate: follow, isPending: loadingAdd } = useMutation({
+  mutationFn: async (feedData: Feed) => {
+    const data = await addFeed(feedData)
+    return data
+  },
+  onSuccess: (data) => {
+    if (data) {
+      queryClient.invalidateQueries({ queryKey: ['rss-channels'] })
+      queryClient.invalidateQueries({ queryKey: ['rss-feeds'] })
+      cancel()
+    }
+  },
+})
 </script>
 
 <template>
   <FieldAction
     v-model="query"
-    :action="search"
+    :action="() => search(query)"
     :loading="loadingSearch"
     icon="favoriteSearch"
     label="Search"
     placeholder="search ..."
   />
   <div v-if="result" class="element result-wrap">
-    <InputBase id="feedTitle" v-model="result.name" ref="input" class="input" />
+    <InputBase id="feedTitle" v-model="result.name" class="input" />
     <div class="channel-actions">
       <ButtonBase class="button" @click="cancel()" label="Cancel" icon="favoriteDelete" />
       <ButtonLoading
         class="button"
         :loading="loadingAdd"
-        @click="follow()"
+        @click="follow(result)"
         label="Follow"
         icon="favoriteAdd"
       />

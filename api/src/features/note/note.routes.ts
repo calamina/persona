@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
+import { HTTPException } from 'hono/http-exception'
 import { protectedRouteHelpers } from '../../middleware/protectedRouteHelper'
-import { sendError, sendSuccess } from '../../utils/api'
 import { zValidator } from '@hono/zod-validator'
 import { dbGetNote, dbUpdateNote } from './note.queries'
 import { updateNoteSchema } from './note.schema'
@@ -10,23 +10,21 @@ export const noteRoute = new Hono()
 
   .get('/', async (c) => {
     const user = c.get('user')
-    const { data, error } = await dbGetNote(user.id)
-    if (error) {
-      console.error('Failed to get note in DB:', error)
-      return c.json(sendError('Database error'), 500)
+    const res = await dbGetNote(user.id)
+    if (!res) {
+      throw new HTTPException(404, { message: 'Note not found' })
     }
-    return c.json(sendSuccess(data))
+
+    return c.json(res)
   })
 
   .put('/', zValidator('json', updateNoteSchema), async (c) => {
     const { content } = c.req.valid('json')
     const user = c.get('user')
-
-    const { data, error } = await dbUpdateNote(user.id, content)
-    if (error) {
-      console.error('Failed to add note in DB:', error)
-      return c.json(sendError('Database error'), 500)
+    const res = await dbUpdateNote(user.id, content)
+    if (!res) {
+      throw new HTTPException(404, { message: 'Failed to update note or note not found' })
     }
 
-    return c.json(sendSuccess(data))
+    return c.json(res)
   })

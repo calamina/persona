@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
+import { HTTPException } from 'hono/http-exception'
 import { protectedRouteHelpers } from '../../middleware/protectedRouteHelper'
-import { sendError, sendSuccess } from '../../utils/api'
 import type { Chan } from './chan.model'
 import { searchChanSchema } from './chan.schema'
 import { zValidator } from '@hono/zod-validator'
@@ -12,7 +12,7 @@ export const chan = new Hono()
     const { board } = c.req.valid('query')
     const response = await fetch(`https://a.4cdn.org/${board}/catalog.json`)
     if (!response.ok) {
-      return c.json(sendError('Database error'), 500)
+      throw new HTTPException(502, { message: "Can't get board catalog from 4chan" })
     }
 
     const [res]: Chan[] = ((await response.json()) as Chan[]) ?? []
@@ -32,8 +32,8 @@ export const chan = new Hono()
           createdAt: new Date(time * 1000),
           updatedAt: new Date(last_modified * 1000),
         }))
-      return c.json(sendSuccess(filteredThreads))
+      return c.json(filteredThreads)
     }
 
-    return c.json(sendError('Database error'), 500)
+    throw new HTTPException(404, { message: 'No threads found or invalid catalog data received' })
   })

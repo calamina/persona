@@ -1,61 +1,58 @@
 // src/features/dashboard/model/dashboard.service.ts
 import { and, eq } from 'drizzle-orm'
-import { db, dbWrapper } from '../../utils/db'
+import { db } from '../../utils/db'
 import { getUrlTitle, isValidUrl } from '../../utils/url'
 import { favorite } from '../../db/favorite.schema'
 
-export const dbGetFavorites = (userId: string) =>
-  dbWrapper(() => db.select().from(favorite).where(eq(favorite.userId, userId)))
+export const dbGetFavorites = async (userId: string) =>
+  await db.select().from(favorite).where(eq(favorite.userId, userId))
 
-export const dbGetFavorite = (userId: string, id: number) =>
-  dbWrapper(async () => {
-    const [getFavorite] = await db
-      .select()
-      .from(favorite)
-      .where(and(eq(favorite.id, id), eq(favorite.userId, userId)))
-    return getFavorite
-  })
+export const dbGetFavorite = async (userId: string, id: number) => {
+  const [getFavorite] = await db
+    .select()
+    .from(favorite)
+    .where(and(eq(favorite.id, id), eq(favorite.userId, userId)))
 
-export const dbCreateFavorite = (userId: string, url: string) =>
-  dbWrapper(async () => {
-    const urlNoProtocol = url.replace(/^https?:\/\//i, '')
-    const urlSafe = new URL('https://' + urlNoProtocol)
+  return getFavorite
+}
 
-    const [isValid, title] = await Promise.all([
-      isValidUrl(urlSafe.href),
-      getUrlTitle(urlSafe.href).catch(() => 'Bookmarked Link'),
-    ])
+export const dbCreateFavorite = async (userId: string, url: string) => {
+  const urlNoProtocol = url.replace(/^https?:\/\//i, '')
+  const urlSafe = new URL('https://' + urlNoProtocol)
 
-    if (!isValid) throw new Error('INVALID_URL')
+  const [isValid, title] = await Promise.all([
+    isValidUrl(urlSafe.href),
+    getUrlTitle(urlSafe.href).catch(() => 'Bookmarked Link'),
+  ])
 
-    const [newFavorite] = await db
-      .insert(favorite)
-      .values({ url: urlSafe.href, userId, title })
-      .returning({ id: favorite.id })
+  if (!isValid) throw new Error('INVALID_URL')
 
-    return newFavorite
-  })
+  const [newFavorite] = await db
+    .insert(favorite)
+    .values({ url: urlSafe.href, userId, title })
+    .returning({ id: favorite.id })
 
-export const dbUpdateFavorite = (
+  return newFavorite
+}
+
+export const dbUpdateFavorite = async (
   userId: string,
   data: { title: string; url: string; id: number },
-) =>
-  dbWrapper(async () => {
-    const [updatedFavorite] = await db
-      .update(favorite)
-      .set(data)
-      .where(and(eq(favorite.id, data.id), eq(favorite.userId, userId)))
-      .returning()
+) => {
+  const [updatedFavorite] = await db
+    .update(favorite)
+    .set(data)
+    .where(and(eq(favorite.id, data.id), eq(favorite.userId, userId)))
+    .returning()
 
-    return updatedFavorite
-  })
+  return updatedFavorite
+}
 
-export const dbDeleteFavorite = (userId: string, id: number) =>
-  dbWrapper(async () => {
-    const [deletedFavorite] = await db
-      .delete(favorite)
-      .where(and(eq(favorite.id, id), eq(favorite.userId, userId)))
-      .returning({ id: favorite.id })
+export const dbDeleteFavorite = async (userId: string, id: number) => {
+  const [deletedFavorite] = await db
+    .delete(favorite)
+    .where(and(eq(favorite.id, id), eq(favorite.userId, userId)))
+    .returning({ id: favorite.id })
 
-    return deletedFavorite
-  })
+  return deletedFavorite
+}

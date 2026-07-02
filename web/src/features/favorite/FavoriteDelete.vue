@@ -1,23 +1,18 @@
 <script setup lang="ts">
 import { deleteFavorite } from './favorite.service.ts'
 import ButtonLoading from '../../components/ButtonLoading.vue'
-import { ref } from 'vue'
-import { useFavoriteStore } from './favorite.store.ts'
 import type { FavoriteDisplay } from './favorite.model.ts'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 
-const store = useFavoriteStore()
 const { favorite } = defineProps<{ favorite: FavoriteDisplay }>()
-const loading = ref(false)
+const queryClient = useQueryClient()
 
-const remove = async (id: number) => {
-  loading.value = true
-  const { data } = await deleteFavorite(id)
-  if (data) {
-    store.clearFavoriteCache()
-    store.loadFavorites(true)
-  }
-  loading.value = false
-}
+const { mutate: remove, isPending: loading } = useMutation({
+  mutationFn: deleteFavorite,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['favorites'] })
+  },
+})
 </script>
 
 <template>

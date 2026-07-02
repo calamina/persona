@@ -1,32 +1,27 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRssStore } from '../rss.store'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import type { FeedDisplay } from '../rss.model'
 import { deleteFeed } from '../rss.service'
 import ButtonLoading from '../../../components/ButtonLoading.vue'
 
-const store = useRssStore()
+const queryClient = useQueryClient()
 const { feed } = defineProps<{ feed: FeedDisplay }>()
 
-const deletingFeedId = ref<number | null>(null)
-
-const remove = async (feed: FeedDisplay) => {
-  deletingFeedId.value = feed.id
-
-  const { data } = await deleteFeed(feed.id)
-  if (data) {
-    await store.loadFeeds()
-    await store.fetchRssFeeds(true)
-  }
-
-  deletingFeedId.value = null
-}
+const { mutate: remove, isPending: isDeleting } = useMutation({
+  mutationFn: async (feedId: number) => {
+    return await deleteFeed(feedId)
+  },
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['rss-channels'] })
+    queryClient.invalidateQueries({ queryKey: ['rss-feeds'] })
+  },
+})
 </script>
 
 <template>
   <ButtonLoading
-    :loading="deletingFeedId === feed.id"
-    @click.prevent="remove(feed)"
+    :loading="isDeleting"
+    @click.prevent="remove(feed.id)"
     class="deleteButton"
     icon="favoriteDelete"
   />

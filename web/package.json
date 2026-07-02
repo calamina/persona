@@ -19,7 +19,6 @@
     "dompurify": "^3.4.11",
     "hono": "^4.12.25",
     "persona-api": "workspace:*",
-    "pinia": "^3.0.4",
     "vue": "^3.5.34",
     "vue-router": "^5.1.0",
     "zod": "^4.4.3"

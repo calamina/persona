@@ -1,30 +1,27 @@
 <script setup lang="ts">
-import type { ChanDisplay } from './chan.model.ts'
 import { ref } from 'vue'
-import { api } from '../../utils/api-client.ts'
 import LayoutWindow from '../../layouts/LayoutWindow.vue'
 import ChanItem from './ChanItem.vue'
 import LayoutList from '../../layouts/LayoutList.vue'
 import TabList, { type Tab } from '../../components/TabList.vue'
-
-const chans = ref<ChanDisplay[]>([])
+import { useQuery } from '@tanstack/vue-query'
+import LoadingContent from '../../components/LoadingContent.vue'
+import { getChanCatalog } from './chan.service.ts'
 
 const BOARDS = ['g', 'wg'] as const
 type Board = (typeof BOARDS)[number]
 const board = ref<Board>('g')
 
-const fetchChans = async (newBoard?: Board) => {
-  board.value = newBoard ?? 'g'
-  const res = await api.chan.$get({ query: { board: board.value } })
-  const { data } = await res.json()
-  if (data) chans.value = data
-}
-
-fetchChans()
+const { isLoading: loading, data: chans } = useQuery({
+  queryKey: ['chans', board],
+  queryFn: () => getChanCatalog(board.value),
+  staleTime: 1000 * 60 * 3,
+  gcTime: 1000 * 60 * 4,
+})
 
 const tabs: Tab[] = BOARDS.map((b) => ({
   name: b,
-  action: () => fetchChans(b),
+  action: () => (board.value = b),
 }))
 </script>
 
@@ -35,7 +32,8 @@ const tabs: Tab[] = BOARDS.map((b) => ({
     </template>
 
     <Transition name="load" mode="out-in">
-      <LayoutList :key="board">
+      <LoadingContent v-if="loading" />
+      <LayoutList v-else :key="board">
         <ChanItem v-for="chan in chans" :key="chan.id" :chan="chan" />
       </LayoutList>
     </Transition>

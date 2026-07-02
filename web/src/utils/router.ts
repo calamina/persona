@@ -6,8 +6,8 @@ import {
 } from 'vue-router'
 import { authClient } from './auth-client.ts'
 
-export type To = RouteLocationNormalizedGeneric
-export type From = RouteLocationNormalizedLoadedGeneric
+type To = RouteLocationNormalizedGeneric
+type From = RouteLocationNormalizedLoadedGeneric
 
 const routes = [
   { path: '/', component: () => import('../views/HomeView.vue') },

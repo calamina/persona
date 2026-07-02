@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useYoutubeStore } from '../youtube.store.ts'
+import { useQuery } from '@tanstack/vue-query'
 import ChannelItem from './ChannelItem.vue'
 import LayoutList from '../../../layouts/LayoutList.vue'
+import LoadingContent from '../../../components/LoadingContent.vue'
+import { getChannels } from '../youtube.service.ts'
 
-const store = useYoutubeStore()
-const { channels } = storeToRefs(store)
-
-await store.loadChannels()
+const { isLoading: loading, data: channels } = useQuery({
+  queryKey: ['youtube-channels'],
+  queryFn: getChannels,
+})
 </script>
 
 <template>
-  <LayoutList>
-    <ChannelItem v-for="channel in channels" :channel :key="channel.id" />
+  <LoadingContent v-if="loading" />
+  <LayoutList v-else>
+    <ChannelItem v-for="channel in channels" :channel="channel" :key="channel.id" />
   </LayoutList>
 </template>

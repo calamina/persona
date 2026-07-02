@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import FavoriteItem from './FavoriteItem.vue'
 import FavoriteAdd from './FavoriteAdd.vue'
-import { useFavoriteStore } from './favorite.store.ts'
-import { storeToRefs } from 'pinia'
 import LayoutWindow from '../../layouts/LayoutWindow.vue'
 import LayoutList from '../../layouts/LayoutList.vue'
+import { getFavorites } from './favorite.service.ts'
+import { useQuery } from '@tanstack/vue-query'
 
-const store = useFavoriteStore()
-const { favorites } = storeToRefs(store)
-
-await store.loadFavorites()
+const { isLoading: _todosLoading, data: favorites } = useQuery({
+  queryKey: ['favorites'],
+  queryFn: getFavorites,
+})
 </script>
 
 <template>

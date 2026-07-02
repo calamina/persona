@@ -1,52 +1,51 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useYoutubeStore } from '../youtube.store'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import type { Channel } from '../youtube.model'
 import { addChannel, searchChannel } from '../youtube.service'
 import ButtonLoading from '../../../components/ButtonLoading.vue'
 import ButtonBase from '../../../components/ButtonBase.vue'
 import FieldAction from '../../../components/FieldAction.vue'
 
-const store = useYoutubeStore()
-
-const loadingSearch = ref(false)
-const loadingAdd = ref(false)
+const queryClient = useQueryClient()
 const query = ref('')
-const result = ref<Channel | null | undefined>(null)
+const result = ref<Channel | null>(null)
 
-const search = async () => {
-  if (!query.value.length) return
-  loadingSearch.value = true
-  const { data } = await searchChannel(query.value)
-  if (data) result.value = data
-  loadingSearch.value = false
-}
+const { mutate: search, isPending: loadingSearch } = useMutation({
+  mutationFn: async (searchQuery: string) => {
+    if (!searchQuery.length) return null
+    const data = await searchChannel(searchQuery)
+    return data ?? null
+  },
+  onSuccess: (data) => {
+    result.value = data
+  },
+})
 
 const cancel = () => {
   result.value = null
   query.value = ''
 }
 
-const follow = async () => {
-  if (!result.value) return
-  loadingAdd.value = true
-
-  const { data } = await addChannel(result.value)
-
-  if (data) {
-    await store.loadChannels()
-    await store.loadVideos(true)
-    cancel()
-  }
-
-  loadingAdd.value = false
-}
+const { mutate: follow, isPending: loadingAdd } = useMutation({
+  mutationFn: async (channelData: Channel) => {
+    const data = await addChannel(channelData)
+    return data
+  },
+  onSuccess: (data) => {
+    if (data) {
+      queryClient.invalidateQueries({ queryKey: ['youtube-channels'] })
+      queryClient.invalidateQueries({ queryKey: ['youtube-videos'] })
+      cancel()
+    }
+  },
+})
 </script>
 
 <template>
   <FieldAction
     v-model="query"
-    :action="search"
+    :action="() => search(query)"
     :loading="loadingSearch"
     icon="favoriteSearch"
     label="Search"
@@ -66,7 +65,7 @@ const follow = async () => {
       <ButtonLoading
         class="button"
         :loading="loadingAdd"
-        @click="follow()"
+        @click="follow(result)"
         label="Follow"
         icon="favoriteAdd"
       />

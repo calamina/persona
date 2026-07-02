@@ -2,29 +2,24 @@
 import { ref } from 'vue'
 import { addFavorite } from './favorite.service'
 import { cleanUrl } from '../../utils/url.ts'
-import { useFavoriteStore } from './favorite.store.ts'
 import FieldAction from '../../components/FieldAction.vue'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 
-const store = useFavoriteStore()
-
-const loading = ref(false)
+const queryClient = useQueryClient()
 const url = ref('')
 
-const create = async () => {
-  if (!url.value) return
-
-  loading.value = true
+const cleanAndSave = () => {
   url.value = cleanUrl(url.value)
-
-  const { data } = await addFavorite(url.value)
-  if (data) {
-    store.clearFavoriteCache()
-    store.loadFavorites(true)
-    url.value = ''
-  }
-
-  loading.value = false
+  return addFavorite(url.value)
 }
+
+const { mutate: create, isPending: loading } = useMutation({
+  mutationFn: cleanAndSave,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['favorites'] })
+    url.value = ''
+  },
+})
 </script>
 
 <template>

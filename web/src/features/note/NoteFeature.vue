@@ -1,36 +1,31 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { refDebounced } from '@vueuse/core'
 import LayoutWindow from '../../layouts/LayoutWindow.vue'
 import IconBase from '../../components/icons/IconBase.vue'
-import { api, networkError } from '../../utils/api-client.ts'
+import { useMutation, useQuery } from '@tanstack/vue-query'
+import { getNote, saveNote } from './note.service.ts'
 
 const input = ref('')
-const loading = ref(false)
-const debouncedInput = refDebounced(input, 6000)
-let lastSavedValue = ''
+const debouncedInput = refDebounced(input, 3000)
 
-const save = async () => {
-  if (input.value === lastSavedValue) return
-  loading.value = true
+const { isLoading: loading, data: note } = useQuery({
+  queryKey: ['note'],
+  queryFn: getNote,
+})
 
-  const res = await api.note.$put({ json: { content: input.value } })
-  const { data } = await res.json()
-  if (data) lastSavedValue = input.value
-  loading.value = false
+watch(note, (newNote) => (input.value = newNote?.content ?? ''), { immediate: true, once: true })
+
+const { mutate: save, isPending: updateLoading } = useMutation({
+  mutationFn: (value: string) => saveNote(value),
+})
+
+const handleSave = () => {
+  if (!input.value || input.value === note.value?.content) return
+  save(input.value)
 }
 
-watch(debouncedInput, save)
-
-onMounted(async () => {
-  try {
-    const res = await api.note.$get()
-    const { data } = await res.json()
-    if (data) input.value = data.content
-  } catch {
-    return networkError.error.message
-  }
-})
+watch(debouncedInput, () => handleSave())
 </script>
 
 <template>
@@ -39,12 +34,12 @@ onMounted(async () => {
       v-model="input"
       name="note"
       id="note"
-      autocorrect="off"
+      autorrect="off"
       spellcheck="false"
       placeholder="roses are red ..."
-      @blur="save"
+      @blur="handleSave"
     ></textarea>
-    <div class="loading" v-if="loading">
+    <div class="loading" v-if="loading || updateLoading">
       <IconBase name="loading" />
     </div>
   </LayoutWindow>

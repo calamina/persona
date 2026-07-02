@@ -1,19 +1,22 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useQuery } from '@tanstack/vue-query'
 import LayoutWindow from '../../layouts/LayoutWindow.vue'
 import LayoutList from '../../layouts/LayoutList.vue'
-import { useRssStore } from './rss.store.ts'
-import { storeToRefs } from 'pinia'
 import RssItem from './RssItem.vue'
-import type { Tab } from '../../components/TabList.vue'
-import { ref } from 'vue'
 import TabList from '../../components/TabList.vue'
+import type { Tab } from '../../components/TabList.vue'
 import RssChannelAdd from './channels/RssChannelAdd.vue'
 import RssChannelList from './channels/RssChannelList.vue'
+import LoadingContent from '../../components/LoadingContent.vue'
+import { getRss } from './rss.service.ts'
 
-const store = useRssStore()
-const { data } = storeToRefs(store)
-
-await store.fetchRssFeeds()
+const { isLoading: loading, data } = useQuery({
+  queryKey: ['rss-feeds'],
+  queryFn: getRss,
+  staleTime: 1000 * 60 * 30,
+  gcTime: 1000 * 60 * 35,
+})
 
 const TABS = ['Feed', 'Channels'] as const
 type TabName = (typeof TABS)[number]
@@ -31,14 +34,15 @@ const tabs: Tab[] = TABS.map((b) => ({
 <template>
   <LayoutWindow title="Rss" icon="rss">
     <template #tabs>
-      <TabList :tabs />
+      <TabList :tabs="tabs" />
     </template>
 
     <keep-alive>
       <Transition name="load" mode="out-in">
         <div v-if="tab === 'Feed'">
-          <LayoutList>
-            <RssItem v-for="item in data" :key="item.title" :item />
+          <LoadingContent v-if="loading" />
+          <LayoutList v-else>
+            <RssItem v-for="item in data" :key="item.title" :item="item" />
           </LayoutList>
         </div>
         <div v-else>

@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useRssStore } from '../rss.store.ts'
+import { useQuery } from '@tanstack/vue-query'
 import LayoutList from '../../../layouts/LayoutList.vue'
 import RssChannel from './RssChannel.vue'
+import LoadingContent from '../../../components/LoadingContent.vue'
+import { getFeeds } from '../rss.service.ts'
 
-const store = useRssStore()
-const { feeds } = storeToRefs(store)
-
-await store.loadFeeds()
+const { isLoading: loading, data: feeds } = useQuery({
+  queryKey: ['rss-channels'],
+  queryFn: getFeeds,
+})
 </script>
 
 <template>
-  <LayoutList>
-    <RssChannel v-for="feed in feeds" :feed :key="feed.name" />
+  <LoadingContent v-if="loading" />
+  <LayoutList v-else>
+    <RssChannel v-for="feed in feeds" :feed="feed" :key="feed.id ?? feed.name" />
   </LayoutList>
 </template>

@@ -8,5 +8,3 @@ export const api = hc<AppType>(API_URL, {
     credentials: 'include',
   },
 })
-
-export const networkError = { data: null, error: { message: 'Network connection failed' } }

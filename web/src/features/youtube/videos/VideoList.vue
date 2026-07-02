@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useYoutubeStore } from '../youtube.store'
+import { useQuery } from '@tanstack/vue-query'
 import VideoItem from './VideoItem.vue'
 import LayoutList from '../../../layouts/LayoutList.vue'
+import LoadingContent from '../../../components/LoadingContent.vue'
+import { getVideos } from '../youtube.service.ts'
 
-const store = useYoutubeStore()
-const { videos } = storeToRefs(store)
-await store.loadVideos()
+const { isLoading: loading, data: videos } = useQuery({
+  queryKey: ['youtube-videos'],
+  queryFn: getVideos,
+  staleTime: 1000 * 60 * 15,
+  gcTime: 1000 * 60 * 20,
+})
 </script>
 
 <template>
-  <LayoutList>
-    <VideoItem v-for="video in videos" :video :key="video.id" />
+  <LoadingContent v-if="loading" />
+  <LayoutList v-else>
+    <VideoItem v-for="video in videos" :video="video" :key="video.id" />
   </LayoutList>
 </template>

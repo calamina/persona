@@ -1,56 +1,61 @@
-import { api, networkError } from '../../utils/api-client'
+import { api } from '../../utils/api-client'
 import type { Feed } from './rss.model'
 
 export async function getRss() {
-  try {
-    const res = await api.rss.$get()
-    return await res.json()
-  } catch {
-    return networkError
+  const res = await api.rss.$get()
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch RSS timeline')
   }
+
+  return await res.json()
 }
 
 export async function getFeeds() {
-  try {
-    const res = await api.rss.feeds.$get()
-    return await res.json()
-  } catch {
-    return networkError
+  const res = await api.rss.feeds.$get()
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch RSS channels')
   }
+
+  return await res.json()
 }
 
 export async function searchFeed(url: string) {
-  try {
-    const res = await api.rss.feeds.search.$get({
-      query: { url },
-    })
-    return await res.json()
-  } catch {
-    return networkError
+  const res = await api.rss.feeds.search.$get({
+    query: { url },
+  })
+
+  if (!res.ok) {
+    throw new Error('Failed to find feed')
   }
+
+  return await res.json()
 }
 
 export async function addFeed(data: Feed) {
-  try {
-    const res = await api.rss.feeds.$post({
-      json: {
-        name: data.name,
-        url: data.url,
-      },
-    })
-    return await res.json()
-  } catch {
-    return networkError
+  const res = await api.rss.feeds.$post({
+    json: {
+      name: data.name,
+      url: data.url,
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error('Failed to add RSS channel')
   }
+
+  return await res.json()
 }
 
 export async function deleteFeed(id: number) {
-  try {
-    const res = await api.rss.feeds[':id'].$delete({
-      param: { id: id.toString() },
-    })
-    return await res.json()
-  } catch {
-    return networkError
+  const res = await api.rss.feeds[':id'].$delete({
+    param: { id: id.toString() },
+  })
+
+  if (!res.ok) {
+    throw new Error('Failed to remove RSS channel')
   }
+
+  return await res.json()
 }

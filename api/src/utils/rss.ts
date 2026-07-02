@@ -2,22 +2,6 @@
 import { XMLParser } from 'fast-xml-parser'
 import type { FeedModel } from '../db/feed.schema'
 
-interface GlobalCache {
-  data: Item[]
-  lastFetched: number
-}
-
-const globalRef = globalThis as unknown as { __backendCache?: GlobalCache }
-
-if (!globalRef.__backendCache) {
-  globalRef.__backendCache = {
-    data: [],
-    lastFetched: 0,
-  }
-}
-
-const backendCache = globalRef.__backendCache
-
 interface Item {
   title: string
   date: Date
@@ -64,14 +48,7 @@ const ensureArray = <T>(val: T | T[] | undefined): T[] => {
   return Array.isArray(val) ? val : [val]
 }
 
-export const getRss = async (feeds: FeedModel[], forceRefresh = false): GetRss => {
-  const now = Date.now()
-  const CACHE_TTL = 15 * 60 * 1000 // 15 minutes in milliseconds
-
-  if (!forceRefresh && backendCache.data.length > 0 && now - backendCache.lastFetched < CACHE_TTL) {
-    return { data: backendCache.data, error: null }
-  }
-
+export const getRss = async (feeds: FeedModel[]): GetRss => {
   const FEED_ITEMS = 2
   const FEED_TIMEOUT = 3000
 
@@ -146,9 +123,6 @@ export const getRss = async (feeds: FeedModel[], forceRefresh = false): GetRss =
     )
 
     const orderedResults = results.sort((a, b) => b.date.getTime() - a.date.getTime())
-
-    backendCache.data = orderedResults
-    backendCache.lastFetched = now
 
     return { data: orderedResults, error: null }
   } catch (error) {

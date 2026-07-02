@@ -1,32 +1,35 @@
-import { api, networkError } from '../../utils/api-client'
+import { api } from '../../utils/api-client'
 
 export async function getFavorites() {
-  try {
-    const res = await api.favorites.$get()
-    return await res.json()
-  } catch {
-    return networkError
+  const res = await api.favorites.$get()
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch favorites')
   }
+
+  return await res.json()
 }
 
 export async function addFavorite(url: string) {
-  try {
-    const res = await api.favorites.$post({
-      json: { url },
-    })
-    return await res.json()
-  } catch {
-    return networkError
+  const res = await api.favorites.$post({
+    json: { url },
+  })
+
+  if (!res.ok) {
+    throw new Error('Failed to add to favorites')
   }
+
+  return await res.json()
 }
 
 export async function deleteFavorite(id: number) {
-  try {
-    const res = await api.favorites[':id'].$delete({
-      param: { id: id.toString() },
-    })
-    return await res.json()
-  } catch {
-    return networkError
+  const res = await api.favorites[':id'].$delete({
+    param: { id: id.toString() },
+  })
+
+  if (!res.ok) {
+    throw new Error('Failed to remove from favorites')
   }
+
+  return await res.json()
 }

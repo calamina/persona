@@ -24,8 +24,8 @@ const groupedLinks = computed(() => {
 </script>
 
 <template>
-  <LayoutWindow title="Soul" icon="soul">
-    <div class="soulContent">
+  <LayoutWindow title="Links" icon="soul">
+    <div class="content">
       <input type="search" name="search" id="search" placeholder="search..." autofocus />
       <div class="links">
         <div class="category" v-for="(links, category) in groupedLinks" :key="category">
@@ -40,7 +40,7 @@ const groupedLinks = computed(() => {
 </template>
 
 <style scoped>
-.soulContent {
+.content {
   display: flex;
   flex-flow: column;
 }

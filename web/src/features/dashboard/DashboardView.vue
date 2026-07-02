@@ -16,7 +16,7 @@ import ChanList from '../chan/ChanList.vue'
     <Suspense>
       <DashboardHeader class="header" />
     </Suspense>
-    <LinksFeature class="soul" />
+    <LinksFeature class="links" />
     <div class="left">
       <!-- <DashboardHeader /> -->
       <Suspense>
@@ -53,7 +53,7 @@ import ChanList from '../chan/ChanList.vue'
   grid-template-rows: auto auto 1fr;
   grid-template-areas:
     'header header header'
-    'soul soul soul'
+    'links links links'
     'left center right';
   grid-auto-flow: row;
 
@@ -65,8 +65,8 @@ import ChanList from '../chan/ChanList.vue'
   grid-area: header;
 }
 
-.soul {
-  grid-area: soul;
+.links {
+  grid-area: links;
 }
 
 .left {

@@ -1,32 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useYoutubeStore } from '../youtube.store.ts'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { deleteChannel } from '../youtube.service.ts'
 import type { ChannelDisplay } from '../youtube.model.ts'
 import ButtonLoading from '../../../components/ButtonLoading.vue'
 
-const store = useYoutubeStore()
+const queryClient = useQueryClient()
 const { channel } = defineProps<{ channel: ChannelDisplay }>()
 
-const deletingChannelId = ref<number | null>(null)
-
-const remove = async (channel: ChannelDisplay) => {
-  deletingChannelId.value = channel.id
-
-  const { data } = await deleteChannel(channel.id)
-  if (data) {
-    await store.loadChannels()
-    await store.loadVideos(true)
-  }
-
-  deletingChannelId.value = null
-}
+const { mutate: remove, isPending: isDeleting } = useMutation({
+  mutationFn: async (channelId: number) => {
+    const data = await deleteChannel(channelId)
+    return data
+  },
+  onSuccess: (data) => {
+    if (data) {
+      queryClient.invalidateQueries({ queryKey: ['youtube-channels'] })
+      queryClient.invalidateQueries({ queryKey: ['youtube-videos'] })
+    }
+  },
+})
 </script>
 
 <template>
   <ButtonLoading
-    :loading="deletingChannelId === channel.id"
-    @click.prevent="remove(channel)"
+    :loading="isDeleting"
+    @click.prevent="remove(channel.id)"
     class="deleteButton"
     icon="favoriteDelete"
   />
