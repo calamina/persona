@@ -8,6 +8,7 @@ import { chan } from './features/chan/chan.routes'
 import { todos } from './features/todo/todo.routes'
 import { rss } from './features/rss/rss.routes'
 import { noteRoute } from './features/note/note.routes'
+import { links } from './features/link/link.routes'
 
 export const app = new Hono()
 
@@ -61,6 +62,7 @@ const routes = app
   .route('/todos', todos)
   .route('/rss', rss)
   .route('/note', noteRoute)
+  .route('/links', links)
 
 console.debug('routes:', routes.routes.length)
 export type AppType = typeof routes

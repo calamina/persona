@@ -23,10 +23,10 @@ a {
   justify-content: space-between;
   align-items: center;
   gap: var(--item-gap);
-  overflow-x: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  height: var(--icon-size);
+
   height: fit-content;
+  border-radius: var(--border-radius-small);
 
   &:hover,
   &:focus-within {
@@ -47,8 +47,7 @@ p {
   display: flex;
   align-items: center;
   height: var(--icon-size);
-  flex: 1;
-  overflow-x: hidden;
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }

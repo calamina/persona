@@ -1,30 +1,53 @@
 <script setup lang="ts">
 import Logout from './Logout.vue'
 import User from './User.vue'
+import ThemeSwitch from '../theme/ThemeSwitch.vue'
+import Search from './Search.vue'
 </script>
 
 <template>
-  <div>
+  <div class="bar">
     <Suspense>
-      <User />
+      <User class="element" />
     </Suspense>
-    <Logout />
+    <Search class="element" />
+    <div class="actions">
+      <ThemeSwitch class="element" />
+      <Logout class="element" />
+    </div>
   </div>
 </template>
 
 <style scoped>
-div {
+.bar {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
   flex-shrink: 0;
   place-self: center;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing);
+  gap: var(--dashboard-spacing);
+  height: var(-title-height);
+  height: 2.1rem;
+}
+
+.element {
+  display: flex;
+  place-items: center;
   height: var(--header-size);
   border: var(--border-header);
-  background-color: var(--header-bg);
+  /* background-color: var(--header-bg); */
   overflow: hidden;
   border-radius: var(--border-radius);
+  height: 100%;
+}
+
+.actions {
+  justify-self: end;
+  width: fit-content;
+  display: flex;
+  gap: var(--dashboard-spacing);
+  height: 100%;
 }
 </style>

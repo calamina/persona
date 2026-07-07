@@ -2,12 +2,11 @@
 import LayoutAsync from '../../layouts/LayoutAsync.vue'
 import NoteFeature from '../note/NoteFeature.vue'
 import RssFeed from '../rss/RssFeed.vue'
-import LinksFeature from '../links/LinksFeature.vue'
-import ThemeSwitch from '../theme/ThemeSwitch.vue'
+import LinkFeature from '../link/LinkFeature.vue'
 import TodoList from '../todo/TodoList.vue'
 import YoutubeFeed from '../youtube/YoutubeFeed.vue'
 import DashboardHeader from './DashboardHeader.vue'
-import FavoriteFeature from '../favorite/FavoriteFeature.vue'
+// import FavoriteFeature from '../favorite/FavoriteFeature.vue'
 import ChanList from '../chan/ChanList.vue'
 </script>
 
@@ -16,12 +15,11 @@ import ChanList from '../chan/ChanList.vue'
     <Suspense>
       <DashboardHeader class="header" />
     </Suspense>
-    <LinksFeature class="links" />
+    <LinkFeature class="links" />
     <div class="left">
-      <!-- <DashboardHeader /> -->
-      <Suspense>
+      <!-- <Suspense>
         <FavoriteFeature />
-      </Suspense>
+      </Suspense> -->
       <NoteFeature />
       <Suspense>
         <TodoList />
@@ -39,7 +37,6 @@ import ChanList from '../chan/ChanList.vue'
       <LayoutAsync>
         <YoutubeFeed />
       </LayoutAsync>
-      <ThemeSwitch />
     </div>
   </div>
 </template>
@@ -57,8 +54,8 @@ import ChanList from '../chan/ChanList.vue'
     'left center right';
   grid-auto-flow: row;
 
-  padding: var(--spacing-dashboard);
-  gap: var(--spacing-dashboard);
+  padding: var(--dashboard-spacing);
+  gap: var(--dashboard-spacing);
 }
 
 .header {
@@ -87,7 +84,7 @@ import ChanList from '../chan/ChanList.vue'
   overflow: hidden;
   display: flex;
   flex-flow: column;
-  gap: var(--spacing-dashboard);
+  gap: var(--dashboard-spacing);
 }
 
 /* .dashboard {
@@ -96,8 +93,8 @@ import ChanList from '../chan/ChanList.vue'
   display: grid;
   padding: var(--spacing);
   gap: var(--spacing);
-  padding: var(--spacing-dashboard);
-  gap: var(--spacing-dashboard);
+  padding: var(--dashboard-spacing);
+  gap: var(--dashboard-spacing);
   grid grid-template-areas: 
   ;
   @media (max-width: 1250px) {
@@ -111,7 +108,7 @@ import ChanList from '../chan/ChanList.vue'
   overflow: hidden;
   align-items: center;
   gap: var(--spacing);
-  gap: var(--spacing-dashboard);
+  gap: var(--dashboard-spacing);
   height: 100%;
   max-height: 100%;
   display: flex;
@@ -126,7 +123,7 @@ import ChanList from '../chan/ChanList.vue'
 .main {
   display: flex;
   flex-flow: column;
-  gap: var(--spacing-dashboard);
+  gap: var(--dashboard-spacing);
   overflow: hidden;
   height: 100%;
 
@@ -140,7 +137,7 @@ import ChanList from '../chan/ChanList.vue'
   flex-shrink: 0;
   display: flex;
   flex-flow: column;
-  gap: var(--spacing-dashboard);
+  gap: var(--dashboard-spacing);
   max-width: max(16rem, 20vw);
   justify-self: center;
   align-self: center;

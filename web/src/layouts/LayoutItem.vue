@@ -3,11 +3,17 @@ const {
   type = 'a',
   cover,
   inline,
-} = defineProps<{ type?: 'a' | 'button' | 'div'; cover?: boolean; inline?: boolean }>()
+  small,
+} = defineProps<{
+  type?: 'a' | 'button' | 'div' | 'form'
+  cover?: boolean
+  inline?: boolean
+  small?: boolean
+}>()
 </script>
 
 <template>
-  <component :is="type" class="item" :class="{ cover, inline }">
+  <component :is="type" class="item" :class="{ cover, inline, small }">
     <slot name="visual" />
     <div class="data">
       <slot />
@@ -50,6 +56,20 @@ const {
   .data {
     flex-flow: row;
     gap: var(--item-gap);
+    align-items: center;
   }
+}
+
+.small {
+  padding: 0;
+  height: var(--favicon-size);
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  cursor: pointer;
 }
 </style>

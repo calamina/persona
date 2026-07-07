@@ -32,6 +32,7 @@ a {
   overflow-x: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  border-radius: var(--border-radius-small);
 
   &:hover,
   &:focus-within {

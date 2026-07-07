@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import LayoutWindow from '../../layouts/LayoutWindow.vue'
-import ChannelAdd from './channels/ChannelAdd.vue'
 import ChannelList from './channels/ChannelList.vue'
 import VideoList from './videos/VideoList.vue'
 import TabList, { type Tab } from '../../components/TabList.vue'
@@ -27,13 +26,8 @@ const tabs: Tab[] = TABS.map((b) => ({
 
     <keep-alive>
       <Transition name="load" mode="out-in">
-        <div v-if="tab === 'Videos'">
-          <VideoList />
-        </div>
-        <div v-else>
-          <ChannelAdd />
-          <ChannelList />
-        </div>
+        <VideoList v-if="tab === 'Videos'" />
+        <ChannelList v-else />
       </Transition>
     </keep-alive>
   </LayoutWindow>

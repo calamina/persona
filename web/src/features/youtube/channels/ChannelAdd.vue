@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref, useTemplateRef } from 'vue'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import type { Channel } from '../youtube.model'
 import { addChannel, searchChannel } from '../youtube.service'
 import ButtonLoading from '../../../components/ButtonLoading.vue'
 import ButtonBase from '../../../components/ButtonBase.vue'
-import FieldAction from '../../../components/FieldAction.vue'
+import ModalBase from '../../../components/ModalBase.vue'
+import IconBase from '../../../components/icons/IconBase.vue'
+import ModalField from '../../../components/ModalField.vue'
 
+const dialog = useTemplateRef('dialog')
 const queryClient = useQueryClient()
 const query = ref('')
 const result = ref<Channel | null>(null)
@@ -22,9 +25,10 @@ const { mutate: search, isPending: loadingSearch } = useMutation({
   },
 })
 
-const cancel = () => {
+const cancel = (params?: { close: boolean }) => {
   result.value = null
   query.value = ''
+  if (params?.close) dialog.value?.close()
 }
 
 const { mutate: follow, isPending: loadingAdd } = useMutation({
@@ -36,101 +40,157 @@ const { mutate: follow, isPending: loadingAdd } = useMutation({
     if (data) {
       queryClient.invalidateQueries({ queryKey: ['youtube-channels'] })
       queryClient.invalidateQueries({ queryKey: ['youtube-videos'] })
-      cancel()
+      cancel({ close: true })
     }
   },
 })
+
+const formAction = () => (result.value ? follow(result.value) : search(query.value))
 </script>
 
 <template>
-  <FieldAction
-    v-model="query"
-    :action="() => search(query)"
-    :loading="loadingSearch"
-    icon="favoriteSearch"
-    label="Search"
-    placeholder="search ..."
-  />
-  <div v-if="result" class="element result">
-    <a :href="result.url" :title="result.name">
-      <img
-        :src="result.iconURL"
-        :alt="result.name + ' channel icon'"
-        referrerpolicy="no-referrer"
+  <button class="addChannel" @click="dialog?.open()">
+    <span>
+      <IconBase name="categAdd" />
+    </span>
+    Add channel
+  </button>
+
+  <ModalBase title="Add youtube channel" ref="dialog">
+    <form id="addForm" @submit.prevent="formAction">
+      <ModalField
+        v-if="!result"
+        v-model="query"
+        name="name"
+        placeholder="summoning salt"
+        autofocus
       />
-      <p class="name">{{ result.name }}</p>
-    </a>
-    <div class="channel-actions">
-      <ButtonBase class="button" @click="cancel()" label="Cancel" icon="favoriteDelete" />
+    </form>
+    <template #actions>
       <ButtonLoading
-        class="button"
-        :loading="loadingAdd"
-        @click="follow(result)"
-        label="Follow"
+        v-if="!result"
+        :loading="loadingSearch"
+        label="Search"
+        form="addForm"
         icon="favoriteAdd"
+        type="submit"
+        class="confirm"
       />
+      <div v-else class="confirm buttons">
+        <ButtonBase class="button" @click="cancel()" label="Cancel" icon="favoriteDelete" />
+        <ButtonLoading
+          :loading="loadingAdd"
+          class="button"
+          label="Add youtube channel"
+          form="addForm"
+          icon="favoriteAdd"
+          type="submit"
+        />
+      </div>
+    </template>
+
+    <div v-if="result" class="result">
+      <a :href="result.url" :title="result.name">
+        <img
+          :src="result.iconURL"
+          :alt="result.name + ' channel icon'"
+          referrerpolicy="no-referrer"
+        />
+        <p class="name">{{ result.name }}</p>
+      </a>
     </div>
-  </div>
+  </ModalBase>
 </template>
 
 <style scoped>
-.element {
-  padding: var(--spacing);
+.addChannel {
+  padding: var(--spacing-small);
   width: 100%;
-  border-bottom: var(--border);
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  align-items: center;
+  gap: var(--item-gap);
+  background-color: transparent;
+  color: var(--color);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: var(--border-radius-small);
 
-  @media (max-width: 1250px) {
-    flex-flow: column;
+  &:hover,
+  &:focus-visible {
+    background-color: var(--element-focus);
+    span {
+      background-color: var(--tag-focus);
+    }
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: var(--border-radius-small);
+    background-color: var(--element-focus);
   }
 }
 
 .result {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  padding: 0;
+  display: flex;
+  flex-flow: column;
   height: fit-content;
+  align-items: center;
 }
 
 a {
   display: flex;
+  padding: var(--spacing-small);
+  flex-flow: column;
   text-decoration: none;
   overflow: hidden;
-  border-right: var(--border);
-  height: fit-content;
+  width: fit-content;
+  border-radius: var(--border-radius-small);
+  gap: var(--item-gap);
+  background-color: var(--element-focus);
 }
 
 img {
   align-self: center;
   object-fit: cover;
-  height: calc(var(--icon-size) * 2);
-  border-right: var(--border);
+  width: 100%;
+  max-width: min(15rem, 80vw);
+  border-radius: var(--border-radius-small);
 }
 
-.channel-actions {
+.confirm {
+  padding: var(--spacing-small);
+  height: fit-content;
+  width: 100%;
+  border: none;
+}
+
+.buttons {
   display: flex;
-  flex-flow: column;
+  padding: 0;
+
+  .button:first-child {
+    border-right: var(--border);
+  }
 }
 
 .button {
   width: 100%;
   border: none;
   border-radius: 0;
-  height: var(--icon-size);
-
-  &:first-child {
-    border-bottom: var(--border);
-  }
+  padding: var(--spacing-small);
+  height: fit-content;
 }
 
 .name {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing);
-}
-
-a:hover .name,
-a:focus-within .name {
-  background-color: var(--element-focus);
 }
 </style>

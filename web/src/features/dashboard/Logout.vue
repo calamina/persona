@@ -20,7 +20,7 @@ const logout = async () => {
 
 <style scoped>
 .logout {
-  background-color: transparent;
+  background-color: var(--element);
   border: none;
   gap: var(--list-gap);
 

@@ -21,10 +21,3 @@
     gap: var(--spacing);
   }
 }
-
-form {
-  display: flex;
-  /* width: 25rem; */
-  flex-flow: column;
-  gap: var(--list-gap);
-}

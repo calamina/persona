@@ -10,7 +10,7 @@ Homepage / dashboard with several features
 - [x] Todos
 - [x] RSS
 - [x] Note
-- [x] Soul (cringe name rn ...)
+- [x] Links
 - [ ] Calendar ?
 - [ ] Git events / repos ?
 - [ ] Apps uptime / up ?
@@ -18,6 +18,7 @@ Homepage / dashboard with several features
 ## Frontend
 
 - `Vue`
+- `Tanstack Query`
 
 ## Backend
 
@@ -36,29 +37,23 @@ Homepage / dashboard with several features
 
 ## TODO
 
-- [ ] ! add dynamic links & categs + bangs
+- [ ] ! Search : add bangs / shortcuts
 - [ ] ! Replace favorites with git info
-- [ ] ! Add param to hide adding / editing
-
-- [ ] ! try positionning actionBar and adding as a list element
 
 - [ ] ! Streamline tabs (youtube / rss / 4chan?)
 - [ ] ! Streamline cover (youtube / rss / 4chan)
-- [ ] ! Favorite add : ISO rss add -> get title and confirm
+- [ ] ! manage errors (store messages ? error in title bar ! add orange and green)
 
 - [ ] confirmation on add (notif / snack) ?
 - [ ] refacto login / register for theme
 - [ ] Add 4chan searchbar ?
 - [ ] Register 4chan boards, favorite one ?
 - [ ] Features tabs on mobile instead of stack
-- [ ] change default favorite icon link
-- [ ] manage errors (store messages ? error in title bar ! add orange and green)
 - [ ] multi-use inputs ? search / add
 - [ ] redirect on register + redirect on mail send
 - [ ] add password reset
 - [ ] check account existing
 - [ ] add animations / transitionGroups
-- [ ] add favorite folders
 
 ## Config (todo)
 

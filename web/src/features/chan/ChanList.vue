@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/vue-query'
 import LoadingContent from '../../components/LoadingContent.vue'
 import { getChanCatalog } from './chan.service.ts'
 
-const BOARDS = ['g', 'wg'] as const
+const BOARDS = ['g', 'wg', 'v'] as const
 type Board = (typeof BOARDS)[number]
 const board = ref<Board>('g')
 

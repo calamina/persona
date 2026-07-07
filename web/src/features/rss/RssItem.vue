@@ -63,6 +63,7 @@ const mediaType = computed(() => {
   &:focus-within {
     .categs span {
       background-color: var(--tag-focus);
+      color: var(--color);
     }
     img,
     video,

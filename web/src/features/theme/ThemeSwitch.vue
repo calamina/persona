@@ -23,8 +23,8 @@ const switchTheme = () => {
 <style scoped>
 .button {
   flex-shrink: 0;
-  width: 100%;
-  gap: var(--item-gap);
+  width: fit-content;
+  gap: var(--list-gap);
 }
 
 .icon {

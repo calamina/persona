@@ -45,10 +45,7 @@ const tabs: Tab[] = TABS.map((b) => ({
             <RssItem v-for="item in data" :key="item.title" :item="item" />
           </LayoutList>
         </div>
-        <div v-else>
-          <RssChannelAdd />
-          <RssChannelList />
-        </div>
+        <RssChannelList v-else />
       </Transition>
     </keep-alive>
   </LayoutWindow>

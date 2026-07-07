@@ -1,14 +1,15 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { user } from './auth.schema'
 
-export const note = sqliteTable('note', {
+export const link = sqliteTable('link', {
   id: integer('id').primaryKey({ autoIncrement: true }),
 
-  content: text('content').notNull(),
+  title: text('title').notNull(),
+  url: text('url').notNull(),
+  category: text('category').notNull(),
 
   userId: text('user_id')
     .notNull()
-    .unique()
     .references(() => user.id, { onDelete: 'cascade' }),
 
   createdAt: integer('created_at', { mode: 'timestamp_ms' })
@@ -20,5 +21,5 @@ export const note = sqliteTable('note', {
     .notNull(),
 })
 
-export type NoteModel = typeof note.$inferSelect
-export type NoteNewModel = typeof note.$inferInsert
+export type LinkModel = typeof link.$inferSelect
+export type LinkNewModel = typeof link.$inferInsert

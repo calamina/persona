@@ -38,8 +38,9 @@ const switchTab = (tab: Tab) => {
   flex-shrink: 0;
   display: flex;
   height: var(--icon-size);
-  background-color: var(--tab-wrap-bg);
-  border-bottom: var(--border);
+  /* height: fit-content; */
+  /* background-color: var(--tab-wrap-bg); */
+  /* border-bottom: var(--border); */
   /* border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius); */
   overflow: hidden;
@@ -52,13 +53,17 @@ const switchTab = (tab: Tab) => {
   width: 100%;
   border: none;
   outline: none;
-  border-right: var(--border);
   background-color: transparent;
   cursor: pointer;
   color: var(--color-dimmer);
+  background-color: var(--tab-inactive-bg);
+  border-bottom: var(--border);
+  border-right: var(--border);
+  /* border-radius: var(--border-radius); */
+  /* height: var(--icon-size); */
 
   &:last-child {
-    border: none;
+    border-right: none;
   }
 
   &:hover,
@@ -66,9 +71,11 @@ const switchTab = (tab: Tab) => {
   &.active {
     color: var(--color);
     background-color: var(--tab-active-bg);
+    background-color: var(--element);
   }
 
   &.active {
+    border-bottom-color: transparent;
     &::before,
     &::after {
       content: '=';

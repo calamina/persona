@@ -19,7 +19,7 @@ try {
 
 <style scoped>
 .user {
-  background-color: transparent;
+  background-color: var(--element);
   border: none;
   gap: var(--list-gap);
   :global(path) {

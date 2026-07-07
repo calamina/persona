@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import LayoutWindow from '../../layouts/LayoutWindow.vue'
-import FieldAction from '../../components/FieldAction.vue'
 import ButtonLoading from '../../components/ButtonLoading.vue'
 import { addTodo, deleteTodo, getTodos, updateTodo } from './todo.service.ts'
 import { ref } from 'vue'
@@ -24,12 +23,20 @@ const { mutate: create, isPending: createLoading } = useMutation({
   },
 })
 
-const { mutate: remove, isPending: removeLoading } = useMutation({
+const {
+  mutate: remove,
+  isPending: removeLoading,
+  variables: removeId,
+} = useMutation({
   mutationFn: deleteTodo,
   onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
 })
 
-const { mutate: update, isPending: updateLoading } = useMutation({
+const {
+  mutate: update,
+  isPending: updateLoading,
+  variables: updateId,
+} = useMutation({
   mutationFn: updateTodo,
   onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
 })
@@ -37,21 +44,16 @@ const { mutate: update, isPending: updateLoading } = useMutation({
 
 <template>
   <LayoutWindow title="Todo" icon="todolist" fit>
-    <FieldAction
-      v-model="newTodo"
-      :action="create"
-      :loading="createLoading"
-      icon="favoriteAdd"
-      label="Add"
-      placeholder="add todo ..."
-      class="header"
-    />
     <LayoutList v-if="todos?.length" fit>
+      <LayoutItem inline type="form" @submit.prevent="create(newTodo)" class="create">
+        <ButtonLoading class="updateButton" :loading="createLoading" icon="checkPlus" />
+        <input v-model="newTodo" type="text" placeholder="Add todo" />
+      </LayoutItem>
       <LayoutItem type="div" inline v-for="todo in todos" :key="todo.id" tabindex="0" class="todo">
         <ButtonLoading
           @click.stop="update(todo.id)"
           class="updateButton"
-          :loading="updateLoading"
+          :loading="updateLoading && updateId === todo.id"
           :icon="todo.done ? 'check' : 'checkNot'"
           :label="todo.title"
           :class="{ done: todo.done }"
@@ -59,7 +61,7 @@ const { mutate: update, isPending: updateLoading } = useMutation({
         <ButtonLoading
           @click.stop="remove(todo.id)"
           class="deleteButton"
-          :loading="removeLoading"
+          :loading="removeLoading && removeId === todo.id"
           icon="favoriteDelete"
         />
       </LayoutItem>
@@ -117,5 +119,26 @@ const { mutate: update, isPending: updateLoading } = useMutation({
 .done {
   opacity: 0.4;
   text-decoration: line-through;
+}
+
+.create {
+  &:hover input,
+  &:focus-within input {
+    border-bottom: var(--border);
+  }
+}
+
+input {
+  border: none;
+  outline: none;
+  color: var(--color);
+  background-color: transparent;
+  padding: 0;
+  width: 100%;
+  border-bottom: var(--border-width) solid transparent;
+
+  &::placeholder {
+    color: var(--color-dim);
+  }
 }
 </style>

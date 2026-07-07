@@ -1,0 +1,1 @@
+ALTER TABLE `link` ADD `category` text NOT NULL;

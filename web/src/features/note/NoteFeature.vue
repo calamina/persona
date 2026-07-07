@@ -14,7 +14,7 @@ const { isLoading: loading, data: note } = useQuery({
   queryFn: getNote,
 })
 
-watch(note, (newNote) => (input.value = newNote?.content ?? ''), { immediate: true, once: true })
+watch(note, (newNote) => (input.value = newNote?.content ?? ''), { once: true })
 
 const { mutate: save, isPending: updateLoading } = useMutation({
   mutationFn: (value: string) => saveNote(value),

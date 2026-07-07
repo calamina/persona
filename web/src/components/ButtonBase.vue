@@ -54,4 +54,8 @@ button {
     background-color: var(--element-focus);
   }
 }
+
+span {
+  flex-shrink: 0;
+}
 </style>
