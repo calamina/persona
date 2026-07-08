@@ -1,6 +1,6 @@
 // src/features/dashboard/model/dashboard.service.ts
 import { and, eq } from 'drizzle-orm'
-import { link, LinkNewModel } from '../../db/link.schema'
+import { link, type LinkNewModel } from '../../db/link.schema'
 import { db } from '../../utils/db'
 
 export const dbGetLinks = async (userId: string) =>

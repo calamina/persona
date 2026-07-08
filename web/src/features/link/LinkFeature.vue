@@ -73,8 +73,6 @@ const categs = computed(() => Object.keys(groupedLinks.value))
 .category {
   display: flex;
   flex-flow: column;
-  gap: var(--list-gap);
-  padding: calc(var(--spacing-small) * 2);
   width: 100%;
 
   &:not(:last-child) {
@@ -86,18 +84,27 @@ h2 {
   font-size: 1rem;
   font-weight: 400;
   text-transform: capitalize;
-  padding: 0.15rem 0.6rem;
-  /* background-color: var(--element-focus); */
-  background-color: var(--tag);
-  border-radius: var(--border-radius-small);
-  width: fit-content;
-  margin-bottom: var(--spacing-small);
+  margin: calc(var(--spacing-small) * 2);
+  margin-bottom: 0;
+
+  &::before,
+  &::after {
+    content: '=';
+    opacity: 0.4;
+  }
+
+  &::before {
+    margin-right: 1ch;
+  }
+  &::after {
+    margin-left: 1ch;
+  }
 }
 
 .linklist {
+  padding: var(--spacing-small);
   display: flex;
   flex-flow: column;
-  gap: var(--list-gap);
 }
 
 img {

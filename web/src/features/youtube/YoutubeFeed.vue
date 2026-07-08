@@ -3,25 +3,16 @@ import { ref } from 'vue'
 import LayoutWindow from '../../layouts/LayoutWindow.vue'
 import ChannelList from './channels/ChannelList.vue'
 import VideoList from './videos/VideoList.vue'
-import TabList, { type Tab } from '../../components/TabList.vue'
+import TabList from '../../components/TabList.vue'
 
 const TABS = ['Videos', 'Channels'] as const
-type TabName = (typeof TABS)[number]
-
-const tab = ref<TabName>('Videos')
-
-const changeTab = (newTab: TabName) => (tab.value = newTab)
-
-const tabs: Tab[] = TABS.map((b) => ({
-  name: b,
-  action: () => changeTab(b),
-}))
+const tab = ref<(typeof TABS)[number]>('Videos')
 </script>
 
 <template>
   <LayoutWindow title="Youtube" icon="youtube">
     <template #tabs>
-      <TabList :tabs="tabs" />
+      <TabList :tabs="TABS" v-model="tab" />
     </template>
 
     <keep-alive>

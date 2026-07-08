@@ -35,8 +35,7 @@ input {
   border: var(--border);
   border-radius: var(--border-radius-small);
   outline: none;
-  padding: 0 var(--spacing-list-hr);
-  height: var(--title-height);
+  padding: var(--spacing-small);
   width: 100%;
   background-color: var(--input-bg);
   color: var(--color);

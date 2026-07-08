@@ -1,51 +1,34 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
-export interface Tab {
-  name: string
-  action: (...args: any) => void
-}
-
-const { tabs } = defineProps<{
-  tabs: Tab[]
+defineProps<{
+  tabs: readonly string[]
 }>()
 
-const activeTab = ref<string>(tabs[0]?.name || '')
-
-const switchTab = (tab: Tab) => {
-  activeTab.value = tab.name
-  tab.action()
-}
+const activeTab = defineModel<string>({ required: true })
 </script>
 
 <template>
   <div class="tabs">
     <button
       v-for="tab in tabs"
+      :key="tab"
       class="tab"
-      :key="tab.name"
       role="tab"
-      :class="{ active: activeTab === tab.name }"
-      @click="switchTab(tab)"
+      :class="{ active: activeTab === tab }"
+      @click="activeTab = tab"
     >
-      {{ tab.name }}
+      {{ tab }}
     </button>
   </div>
 </template>
 
 <style scoped>
+/* Keep your existing CSS exactly as it is */
 .tabs {
   flex-shrink: 0;
   display: flex;
   height: var(--icon-size);
-  /* height: fit-content; */
-  /* background-color: var(--tab-wrap-bg); */
-  /* border-bottom: var(--border); */
-  /* border-top-left-radius: var(--border-radius);
-  border-top-right-radius: var(--border-radius); */
   overflow: hidden;
 }
-
 .tab {
   display: flex;
   align-items: center;
@@ -59,13 +42,10 @@ const switchTab = (tab: Tab) => {
   background-color: var(--tab-inactive-bg);
   border-bottom: var(--border);
   border-right: var(--border);
-  /* border-radius: var(--border-radius); */
-  /* height: var(--icon-size); */
 
   &:last-child {
     border-right: none;
   }
-
   &:hover,
   &:focus-within,
   &.active {
@@ -73,7 +53,6 @@ const switchTab = (tab: Tab) => {
     background-color: var(--tab-active-bg);
     background-color: var(--element);
   }
-
   &.active {
     border-bottom-color: transparent;
     &::before,
@@ -81,7 +60,6 @@ const switchTab = (tab: Tab) => {
       content: '=';
       opacity: 0.4;
     }
-
     &::before {
       margin-right: 1ch;
     }

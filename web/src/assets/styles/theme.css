@@ -185,7 +185,7 @@
   --icon-size: 1.8rem;
   --icon-stroke: 1.15px;
 
-  --favicon-size: 1.9rem;
+  --favicon-size: 1.6rem;
 
   --spacing: 0rem;
   --spacing-small: 0.3rem;
@@ -203,7 +203,7 @@
 
   --title-align: start;
   --title-spacing: 0.3rem;
-  --title-height: 1.8rem;
+  --title-height: 2.1rem;
   --title-bg: oklch(92% 0.08 90);
   /* --title-bg: transparent; */
   --title-color: var(--color-dim);

@@ -12,6 +12,8 @@ const windowRef = useTemplateRef('window')
 const open = () => dialogRef.value?.showModal()
 
 const close = () => dialogRef.value?.close()
+
+// todo :: pass function so it resets fields etc.
 onClickOutside(windowRef, () => close())
 
 defineExpose({ open, close })

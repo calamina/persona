@@ -1,3 +1,4 @@
+import IconBack from '../components/icons/IconBack.vue'
 import IconCategAdd from '../components/icons/IconCategAdd.vue'
 import IconChan from '../components/icons/IconChan.vue'
 import IconCheck from '../components/icons/IconCheck.vue'
@@ -54,5 +55,6 @@ export const iconMap = {
   categAdd: IconCategAdd,
   close: IconClose,
   fullscreen: IconFullscreen,
+  back: IconBack,
 }
 export type IconName = keyof typeof iconMap

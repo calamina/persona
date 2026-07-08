@@ -5,8 +5,6 @@ import LayoutWindow from '../../layouts/LayoutWindow.vue'
 import LayoutList from '../../layouts/LayoutList.vue'
 import RssItem from './RssItem.vue'
 import TabList from '../../components/TabList.vue'
-import type { Tab } from '../../components/TabList.vue'
-import RssChannelAdd from './channels/RssChannelAdd.vue'
 import RssChannelList from './channels/RssChannelList.vue'
 import LoadingContent from '../../components/LoadingContent.vue'
 import { getRss } from './rss.service.ts'
@@ -19,32 +17,24 @@ const { isLoading: loading, data } = useQuery({
 })
 
 const TABS = ['Feed', 'Channels'] as const
-type TabName = (typeof TABS)[number]
-
-const tab = ref<TabName>('Feed')
-
-const changeTab = (newTab: TabName) => (tab.value = newTab)
-
-const tabs: Tab[] = TABS.map((b) => ({
-  name: b,
-  action: () => changeTab(b),
-}))
+const tab = ref<(typeof TABS)[number]>('Feed')
 </script>
 
 <template>
   <LayoutWindow title="Rss" icon="rss">
     <template #tabs>
-      <TabList :tabs="tabs" />
+      <TabList :tabs="TABS" v-model="tab" />
     </template>
 
     <keep-alive>
       <Transition name="load" mode="out-in">
-        <div v-if="tab === 'Feed'">
+        <template v-if="tab === 'Feed'">
           <LoadingContent v-if="loading" />
           <LayoutList v-else>
             <RssItem v-for="item in data" :key="item.title" :item="item" />
           </LayoutList>
-        </div>
+        </template>
+
         <RssChannelList v-else />
       </Transition>
     </keep-alive>

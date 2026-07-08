@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useTemplateRef } from 'vue'
+import { ref, useTemplateRef } from 'vue'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import type { Channel } from '../youtube.model'
 import { addChannel, searchChannel } from '../youtube.service'
@@ -77,13 +77,13 @@ const formAction = () => (result.value ? follow(result.value) : search(query.val
         class="confirm"
       />
       <div v-else class="confirm buttons">
-        <ButtonBase class="button" @click="cancel()" label="Cancel" icon="favoriteDelete" />
+        <ButtonBase class="button" @click="cancel()" label="Search again" icon="back" />
         <ButtonLoading
           :loading="loadingAdd"
           class="button"
           label="Add youtube channel"
           form="addForm"
-          icon="favoriteAdd"
+          icon="categAdd"
           type="submit"
         />
       </div>
@@ -147,13 +147,18 @@ const formAction = () => (result.value ? follow(result.value) : search(query.val
 a {
   display: flex;
   padding: var(--spacing-small);
+  padding-bottom: 0;
   flex-flow: column;
   text-decoration: none;
   overflow: hidden;
   width: fit-content;
   border-radius: var(--border-radius-small);
   gap: var(--item-gap);
-  background-color: var(--element-focus);
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--element-focus);
+  }
 }
 
 img {

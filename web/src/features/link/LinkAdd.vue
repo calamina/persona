@@ -87,12 +87,15 @@ const { mutate: create, isPending: _createLoading } = useMutation({
 
 <style scoped>
 .addlink {
+  border-top: var(--border);
+  margin-top: var(--spacing-small);
+  border-radius: 0;
+  padding: calc(var(--spacing-small) * 2);
+  height: fit-content;
+
   &:hover,
   &:focus-within {
-    button {
-      opacity: 1;
-    }
-    img {
+    .favicon {
       background-color: var(--tag-focus);
     }
   }

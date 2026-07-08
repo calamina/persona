@@ -40,12 +40,17 @@ const {
   mutationFn: updateTodo,
   onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
 })
+
+const createTodo = () => {
+  if (!newTodo.value) return
+  create(newTodo.value)
+}
 </script>
 
 <template>
   <LayoutWindow title="Todo" icon="todolist" fit>
     <LayoutList v-if="todos?.length" fit>
-      <LayoutItem inline type="form" @submit.prevent="create(newTodo)" class="create">
+      <LayoutItem inline type="form" @submit.prevent="createTodo()" class="create">
         <ButtonLoading class="updateButton" :loading="createLoading" icon="checkPlus" />
         <input v-model="newTodo" type="text" placeholder="Add todo" />
       </LayoutItem>
@@ -122,6 +127,10 @@ const {
 }
 
 .create {
+  :global(.data) {
+    gap: 0.45rem !important;
+  }
+
   &:hover input,
   &:focus-within input {
     border-bottom: var(--border);

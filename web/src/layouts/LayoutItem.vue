@@ -61,8 +61,7 @@ const {
 }
 
 .small {
-  padding: 0;
-  height: var(--favicon-size);
+  padding: var(--spacing-small);
 }
 
 button {

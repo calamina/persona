@@ -21,15 +21,15 @@ const fullscreen = ref(false)
     <h2 :class="{ borderless: !toggled }">
       <IconBase v-if="icon" :name="icon" class="title-icon" />
       {{ title ?? '' }}
-      <!-- <div class="actions">
+      <div class="actions">
         <slot class="action" name="action" />
-        <button class="action" @click="toggled = !toggled" v-if="collapse && !fullscreen">
+        <!-- <button class="action" @click="toggled = !toggled" v-if="collapse && !fullscreen">
           <IconBase name="fold" />
         </button>
         <button class="action" @click="fullscreen = !fullscreen" v-if="collapse">
           <IconBase :name="screenIcon" :key="screenIcon" />
-        </button>
-      </div> -->
+        </button> -->
+      </div>
     </h2>
     <slot name="tabs" v-if="toggled || fullscreen" />
     <div class="content" v-if="toggled || fullscreen">

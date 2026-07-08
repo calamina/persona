@@ -3,14 +3,13 @@ import { ref } from 'vue'
 import LayoutWindow from '../../layouts/LayoutWindow.vue'
 import ChanItem from './ChanItem.vue'
 import LayoutList from '../../layouts/LayoutList.vue'
-import TabList, { type Tab } from '../../components/TabList.vue'
+import TabList from '../../components/TabList.vue'
 import { useQuery } from '@tanstack/vue-query'
 import LoadingContent from '../../components/LoadingContent.vue'
 import { getChanCatalog } from './chan.service.ts'
 
 const BOARDS = ['g', 'wg', 'v'] as const
-type Board = (typeof BOARDS)[number]
-const board = ref<Board>('g')
+const board = ref<(typeof BOARDS)[number]>('g')
 
 const { isLoading: loading, data: chans } = useQuery({
   queryKey: ['chans', board],
@@ -18,17 +17,12 @@ const { isLoading: loading, data: chans } = useQuery({
   staleTime: 1000 * 60 * 3,
   gcTime: 1000 * 60 * 4,
 })
-
-const tabs: Tab[] = BOARDS.map((b) => ({
-  name: b,
-  action: () => (board.value = b),
-}))
 </script>
 
 <template>
   <LayoutWindow title="4chan" icon="chan">
     <template #tabs>
-      <TabList :tabs />
+      <TabList :tabs="BOARDS" v-model="board" />
     </template>
 
     <Transition name="load" mode="out-in">
