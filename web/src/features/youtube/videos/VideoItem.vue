@@ -2,46 +2,43 @@
 import { useTimeAgo } from '@vueuse/core'
 import LayoutItem from '../../../layouts/LayoutItem.vue'
 import type { VideoDisplay } from '../youtube.model'
+import MediaDisplay from '../../../components/MediaDisplay.vue'
+
 const { video } = defineProps<{ video: VideoDisplay }>()
 </script>
 
 <template>
   <LayoutItem cover :href="'https://www.youtube.com/watch?v=' + video.id" :title="video.title">
     <template #visual>
-      <img
-        width="100"
+      <MediaDisplay
         :src="`http://img.youtube.com/vi/${video.id}/sddefault.jpg`"
-        :alt="video.title + 'thumbnail'"
+        :alt="video.title + ' thumbnail'"
       />
     </template>
-    <p class="info">{{ video.title }}</p>
-    <p class="info">{{ video.author }}</p>
-    <p class="info date">{{ useTimeAgo(video.published) }}</p>
+
+    <p class="info text-ellipsis">{{ video.title }}</p>
+    <p class="info text-ellipsis dim-text">{{ video.author }}</p>
+    <p class="info text-ellipsis dim-text date">{{ useTimeAgo(video.published) }}</p>
   </LayoutItem>
 </template>
 
 <style scoped>
-img {
-  /* border: var(--border); */
-  border-radius: var(--border-radius-small);
-  width: 100%;
-  flex-shrink: 0;
-  height: 4rem;
-  object-fit: cover;
-  background-color: var(--element-focus);
-}
-
-.info {
+.text-ellipsis {
   overflow-x: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 100%;
+}
+
+.info {
   line-height: 1.25rem;
-  &:not(:first-child) {
-    color: var(--color-dim);
-  }
+
   &.date {
     line-height: 1.5rem;
   }
+}
+
+.dim-text {
+  color: var(--color-dim);
 }
 </style>

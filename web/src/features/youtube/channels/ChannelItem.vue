@@ -8,6 +8,7 @@ const { channel } = defineProps<{ channel: ChannelDisplay }>()
 <template>
   <a class="channel" :key="channel.id" :href="channel.url" :title="channel.name">
     <img
+      width="50"
       :src="channel.iconURL ?? ''"
       :alt="channel.name + ' channel icon'"
       referrerpolicy="no-referrer"

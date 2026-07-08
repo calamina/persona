@@ -40,7 +40,6 @@ Homepage / dashboard with several features
 - [ ] ! Search : add bangs / shortcuts
 - [ ] ! Replace favorites with git info
 
-- [ ] ! Streamline cover (youtube / rss / 4chan)
 - [ ] ! manage errors (store messages ? error in title bar ! add orange and green)
 
 - [ ] confirmation on add (notif / snack) ?
