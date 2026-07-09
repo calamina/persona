@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ButtonBase from '../../components/ButtonBase.vue'
 
-const themes = ['maxi', 'mini', 'micro'] as const
+const themes = ['maxi', 'mini', 'micro', 'chromi'] as const
 type Theme = (typeof themes)[number]
 
 const switchTheme = () => {

@@ -6,7 +6,6 @@
   background-color: var(--element);
   padding: var(--spacing);
   border-radius: var(--border-radius);
-  border: var(--border);
   display: flex;
   flex-flow: column;
   gap: var(--list-gap);

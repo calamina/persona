@@ -55,7 +55,8 @@ input {
 label {
   color: var(--color);
   text-transform: capitalize;
-  line-height: 1;
+  line-height: 1.1rem;
+  font-size: 0.9rem;
 
   span {
     color: var(--color-dim);

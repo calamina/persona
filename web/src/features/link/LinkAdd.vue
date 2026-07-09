@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, useTemplateRef } from 'vue'
 import ButtonBase from '../../components/ButtonBase.vue'
-import { cleanUrl } from '../../utils/url.ts'
+import { cleanUrl } from '../../utils/utils.ts'
 import { addLink, getLinkName } from './link.service.ts'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import ModalBase from '../../components/ModalBase.vue'

@@ -86,52 +86,6 @@ h6 {
   isolation: isolate;
 }
 
-dialog::backdrop {
-  pointer-events: all;
-}
-
-dialog:open {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Closed state of the dialog   */
-dialog {
-  opacity: 0;
-  transform: translateY(-0.15rem);
-  transition:
-    opacity 0.125s ease-out,
-    transform 0.125s ease-out,
-    overlay 0.7s ease-out allow-discrete,
-    display 0.7s ease-out allow-discrete;
-  /* Equivalent to
-  transition: all 0.7s allow-discrete; */
-}
-
-/* Before open state  */
-/* Needs to be after the previous dialog:open rule to take effect,
-    as the specificity is the same */
-@starting-style {
-  dialog:open {
-    opacity: 0;
-    transform: translateY(-0.15rem);
-  }
-}
-
-/* Transition the :backdrop when the dialog modal is promoted to the top layer */
-dialog::backdrop {
-  background-color: transparent;
-  transition: background-color 0.125s;
-  /* Equivalent to
-  transition: all 0.7s allow-discrete; */
-}
-
-@starting-style {
-  dialog:open::backdrop {
-    background-color: transparent;
-  }
-}
-
 p,
 div {
   width: 100%;

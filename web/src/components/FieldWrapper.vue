@@ -17,8 +17,8 @@ const {
 
 <template>
   <div class="field-wrapper">
-    <slot />
     <LabelBase v-if="label" :id :label />
+    <slot />
     <TextHint :id :content="hint" type="hint" class="hint-msg" />
     <TextHint :id :content="errorMessage" type="error" class="error-msg" />
   </div>
@@ -29,5 +29,6 @@ div {
   display: flex;
   flex-flow: column;
   position: relative;
+  gap: var(--list-gap);
 }
 </style>

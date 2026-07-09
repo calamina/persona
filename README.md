@@ -11,9 +11,8 @@ Homepage / dashboard with several features
 - [x] RSS
 - [x] Note
 - [x] Links
+- [x] Git events & repos
 - [ ] Calendar ?
-- [ ] Git events / repos ?
-- [ ] Apps uptime / up ?
 
 ## Frontend
 
@@ -35,23 +34,24 @@ Homepage / dashboard with several features
 - `Github Actions`
 - `Oxlint` + `Oxfmt`
 
+---
+
 ## TODO
 
 - [ ] ! Search : add bangs / shortcuts
-- [ ] ! Replace favorites with git info
-
+- [ ] ! Inputs : check fieldBase & ModalInput and DRY
 - [ ] ! manage errors (store messages ? error in title bar ! add orange and green)
 
+- [ ] github : add dynamic username & uptime (ping homepage ?)
 - [ ] confirmation on add (notif / snack) ?
-- [ ] refacto login / register for theme
-- [ ] Add 4chan searchbar ?
 - [ ] Register 4chan boards, favorite one ?
 - [ ] Features tabs on mobile instead of stack
-- [ ] multi-use inputs ? search / add
+
 - [ ] redirect on register + redirect on mail send
 - [ ] add password reset
 - [ ] check account existing
-- [ ] add animations / transitionGroups
+
+---
 
 ## Config (todo)
 

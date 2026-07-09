@@ -8,6 +8,7 @@ import YoutubeFeed from '../youtube/YoutubeFeed.vue'
 import DashboardHeader from './DashboardHeader.vue'
 // import FavoriteFeature from '../favorite/FavoriteFeature.vue'
 import ChanList from '../chan/ChanList.vue'
+import GithubData from '../github/GithubData.vue'
 </script>
 
 <template>
@@ -20,6 +21,9 @@ import ChanList from '../chan/ChanList.vue'
       <!-- <Suspense>
         <FavoriteFeature />
       </Suspense> -->
+      <Suspense>
+        <GithubData />
+      </Suspense>
       <NoteFeature />
       <Suspense>
         <TodoList />
@@ -37,6 +41,7 @@ import ChanList from '../chan/ChanList.vue'
       <LayoutAsync>
         <YoutubeFeed />
       </LayoutAsync>
+      <!-- <p>notification</p> -->
     </div>
   </div>
 </template>

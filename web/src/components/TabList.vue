@@ -51,7 +51,6 @@ const activeTab = defineModel<string>({ required: true })
   &.active {
     color: var(--color);
     background-color: var(--tab-active-bg);
-    background-color: var(--element);
   }
   &.active {
     border-bottom-color: transparent;

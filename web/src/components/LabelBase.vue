@@ -13,7 +13,6 @@ const { id, label } = defineProps<{
 label {
   line-height: 1.1rem;
   font-size: 0.9rem;
-  color: var(--color-dim);
   color: var(--color);
 }
 </style>

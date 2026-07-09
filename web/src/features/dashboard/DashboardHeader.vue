@@ -28,7 +28,7 @@ import Search from './Search.vue'
   align-items: center;
   justify-content: space-between;
   gap: var(--dashboard-spacing);
-  height: var(--title-height);
+  height: var(--header-size);
 }
 
 .element {

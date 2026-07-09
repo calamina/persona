@@ -18,7 +18,7 @@ const fullscreen = ref(false)
 
 <template>
   <div class="window" :class="{ fit: fit || !toggled, fullscreen }">
-    <h2 :class="{ borderless: !toggled }">
+    <h2 v-if="title" :class="{ borderless: !toggled }">
       <IconBase v-if="icon" :name="icon" class="title-icon" />
       {{ title ?? '' }}
       <div class="actions">

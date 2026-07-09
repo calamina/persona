@@ -12,11 +12,14 @@ import IconFavoriteSearch from '../components/icons/IconFavoriteSearch.vue'
 import IconFold from '../components/icons/IconFold.vue'
 import IconFolder from '../components/icons/IconFolder.vue'
 import IconFullscreen from '../components/icons/IconFullscreen.vue'
+import IconGithub from '../components/icons/IconGithub.vue'
 import IconHide from '../components/icons/IconHide.vue'
 import IconLoading from '../components/icons/IconLoading.vue'
 import IconLogout from '../components/icons/IconLogout.vue'
 import IconNote from '../components/icons/IconNote.vue'
 import IconPlus from '../components/icons/IconPlus.vue'
+import IconPush from '../components/icons/IconPush.vue'
+import IconRegister from '../components/icons/IconRegister.vue'
 import IconRss from '../components/icons/IconRss.vue'
 import IconSearch from '../components/icons/IconSearch.vue'
 import IconShow from '../components/icons/IconShow.vue'
@@ -56,5 +59,8 @@ export const iconMap = {
   close: IconClose,
   fullscreen: IconFullscreen,
   back: IconBack,
+  register: IconRegister,
+  github: IconGithub,
+  push: IconPush,
 }
 export type IconName = keyof typeof iconMap

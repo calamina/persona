@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { addFavorite } from './favorite.service'
-import { cleanUrl } from '../../utils/url.ts'
+import { cleanUrl } from '../../utils/utils.ts'
 import FieldAction from '../../components/FieldAction.vue'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 
