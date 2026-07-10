@@ -28,12 +28,14 @@ import IconSoul from '../components/icons/IconSoul.vue'
 import IconTheme from '../components/icons/IconTheme.vue'
 import IconTodoList from '../components/icons/IconTodoList.vue'
 import IconUser from '../components/icons/IconUser.vue'
+import IconUserGithub from '../components/icons/IconUserGithub.vue'
 import IconYoutube from '../components/icons/IconYoutube.vue'
 
 export const iconMap = {
   show: IconShow,
   hide: IconHide,
   user: IconUser,
+  userGithub: IconUserGithub,
   logout: IconLogout,
   favoriteAdd: IconFavoriteAdd,
   favoriteDelete: IconFavoriteDelete,

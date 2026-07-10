@@ -9,7 +9,12 @@ const {
   icon,
   fit,
   // collapse = true,
-} = defineProps<{ title?: string; icon?: IconName; fit?: boolean; collapse?: boolean }>()
+} = defineProps<{
+  title?: string
+  icon?: IconName
+  fit?: boolean
+  collapse?: boolean
+}>()
 
 const toggled = ref(true)
 const fullscreen = ref(false)

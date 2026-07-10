@@ -27,12 +27,14 @@ const mediaType = computed(() => {
     :src="src"
     width="100"
     autoplay
+    playsinline
     muted
     loop
+    crossorigin="anonymous"
     class="media"
   ></video>
   <img
-    v-else-if="src"
+    v-else-if="mediaType === 'image' && src"
     :src="src"
     width="100"
     :alt="alt || 'thumbnail'"

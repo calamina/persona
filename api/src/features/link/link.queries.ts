@@ -17,7 +17,6 @@ export const dbGetLinks = async (userId: string) =>
 
 export const dbCreateLink = async (data: LinkNewModel) => {
   try {
-    console.debug(data)
     const [newLink] = await db.insert(link).values(data).returning({ id: link.id })
     return newLink ?? null
   } catch {

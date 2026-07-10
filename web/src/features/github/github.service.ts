@@ -52,9 +52,10 @@ export const EVENT_TYPE_MAP: Record<string, string> = {
   WatchEvent: 'Star',
 }
 
-const username = 'calamina'
-
 export const getRepos = async (): Promise<Repository[]> => {
+  const username = localStorage.getItem('github-username')
+  if (!username) return []
+
   try {
     const response = await fetch(
       `https://api.github.com/users/${username}/repos?sort=pushed&per_page=100`,
@@ -80,9 +81,12 @@ export const getRepos = async (): Promise<Repository[]> => {
 }
 
 export const getPublicEvents = async (): Promise<PublicEvent[]> => {
+  const username = localStorage.getItem('github-username')
+  if (!username) return []
+
   try {
     const response = await fetch(
-      `https://api.github.com/users/${username}/events/public?per_page=100`,
+      `https://api.github.com/users/${username}/events/public?per_page=20`,
       {
         method: 'GET',
         headers: {
@@ -98,7 +102,6 @@ export const getPublicEvents = async (): Promise<PublicEvent[]> => {
     }
 
     const rawJson = await response.json()
-    console.debug(rawJson)
     return z.array(PublicEventSchema).parse(rawJson)
   } catch {
     return []

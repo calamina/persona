@@ -208,7 +208,6 @@
   --title-spacing: 0.3rem;
   --title-height: 1.8rem;
   --title-bg: oklch(92% 0.08 90);
-  /* --title-bg: transparent; */
   --title-color: var(--color);
 
   --item-gap: 0.6rem;
@@ -234,9 +233,9 @@
   --modal-bg: oklch(22% 0.015 310 / 0.9);
   --modal-spacing: 0.9rem;
 
-  --element: #00000044;
-  --element-focus: #00000066;
-  --element-focusmax: #000000aa;
+  --element: oklch(19% 0.015 310);
+  --element-focus: oklch(24% 0.015 310);
+  --element-focusmax: oklch(29% 0.015 310);
 
   --input-bg: var(--element-focus);
   --input-focus: var(--element-focusmax);
@@ -248,8 +247,8 @@
   --color: oklch(70% 0.015 310);
   --color-dim: oklch(55% 0.015 310);
   --color-dimmer: oklch(50% 0.015 310);
-  --color-focus: oklch(20% 0 310);
-  --color-highlight: oklch(64.137% 0 77.645);
+  --color-focus: oklch(75% 0 310);
+  --color-highlight: oklch(80% 0 310);
 
   --border-color: oklch(30% 0.015 310);
   --border-focus: oklch(20% 0 310);
